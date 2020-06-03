@@ -1,0 +1,75 @@
+[options]
+work_mode = "normal"
+library = "Hinawa"
+version = "3.0"
+min_cfg_version = "3.0"
+single_version_file = true
+
+generate = [
+    "Hinawa.FwRcode",
+    "Hinawa.FwTcode",
+    "Hinawa.SndUnitType",
+    "Hinawa.SndUnit",
+    "Hinawa.SndDice",
+    "Hinawa.SndMotu",
+    "Hinawa.SndDg00x",
+]
+
+manual = [
+    "GLib.Error",
+    "GLib.Source",
+]
+
+[[object]]
+name = "Hinawa.FwNode"
+status = "generate"
+manual_traits = ["FwNodeExtManual"]
+    [[object.function]]
+    pattern = "get_config_rom"
+    ignore = true
+    doc_trait_name = "FwNodeExtManual"
+
+[[object]]
+name = "Hinawa.FwReq"
+status = "generate"
+manual_traits = ["FwReqExtManual"]
+    [[object.function]]
+    pattern = "transaction"
+    ignore = true
+    doc_trait_name = "FwReqExtManual"
+
+[[object]]
+name = "Hinawa.FwResp"
+status = "generate"
+manual_traits = ["FwRespExtManual"]
+    [[object.function]]
+    pattern = "get_req_frame"
+    ignore = true
+    doc_trait_name = "FwRespExtManual"
+
+[[object]]
+name = "Hinawa.FwFcp"
+status = "generate"
+manual_traits = ["FwFcpExtManual"]
+    [[object.function]]
+    pattern = "transaction"
+    ignore = true
+    doc_trait_name = "FwFcpExtManual"
+
+[[object]]
+name = "Hinawa.SndEfw"
+status = "generate"
+manual_traits = ["SndEfwExtManual"]
+    [[object.function]]
+    pattern = "transaction"
+    ignore = true
+    doc_trait_name = "SndEfwExtManual"
+
+[[object]]
+name = "Hinawa.SndTscm"
+status = "generate"
+manual_traits = ["SndTscmExtManual"]
+    [[object.function]]
+    pattern = "get_state"
+    ignore = true
+    doc_trait_name = "SndTscmExtManual"

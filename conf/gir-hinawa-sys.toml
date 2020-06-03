@@ -1,0 +1,10 @@
+[options]
+work_mode = "sys"
+library = "Hinawa"
+version = "3.0"
+min_cfg_version = "2.0"
+single_version_file = "."
+external_libraries = [
+  "GLib",
+  "GObject",
+]
