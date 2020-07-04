@@ -9,7 +9,6 @@ generate = [
     "Hinawa.FwRcode",
     "Hinawa.FwTcode",
     "Hinawa.SndUnitType",
-    "Hinawa.SndUnit",
     "Hinawa.SndDice",
     "Hinawa.SndMotu",
     "Hinawa.SndDg00x",
@@ -55,6 +54,15 @@ manual_traits = ["FwFcpExtManual"]
     pattern = "transaction"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
+
+[[object]]
+name = "Hinawa.SndUnit"
+status = "generate"
+manual_traits = ["SndUnitExtManual"]
+    [[object.function]]
+    pattern = "open"
+    ignore = true
+    doc_trait_name = "SndUnitExtManual"
 
 [[object]]
 name = "Hinawa.SndEfw"

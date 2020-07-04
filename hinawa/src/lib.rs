@@ -22,6 +22,9 @@ pub use fw_resp::*;
 mod fw_fcp;
 pub use fw_fcp::*;
 
+mod snd_unit;
+pub use snd_unit::*;
+
 mod snd_efw;
 pub use snd_efw::*;
 

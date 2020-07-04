@@ -42,12 +42,22 @@ impl Default for SndDice {
 pub const NONE_SND_DICE: Option<&SndDice> = None;
 
 pub trait SndDiceExt: 'static {
+    fn open(&self, path: &str) -> Result<(), glib::Error>;
+
     fn transaction(&self, addr: u64, frame: &[u32], bit_flag: u32) -> Result<(), glib::Error>;
 
     fn connect_notified<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SndDice>> SndDiceExt for O {
+    fn open(&self, path: &str) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_snd_dice_open(self.as_ref().to_glib_none().0, path.to_glib_none().0, &mut error);
+            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+
     fn transaction(&self, addr: u64, frame: &[u32], bit_flag: u32) -> Result<(), glib::Error> {
         let frame_count = frame.len() as usize;
         unsafe {

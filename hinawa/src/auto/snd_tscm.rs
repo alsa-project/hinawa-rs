@@ -2,6 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use glib;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -13,6 +14,7 @@ use libc;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
+use std::ptr;
 use SndUnit;
 
 glib_wrapper! {
@@ -40,10 +42,20 @@ impl Default for SndTscm {
 pub const NONE_SND_TSCM: Option<&SndTscm> = None;
 
 pub trait SndTscmExt: 'static {
+    fn open(&self, path: &str) -> Result<(), glib::Error>;
+
     fn connect_control<F: Fn(&Self, u32, u32, u32) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SndTscm>> SndTscmExt for O {
+    fn open(&self, path: &str) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_snd_tscm_open(self.as_ref().to_glib_none().0, path.to_glib_none().0, &mut error);
+            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+
     fn connect_control<F: Fn(&Self, u32, u32, u32) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn control_trampoline<P, F: Fn(&P, u32, u32, u32) + 'static>(this: *mut hinawa_sys::HinawaSndTscm, index: libc::c_uint, before: libc::c_uint, after: libc::c_uint, f: glib_sys::gpointer)
             where P: IsA<SndTscm>
