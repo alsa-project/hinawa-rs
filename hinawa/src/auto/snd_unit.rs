@@ -52,8 +52,6 @@ pub trait SndUnitExt: 'static {
 
     fn lock(&self) -> Result<(), glib::Error>;
 
-    fn open(&self, path: &str) -> Result<(), glib::Error>;
-
     fn unlock(&self) -> Result<(), glib::Error>;
 
     fn get_property_card(&self) -> u32;
@@ -103,14 +101,6 @@ impl<O: IsA<SndUnit>> SndUnitExt for O {
         unsafe {
             let mut error = ptr::null_mut();
             let _ = hinawa_sys::hinawa_snd_unit_lock(self.as_ref().to_glib_none().0, &mut error);
-            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
-        }
-    }
-
-    fn open(&self, path: &str) -> Result<(), glib::Error> {
-        unsafe {
-            let mut error = ptr::null_mut();
-            let _ = hinawa_sys::hinawa_snd_unit_open(self.as_ref().to_glib_none().0, path.to_glib_none().0, &mut error);
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
     }

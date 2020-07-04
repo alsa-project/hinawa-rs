@@ -2,9 +2,12 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use glib;
+use glib::object::IsA;
 use glib::translate::*;
 use hinawa_sys;
 use std::fmt;
+use std::ptr;
 use SndUnit;
 
 glib_wrapper! {
@@ -30,6 +33,20 @@ impl Default for SndEfw {
 }
 
 pub const NONE_SND_EFW: Option<&SndEfw> = None;
+
+pub trait SndEfwExt: 'static {
+    fn open(&self, path: &str) -> Result<(), glib::Error>;
+}
+
+impl<O: IsA<SndEfw>> SndEfwExt for O {
+    fn open(&self, path: &str) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_snd_efw_open(self.as_ref().to_glib_none().0, path.to_glib_none().0, &mut error);
+            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+}
 
 impl fmt::Display for SndEfw {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

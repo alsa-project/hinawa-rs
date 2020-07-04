@@ -28,6 +28,7 @@ pub use self::snd_dice::SndDiceExt;
 
 mod snd_efw;
 pub use self::snd_efw::{SndEfw, SndEfwClass, NONE_SND_EFW};
+pub use self::snd_efw::SndEfwExt;
 
 mod snd_motu;
 pub use self::snd_motu::{SndMotu, SndMotuClass, NONE_SND_MOTU};
@@ -54,6 +55,7 @@ pub mod traits {
     pub use super::FwRespExt;
     pub use super::SndDg00xExt;
     pub use super::SndDiceExt;
+    pub use super::SndEfwExt;
     pub use super::SndMotuExt;
     pub use super::SndTscmExt;
     pub use super::SndUnitExt;
