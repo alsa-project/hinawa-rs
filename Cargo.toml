@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "hinawa-sys",
+    "hinawa",
+]
+
+default-members = [
+    "hinawa",
+]
