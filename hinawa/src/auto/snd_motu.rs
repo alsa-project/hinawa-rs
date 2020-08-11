@@ -66,7 +66,7 @@ impl<O: IsA<SndMotu>> SndMotuExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notified\0".as_ptr() as *const _,
-                Some(transmute(notified_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notified_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

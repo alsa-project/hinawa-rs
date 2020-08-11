@@ -152,7 +152,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"bus-update\0".as_ptr() as *const _,
-                Some(transmute(bus_update_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(bus_update_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -166,7 +166,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"disconnected\0".as_ptr() as *const _,
-                Some(transmute(disconnected_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(disconnected_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -180,7 +180,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::bus-manager-node-id\0".as_ptr() as *const _,
-                Some(transmute(notify_bus_manager_node_id_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_bus_manager_node_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -194,7 +194,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::generation\0".as_ptr() as *const _,
-                Some(transmute(notify_generation_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_generation_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -208,7 +208,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::ir-manager-node-id\0".as_ptr() as *const _,
-                Some(transmute(notify_ir_manager_node_id_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_ir_manager_node_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -222,7 +222,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::local-node-id\0".as_ptr() as *const _,
-                Some(transmute(notify_local_node_id_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_local_node_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -236,7 +236,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::node-id\0".as_ptr() as *const _,
-                Some(transmute(notify_node_id_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_node_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 
@@ -250,7 +250,7 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::root-node-id\0".as_ptr() as *const _,
-                Some(transmute(notify_root_node_id_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_root_node_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

@@ -66,7 +66,7 @@ impl<O: IsA<SndDg00x>> SndDg00xExt for O {
         unsafe {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"message\0".as_ptr() as *const _,
-                Some(transmute(message_trampoline::<Self, F> as usize)), Box_::into_raw(f))
+                Some(transmute::<_, unsafe extern "C" fn()>(message_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

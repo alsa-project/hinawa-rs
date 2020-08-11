@@ -15,6 +15,7 @@ use std::fmt;
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
+#[non_exhaustive]
 pub enum FwRcode {
     Complete,
     ConflictError,
@@ -114,6 +115,7 @@ impl SetValue for FwRcode {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
+#[non_exhaustive]
 pub enum FwTcode {
     WriteQuadletRequest,
     WriteBlockRequest,
@@ -245,6 +247,7 @@ impl SetValue for FwTcode {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
+#[non_exhaustive]
 pub enum SndUnitType {
     Dice,
     Fireworks,
