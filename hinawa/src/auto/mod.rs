@@ -43,8 +43,13 @@ pub use self::snd_unit::{SndUnit, SndUnitClass, NONE_SND_UNIT};
 pub use self::snd_unit::SndUnitExt;
 
 mod enums;
+pub use self::enums::FwFcpError;
+pub use self::enums::FwNodeError;
 pub use self::enums::FwRcode;
 pub use self::enums::FwTcode;
+pub use self::enums::SndDiceError;
+pub use self::enums::SndEfwStatus;
+pub use self::enums::SndUnitError;
 pub use self::enums::SndUnitType;
 
 #[doc(hidden)]

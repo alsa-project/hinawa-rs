@@ -2,16 +2,200 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use glib::error::ErrorDomain;
 use glib::translate::*;
 use glib::value::FromValue;
 use glib::value::FromValueOptional;
 use glib::value::SetValue;
 use glib::value::Value;
+use glib::Quark;
 use glib::StaticType;
 use glib::Type;
 use gobject_sys;
 use hinawa_sys;
 use std::fmt;
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+pub enum FwFcpError {
+    Timeout,
+    LargeResp,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for FwFcpError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "FwFcpError::{}", match *self {
+            FwFcpError::Timeout => "Timeout",
+            FwFcpError::LargeResp => "LargeResp",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for FwFcpError {
+    type GlibType = hinawa_sys::HinawaFwFcpError;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaFwFcpError {
+        match *self {
+            FwFcpError::Timeout => hinawa_sys::HINAWA_FW_FCP_ERROR_TIMEOUT,
+            FwFcpError::LargeResp => hinawa_sys::HINAWA_FW_FCP_ERROR_LARGE_RESP,
+            FwFcpError::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaFwFcpError> for FwFcpError {
+    fn from_glib(value: hinawa_sys::HinawaFwFcpError) -> Self {
+        match value {
+            0 => FwFcpError::Timeout,
+            1 => FwFcpError::LargeResp,
+            value => FwFcpError::__Unknown(value),
+        }
+    }
+}
+
+impl ErrorDomain for FwFcpError {
+    fn domain() -> Quark {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_fcp_error_quark()) }
+    }
+
+    fn code(self) -> i32 {
+        self.to_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        match code {
+            0 => Some(FwFcpError::Timeout),
+            1 => Some(FwFcpError::LargeResp),
+            value => Some(FwFcpError::__Unknown(value)),
+        }
+    }
+}
+
+impl StaticType for FwFcpError {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_fcp_error_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for FwFcpError {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for FwFcpError {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for FwFcpError {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+pub enum FwNodeError {
+    Disconnected,
+    Opened,
+    NotOpened,
+    Failed,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for FwNodeError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "FwNodeError::{}", match *self {
+            FwNodeError::Disconnected => "Disconnected",
+            FwNodeError::Opened => "Opened",
+            FwNodeError::NotOpened => "NotOpened",
+            FwNodeError::Failed => "Failed",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for FwNodeError {
+    type GlibType = hinawa_sys::HinawaFwNodeError;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaFwNodeError {
+        match *self {
+            FwNodeError::Disconnected => hinawa_sys::HINAWA_FW_NODE_ERROR_DISCONNECTED,
+            FwNodeError::Opened => hinawa_sys::HINAWA_FW_NODE_ERROR_OPENED,
+            FwNodeError::NotOpened => hinawa_sys::HINAWA_FW_NODE_ERROR_NOT_OPENED,
+            FwNodeError::Failed => hinawa_sys::HINAWA_FW_NODE_ERROR_FAILED,
+            FwNodeError::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaFwNodeError> for FwNodeError {
+    fn from_glib(value: hinawa_sys::HinawaFwNodeError) -> Self {
+        match value {
+            0 => FwNodeError::Disconnected,
+            1 => FwNodeError::Opened,
+            2 => FwNodeError::NotOpened,
+            3 => FwNodeError::Failed,
+            value => FwNodeError::__Unknown(value),
+        }
+    }
+}
+
+impl ErrorDomain for FwNodeError {
+    fn domain() -> Quark {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_node_error_quark()) }
+    }
+
+    fn code(self) -> i32 {
+        self.to_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        match code {
+            0 => Some(FwNodeError::Disconnected),
+            1 => Some(FwNodeError::Opened),
+            2 => Some(FwNodeError::NotOpened),
+            3 => Some(FwNodeError::Failed),
+            _ => Some(FwNodeError::Failed),
+        }
+    }
+}
+
+impl StaticType for FwNodeError {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_node_error_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for FwNodeError {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for FwNodeError {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for FwNodeError {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
@@ -27,6 +211,7 @@ pub enum FwRcode {
     Busy,
     Generation,
     NoAck,
+    Invalid,
     #[doc(hidden)]
     __Unknown(i32),
 }
@@ -44,6 +229,7 @@ impl fmt::Display for FwRcode {
             FwRcode::Busy => "Busy",
             FwRcode::Generation => "Generation",
             FwRcode::NoAck => "NoAck",
+            FwRcode::Invalid => "Invalid",
             _ => "Unknown",
         })
     }
@@ -65,6 +251,7 @@ impl ToGlib for FwRcode {
             FwRcode::Busy => hinawa_sys::HINAWA_FW_RCODE_BUSY,
             FwRcode::Generation => hinawa_sys::HINAWA_FW_RCODE_GENERATION,
             FwRcode::NoAck => hinawa_sys::HINAWA_FW_RCODE_NO_ACK,
+            FwRcode::Invalid => hinawa_sys::HINAWA_FW_RCODE_INVALID,
             FwRcode::__Unknown(value) => value
         }
     }
@@ -84,6 +271,7 @@ impl FromGlib<hinawa_sys::HinawaFwRcode> for FwRcode {
             18 => FwRcode::Busy,
             19 => FwRcode::Generation,
             20 => FwRcode::NoAck,
+            21 => FwRcode::Invalid,
             value => FwRcode::__Unknown(value),
         }
     }
@@ -240,6 +428,331 @@ impl<'a> FromValue<'a> for FwTcode {
 }
 
 impl SetValue for FwTcode {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+pub enum SndDiceError {
+    Timeout,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for SndDiceError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SndDiceError::{}", match *self {
+            SndDiceError::Timeout => "Timeout",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for SndDiceError {
+    type GlibType = hinawa_sys::HinawaSndDiceError;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaSndDiceError {
+        match *self {
+            SndDiceError::Timeout => hinawa_sys::HINAWA_SND_DICE_ERROR_TIMEOUT,
+            SndDiceError::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaSndDiceError> for SndDiceError {
+    fn from_glib(value: hinawa_sys::HinawaSndDiceError) -> Self {
+        match value {
+            0 => SndDiceError::Timeout,
+            value => SndDiceError::__Unknown(value),
+        }
+    }
+}
+
+impl ErrorDomain for SndDiceError {
+    fn domain() -> Quark {
+        unsafe { from_glib(hinawa_sys::hinawa_snd_dice_error_quark()) }
+    }
+
+    fn code(self) -> i32 {
+        self.to_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        match code {
+            0 => Some(SndDiceError::Timeout),
+            value => Some(SndDiceError::__Unknown(value)),
+        }
+    }
+}
+
+impl StaticType for SndDiceError {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_snd_dice_error_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for SndDiceError {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for SndDiceError {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for SndDiceError {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+pub enum SndEfwStatus {
+    Ok,
+    Bad,
+    BadCommand,
+    CommErr,
+    BadQuadCount,
+    Unsupported,
+    Timeout,
+    DspTimeout,
+    BadRate,
+    BadClock,
+    BadChannel,
+    BadPan,
+    FlashBusy,
+    BadMirror,
+    BadLed,
+    BadParameter,
+    LargeResp,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for SndEfwStatus {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SndEfwStatus::{}", match *self {
+            SndEfwStatus::Ok => "Ok",
+            SndEfwStatus::Bad => "Bad",
+            SndEfwStatus::BadCommand => "BadCommand",
+            SndEfwStatus::CommErr => "CommErr",
+            SndEfwStatus::BadQuadCount => "BadQuadCount",
+            SndEfwStatus::Unsupported => "Unsupported",
+            SndEfwStatus::Timeout => "Timeout",
+            SndEfwStatus::DspTimeout => "DspTimeout",
+            SndEfwStatus::BadRate => "BadRate",
+            SndEfwStatus::BadClock => "BadClock",
+            SndEfwStatus::BadChannel => "BadChannel",
+            SndEfwStatus::BadPan => "BadPan",
+            SndEfwStatus::FlashBusy => "FlashBusy",
+            SndEfwStatus::BadMirror => "BadMirror",
+            SndEfwStatus::BadLed => "BadLed",
+            SndEfwStatus::BadParameter => "BadParameter",
+            SndEfwStatus::LargeResp => "LargeResp",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for SndEfwStatus {
+    type GlibType = hinawa_sys::HinawaSndEfwStatus;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaSndEfwStatus {
+        match *self {
+            SndEfwStatus::Ok => hinawa_sys::HINAWA_SND_EFW_STATUS_OK,
+            SndEfwStatus::Bad => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD,
+            SndEfwStatus::BadCommand => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_COMMAND,
+            SndEfwStatus::CommErr => hinawa_sys::HINAWA_SND_EFW_STATUS_COMM_ERR,
+            SndEfwStatus::BadQuadCount => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_QUAD_COUNT,
+            SndEfwStatus::Unsupported => hinawa_sys::HINAWA_SND_EFW_STATUS_UNSUPPORTED,
+            SndEfwStatus::Timeout => hinawa_sys::HINAWA_SND_EFW_STATUS_TIMEOUT,
+            SndEfwStatus::DspTimeout => hinawa_sys::HINAWA_SND_EFW_STATUS_DSP_TIMEOUT,
+            SndEfwStatus::BadRate => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_RATE,
+            SndEfwStatus::BadClock => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_CLOCK,
+            SndEfwStatus::BadChannel => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_CHANNEL,
+            SndEfwStatus::BadPan => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_PAN,
+            SndEfwStatus::FlashBusy => hinawa_sys::HINAWA_SND_EFW_STATUS_FLASH_BUSY,
+            SndEfwStatus::BadMirror => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_MIRROR,
+            SndEfwStatus::BadLed => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_LED,
+            SndEfwStatus::BadParameter => hinawa_sys::HINAWA_SND_EFW_STATUS_BAD_PARAMETER,
+            SndEfwStatus::LargeResp => hinawa_sys::HINAWA_SND_EFW_STATUS_LARGE_RESP,
+            SndEfwStatus::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaSndEfwStatus> for SndEfwStatus {
+    fn from_glib(value: hinawa_sys::HinawaSndEfwStatus) -> Self {
+        match value {
+            0 => SndEfwStatus::Ok,
+            1 => SndEfwStatus::Bad,
+            2 => SndEfwStatus::BadCommand,
+            3 => SndEfwStatus::CommErr,
+            4 => SndEfwStatus::BadQuadCount,
+            5 => SndEfwStatus::Unsupported,
+            6 => SndEfwStatus::Timeout,
+            7 => SndEfwStatus::DspTimeout,
+            8 => SndEfwStatus::BadRate,
+            9 => SndEfwStatus::BadClock,
+            10 => SndEfwStatus::BadChannel,
+            11 => SndEfwStatus::BadPan,
+            12 => SndEfwStatus::FlashBusy,
+            13 => SndEfwStatus::BadMirror,
+            14 => SndEfwStatus::BadLed,
+            15 => SndEfwStatus::BadParameter,
+            16 => SndEfwStatus::LargeResp,
+            value => SndEfwStatus::__Unknown(value),
+        }
+    }
+}
+
+impl StaticType for SndEfwStatus {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_snd_efw_status_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for SndEfwStatus {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for SndEfwStatus {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for SndEfwStatus {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+pub enum SndUnitError {
+    Disconnected,
+    Used,
+    Opened,
+    NotOpened,
+    Locked,
+    Unlocked,
+    WrongClass,
+    Failed,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for SndUnitError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SndUnitError::{}", match *self {
+            SndUnitError::Disconnected => "Disconnected",
+            SndUnitError::Used => "Used",
+            SndUnitError::Opened => "Opened",
+            SndUnitError::NotOpened => "NotOpened",
+            SndUnitError::Locked => "Locked",
+            SndUnitError::Unlocked => "Unlocked",
+            SndUnitError::WrongClass => "WrongClass",
+            SndUnitError::Failed => "Failed",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for SndUnitError {
+    type GlibType = hinawa_sys::HinawaSndUnitError;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaSndUnitError {
+        match *self {
+            SndUnitError::Disconnected => hinawa_sys::HINAWA_SND_UNIT_ERROR_DISCONNECTED,
+            SndUnitError::Used => hinawa_sys::HINAWA_SND_UNIT_ERROR_USED,
+            SndUnitError::Opened => hinawa_sys::HINAWA_SND_UNIT_ERROR_OPENED,
+            SndUnitError::NotOpened => hinawa_sys::HINAWA_SND_UNIT_ERROR_NOT_OPENED,
+            SndUnitError::Locked => hinawa_sys::HINAWA_SND_UNIT_ERROR_LOCKED,
+            SndUnitError::Unlocked => hinawa_sys::HINAWA_SND_UNIT_ERROR_UNLOCKED,
+            SndUnitError::WrongClass => hinawa_sys::HINAWA_SND_UNIT_ERROR_WRONG_CLASS,
+            SndUnitError::Failed => hinawa_sys::HINAWA_SND_UNIT_ERROR_FAILED,
+            SndUnitError::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaSndUnitError> for SndUnitError {
+    fn from_glib(value: hinawa_sys::HinawaSndUnitError) -> Self {
+        match value {
+            0 => SndUnitError::Disconnected,
+            1 => SndUnitError::Used,
+            2 => SndUnitError::Opened,
+            3 => SndUnitError::NotOpened,
+            4 => SndUnitError::Locked,
+            5 => SndUnitError::Unlocked,
+            6 => SndUnitError::WrongClass,
+            7 => SndUnitError::Failed,
+            value => SndUnitError::__Unknown(value),
+        }
+    }
+}
+
+impl ErrorDomain for SndUnitError {
+    fn domain() -> Quark {
+        unsafe { from_glib(hinawa_sys::hinawa_snd_unit_error_quark()) }
+    }
+
+    fn code(self) -> i32 {
+        self.to_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        match code {
+            0 => Some(SndUnitError::Disconnected),
+            1 => Some(SndUnitError::Used),
+            2 => Some(SndUnitError::Opened),
+            3 => Some(SndUnitError::NotOpened),
+            4 => Some(SndUnitError::Locked),
+            5 => Some(SndUnitError::Unlocked),
+            6 => Some(SndUnitError::WrongClass),
+            7 => Some(SndUnitError::Failed),
+            _ => Some(SndUnitError::Failed),
+        }
+    }
+}
+
+impl StaticType for SndUnitError {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_snd_unit_error_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for SndUnitError {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for SndUnitError {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for SndUnitError {
     unsafe fn set_value(value: &mut Value, this: &Self) {
         gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }

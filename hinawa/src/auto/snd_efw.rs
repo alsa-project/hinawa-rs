@@ -7,6 +7,7 @@ use glib::object::IsA;
 use glib::translate::*;
 use hinawa_sys;
 use std::fmt;
+use std::mem;
 use std::ptr;
 use SndUnit;
 
@@ -36,6 +37,8 @@ pub const NONE_SND_EFW: Option<&SndEfw> = None;
 
 pub trait SndEfwExt: 'static {
     fn open(&self, path: &str) -> Result<(), glib::Error>;
+
+    fn transaction_async(&self, category: u32, command: u32, args: &[u32]) -> Result<u32, glib::Error>;
 }
 
 impl<O: IsA<SndEfw>> SndEfwExt for O {
@@ -44,6 +47,17 @@ impl<O: IsA<SndEfw>> SndEfwExt for O {
             let mut error = ptr::null_mut();
             let _ = hinawa_sys::hinawa_snd_efw_open(self.as_ref().to_glib_none().0, path.to_glib_none().0, &mut error);
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+
+    fn transaction_async(&self, category: u32, command: u32, args: &[u32]) -> Result<u32, glib::Error> {
+        let arg_count = args.len() as usize;
+        unsafe {
+            let mut resp_seqnum = mem::MaybeUninit::uninit();
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_snd_efw_transaction_async(self.as_ref().to_glib_none().0, category, command, args.to_glib_none().0, arg_count, resp_seqnum.as_mut_ptr(), &mut error);
+            let resp_seqnum = resp_seqnum.assume_init();
+            if error.is_null() { Ok(resp_seqnum) } else { Err(from_glib_full(error)) }
         }
     }
 }

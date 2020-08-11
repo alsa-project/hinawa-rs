@@ -9,6 +9,11 @@ generate = [
     "Hinawa.FwRcode",
     "Hinawa.FwTcode",
     "Hinawa.SndUnitType",
+    "Hinawa.FwNodeError",
+    "Hinawa.FwFcpError",
+    "Hinawa.SndUnitError",
+    "Hinawa.SndDiceError",
+    "Hinawa.SndEfwStatus",
     "Hinawa.SndDice",
     "Hinawa.SndMotu",
     "Hinawa.SndDg00x",
@@ -32,10 +37,25 @@ manual_traits = ["FwNodeExtManual"]
 name = "Hinawa.FwReq"
 status = "generate"
 manual_traits = ["FwReqExtManual"]
+    [[object.signal]]
+    pattern = "responded"
+    ignore = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.function]]
+    pattern = "transaction_async"
+    ignore = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.function]]
+    pattern = "transaction_sync"
+    ignore = true
+    doc_trait_name = "FwReqExtManual"
     [[object.function]]
     pattern = "transaction"
     ignore = true
     doc_trait_name = "FwReqExtManual"
+    [[object.function]]
+    pattern = "error_quark"
+    ignore = true
 
 [[object]]
 name = "Hinawa.FwResp"
@@ -51,7 +71,15 @@ name = "Hinawa.FwFcp"
 status = "generate"
 manual_traits = ["FwFcpExtManual"]
     [[object.function]]
+    pattern = "avc_transaction"
+    ignore = true
+    doc_trait_name = "FwFcpExtManual"
+    [[object.function]]
     pattern = "transaction"
+    ignore = true
+    doc_trait_name = "FwFcpExtManual"
+    [[object.signal]]
+    pattern = "responded"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
 
@@ -69,9 +97,20 @@ name = "Hinawa.SndEfw"
 status = "generate"
 manual_traits = ["SndEfwExtManual"]
     [[object.function]]
+    pattern = "transaction_sync"
+    ignore = true
+    doc_trait_name = "SndEfwExtManual"
+    [[object.function]]
     pattern = "transaction"
     ignore = true
     doc_trait_name = "SndEfwExtManual"
+    [[object.signal]]
+    pattern = "responded"
+    ignore = true
+    doc_trait_name = "SndEfwExtManual"
+    [[object.function]]
+    pattern = "error_quark"
+    ignore = true
 
 [[object]]
 name = "Hinawa.SndTscm"
