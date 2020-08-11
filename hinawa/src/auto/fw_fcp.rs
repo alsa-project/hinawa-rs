@@ -47,6 +47,8 @@ pub const NONE_FW_FCP: Option<&FwFcp> = None;
 pub trait FwFcpExt: 'static {
     fn bind<P: IsA<FwNode>>(&self, node: &P) -> Result<(), glib::Error>;
 
+    fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error>;
+
     fn unbind(&self);
 
     fn get_property_is_bound(&self) -> bool;
@@ -65,6 +67,15 @@ impl<O: IsA<FwFcp>> FwFcpExt for O {
         unsafe {
             let mut error = ptr::null_mut();
             let _ = hinawa_sys::hinawa_fw_fcp_bind(self.as_ref().to_glib_none().0, node.as_ref().to_glib_none().0, &mut error);
+            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+
+    fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error> {
+        let cmd_size = cmd.len() as usize;
+        unsafe {
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_fw_fcp_command(self.as_ref().to_glib_none().0, cmd.to_glib_none().0, cmd_size, timeout_ms, &mut error);
             if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
         }
     }

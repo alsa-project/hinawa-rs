@@ -18,6 +18,16 @@ use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
 use glib::{gboolean, gconstpointer, gpointer, GType};
 
 // Enums
+pub type HinawaFwFcpError = c_int;
+pub const HINAWA_FW_FCP_ERROR_TIMEOUT: HinawaFwFcpError = 0;
+pub const HINAWA_FW_FCP_ERROR_LARGE_RESP: HinawaFwFcpError = 1;
+
+pub type HinawaFwNodeError = c_int;
+pub const HINAWA_FW_NODE_ERROR_DISCONNECTED: HinawaFwNodeError = 0;
+pub const HINAWA_FW_NODE_ERROR_OPENED: HinawaFwNodeError = 1;
+pub const HINAWA_FW_NODE_ERROR_NOT_OPENED: HinawaFwNodeError = 2;
+pub const HINAWA_FW_NODE_ERROR_FAILED: HinawaFwNodeError = 3;
+
 pub type HinawaFwRcode = c_int;
 pub const HINAWA_FW_RCODE_COMPLETE: HinawaFwRcode = 0;
 pub const HINAWA_FW_RCODE_CONFLICT_ERROR: HinawaFwRcode = 4;
@@ -29,6 +39,7 @@ pub const HINAWA_FW_RCODE_CANCELLED: HinawaFwRcode = 17;
 pub const HINAWA_FW_RCODE_BUSY: HinawaFwRcode = 18;
 pub const HINAWA_FW_RCODE_GENERATION: HinawaFwRcode = 19;
 pub const HINAWA_FW_RCODE_NO_ACK: HinawaFwRcode = 20;
+pub const HINAWA_FW_RCODE_INVALID: HinawaFwRcode = 21;
 
 pub type HinawaFwTcode = c_int;
 pub const HINAWA_FW_TCODE_WRITE_QUADLET_REQUEST: HinawaFwTcode = 0;
@@ -50,6 +61,38 @@ pub const HINAWA_FW_TCODE_LOCK_BOUNDED_ADD: HinawaFwTcode = 21;
 pub const HINAWA_FW_TCODE_LOCK_WRAP_ADD: HinawaFwTcode = 22;
 pub const HINAWA_FW_TCODE_LOCK_VENDOR_DEPENDENT: HinawaFwTcode = 23;
 
+pub type HinawaSndDiceError = c_int;
+pub const HINAWA_SND_DICE_ERROR_TIMEOUT: HinawaSndDiceError = 0;
+
+pub type HinawaSndEfwStatus = c_int;
+pub const HINAWA_SND_EFW_STATUS_OK: HinawaSndEfwStatus = 0;
+pub const HINAWA_SND_EFW_STATUS_BAD: HinawaSndEfwStatus = 1;
+pub const HINAWA_SND_EFW_STATUS_BAD_COMMAND: HinawaSndEfwStatus = 2;
+pub const HINAWA_SND_EFW_STATUS_COMM_ERR: HinawaSndEfwStatus = 3;
+pub const HINAWA_SND_EFW_STATUS_BAD_QUAD_COUNT: HinawaSndEfwStatus = 4;
+pub const HINAWA_SND_EFW_STATUS_UNSUPPORTED: HinawaSndEfwStatus = 5;
+pub const HINAWA_SND_EFW_STATUS_TIMEOUT: HinawaSndEfwStatus = 6;
+pub const HINAWA_SND_EFW_STATUS_DSP_TIMEOUT: HinawaSndEfwStatus = 7;
+pub const HINAWA_SND_EFW_STATUS_BAD_RATE: HinawaSndEfwStatus = 8;
+pub const HINAWA_SND_EFW_STATUS_BAD_CLOCK: HinawaSndEfwStatus = 9;
+pub const HINAWA_SND_EFW_STATUS_BAD_CHANNEL: HinawaSndEfwStatus = 10;
+pub const HINAWA_SND_EFW_STATUS_BAD_PAN: HinawaSndEfwStatus = 11;
+pub const HINAWA_SND_EFW_STATUS_FLASH_BUSY: HinawaSndEfwStatus = 12;
+pub const HINAWA_SND_EFW_STATUS_BAD_MIRROR: HinawaSndEfwStatus = 13;
+pub const HINAWA_SND_EFW_STATUS_BAD_LED: HinawaSndEfwStatus = 14;
+pub const HINAWA_SND_EFW_STATUS_BAD_PARAMETER: HinawaSndEfwStatus = 15;
+pub const HINAWA_SND_EFW_STATUS_LARGE_RESP: HinawaSndEfwStatus = 16;
+
+pub type HinawaSndUnitError = c_int;
+pub const HINAWA_SND_UNIT_ERROR_DISCONNECTED: HinawaSndUnitError = 0;
+pub const HINAWA_SND_UNIT_ERROR_USED: HinawaSndUnitError = 1;
+pub const HINAWA_SND_UNIT_ERROR_OPENED: HinawaSndUnitError = 2;
+pub const HINAWA_SND_UNIT_ERROR_NOT_OPENED: HinawaSndUnitError = 3;
+pub const HINAWA_SND_UNIT_ERROR_LOCKED: HinawaSndUnitError = 4;
+pub const HINAWA_SND_UNIT_ERROR_UNLOCKED: HinawaSndUnitError = 5;
+pub const HINAWA_SND_UNIT_ERROR_WRONG_CLASS: HinawaSndUnitError = 6;
+pub const HINAWA_SND_UNIT_ERROR_FAILED: HinawaSndUnitError = 7;
+
 pub type HinawaSndUnitType = c_int;
 pub const HINAWA_SND_UNIT_TYPE_DICE: HinawaSndUnitType = 1;
 pub const HINAWA_SND_UNIT_TYPE_FIREWORKS: HinawaSndUnitType = 2;
@@ -65,12 +108,14 @@ pub const HINAWA_SND_UNIT_TYPE_FIREFACE: HinawaSndUnitType = 8;
 #[derive(Copy, Clone)]
 pub struct HinawaFwFcpClass {
     pub parent_class: HinawaFwRespClass,
+    pub responded: Option<unsafe extern "C" fn(*mut HinawaFwFcp, *const u8, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaFwFcpClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwFcpClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
+         .field("responded", &self.responded)
          .finish()
     }
 }
@@ -107,12 +152,14 @@ pub type HinawaFwNodePrivate = *mut _HinawaFwNodePrivate;
 #[derive(Copy, Clone)]
 pub struct HinawaFwReqClass {
     pub parent_class: gobject::GObjectClass,
+    pub responded: Option<unsafe extern "C" fn(*mut HinawaFwReq, HinawaFwRcode, *const u8, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaFwReqClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwReqClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
+         .field("responded", &self.responded)
          .finish()
     }
 }
@@ -184,12 +231,14 @@ pub type HinawaSndDicePrivate = *mut _HinawaSndDicePrivate;
 #[derive(Copy, Clone)]
 pub struct HinawaSndEfwClass {
     pub parent_class: HinawaSndUnitClass,
+    pub responded: Option<unsafe extern "C" fn(*mut HinawaSndEfw, HinawaSndEfwStatus, c_uint, c_uint, c_uint, *const u32, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaSndEfwClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndEfwClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
+         .field("responded", &self.responded)
          .finish()
     }
 }
@@ -426,6 +475,18 @@ impl ::std::fmt::Debug for HinawaSndUnit {
 extern "C" {
 
     //=========================================================================
+    // HinawaFwFcpError
+    //=========================================================================
+    pub fn hinawa_fw_fcp_error_get_type() -> GType;
+    pub fn hinawa_fw_fcp_error_quark() -> glib::GQuark;
+
+    //=========================================================================
+    // HinawaFwNodeError
+    //=========================================================================
+    pub fn hinawa_fw_node_error_get_type() -> GType;
+    pub fn hinawa_fw_node_error_quark() -> glib::GQuark;
+
+    //=========================================================================
     // HinawaFwRcode
     //=========================================================================
     pub fn hinawa_fw_rcode_get_type() -> GType;
@@ -434,6 +495,23 @@ extern "C" {
     // HinawaFwTcode
     //=========================================================================
     pub fn hinawa_fw_tcode_get_type() -> GType;
+
+    //=========================================================================
+    // HinawaSndDiceError
+    //=========================================================================
+    pub fn hinawa_snd_dice_error_get_type() -> GType;
+    pub fn hinawa_snd_dice_error_quark() -> glib::GQuark;
+
+    //=========================================================================
+    // HinawaSndEfwStatus
+    //=========================================================================
+    pub fn hinawa_snd_efw_status_get_type() -> GType;
+
+    //=========================================================================
+    // HinawaSndUnitError
+    //=========================================================================
+    pub fn hinawa_snd_unit_error_get_type() -> GType;
+    pub fn hinawa_snd_unit_error_quark() -> glib::GQuark;
 
     //=========================================================================
     // HinawaSndUnitType
@@ -445,7 +523,9 @@ extern "C" {
     //=========================================================================
     pub fn hinawa_fw_fcp_get_type() -> GType;
     pub fn hinawa_fw_fcp_new() -> *mut HinawaFwFcp;
+    pub fn hinawa_fw_fcp_avc_transaction(self_: *mut HinawaFwFcp, cmd: *const u8, cmd_size: size_t, resp: *const *mut u8, resp_size: *mut size_t, timeout_ms: c_uint, error: *mut *mut glib::GError);
     pub fn hinawa_fw_fcp_bind(self_: *mut HinawaFwFcp, node: *mut HinawaFwNode, error: *mut *mut glib::GError);
+    pub fn hinawa_fw_fcp_command(self_: *mut HinawaFwFcp, cmd: *const u8, cmd_size: size_t, timeout_ms: c_uint, error: *mut *mut glib::GError);
     pub fn hinawa_fw_fcp_transaction(self_: *mut HinawaFwFcp, req_frame: *const u8, req_frame_size: size_t, resp_frame: *const *mut u8, resp_frame_size: *mut size_t, error: *mut *mut glib::GError);
     pub fn hinawa_fw_fcp_unbind(self_: *mut HinawaFwFcp);
 
@@ -463,7 +543,10 @@ extern "C" {
     //=========================================================================
     pub fn hinawa_fw_req_get_type() -> GType;
     pub fn hinawa_fw_req_new() -> *mut HinawaFwReq;
+    pub fn hinawa_fw_req_error_quark() -> glib::GQuark;
     pub fn hinawa_fw_req_transaction(self_: *mut HinawaFwReq, node: *mut HinawaFwNode, tcode: HinawaFwTcode, addr: u64, length: size_t, frame: *const *mut u8, frame_size: *mut size_t, error: *mut *mut glib::GError);
+    pub fn hinawa_fw_req_transaction_async(self_: *mut HinawaFwReq, node: *mut HinawaFwNode, tcode: HinawaFwTcode, addr: u64, length: size_t, frame: *const *mut u8, frame_size: *mut size_t, error: *mut *mut glib::GError);
+    pub fn hinawa_fw_req_transaction_sync(self_: *mut HinawaFwReq, node: *mut HinawaFwNode, tcode: HinawaFwTcode, addr: u64, length: size_t, frame: *const *mut u8, frame_size: *mut size_t, timeout_ms: c_uint, error: *mut *mut glib::GError);
 
     //=========================================================================
     // HinawaFwResp
@@ -495,8 +578,11 @@ extern "C" {
     //=========================================================================
     pub fn hinawa_snd_efw_get_type() -> GType;
     pub fn hinawa_snd_efw_new() -> *mut HinawaSndEfw;
+    pub fn hinawa_snd_efw_error_quark() -> glib::GQuark;
     pub fn hinawa_snd_efw_open(self_: *mut HinawaSndEfw, path: *mut c_char, error: *mut *mut glib::GError);
     pub fn hinawa_snd_efw_transaction(self_: *mut HinawaSndEfw, category: c_uint, command: c_uint, args: *const u32, arg_count: size_t, params: *const *mut u32, param_count: *mut size_t, error: *mut *mut glib::GError);
+    pub fn hinawa_snd_efw_transaction_async(self_: *mut HinawaSndEfw, category: c_uint, command: c_uint, args: *const u32, arg_count: size_t, resp_seqnum: *mut u32, error: *mut *mut glib::GError);
+    pub fn hinawa_snd_efw_transaction_sync(self_: *mut HinawaSndEfw, category: c_uint, command: c_uint, args: *const u32, arg_count: size_t, params: *const *mut u32, param_count: *mut size_t, timeout_ms: c_uint, error: *mut *mut glib::GError);
 
     //=========================================================================
     // HinawaSndMotu
@@ -528,6 +614,9 @@ extern "C" {
     // Other functions
     //=========================================================================
     pub fn hinawa_sigs_marshal_ENUM__ENUM(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
+    pub fn hinawa_sigs_marshal_VOID__ENUM_POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
+    pub fn hinawa_sigs_marshal_VOID__ENUM_UINT_UINT_UINT_POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
+    pub fn hinawa_sigs_marshal_VOID__POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
     pub fn hinawa_sigs_marshal_VOID__UINT_UINT_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
 
 }
