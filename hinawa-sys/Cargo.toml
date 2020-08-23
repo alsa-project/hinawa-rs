@@ -11,10 +11,11 @@ repository = "https://github.com/alsa-project/hinawa-rs/"
 features = ["dox"]
 [package.metadata.system-deps.hinawa]
 name = "hinawa"
-version = "2.1"
+version = "2.2"
 
 [package.metadata.system-deps.hinawa.feature-versions]
 v2_1 = "2.1"
+v2_2 = "2.2"
 
 [lib]
 name = "hinawa_sys"
@@ -35,3 +36,4 @@ tempfile = "3"
 [features]
 dox = []
 v2_1 = []
+v2_2 = []

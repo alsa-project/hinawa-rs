@@ -41,6 +41,11 @@ pub const HINAWA_FW_RCODE_GENERATION: HinawaFwRcode = 19;
 pub const HINAWA_FW_RCODE_NO_ACK: HinawaFwRcode = 20;
 pub const HINAWA_FW_RCODE_INVALID: HinawaFwRcode = 21;
 
+pub type HinawaFwRespError = c_int;
+pub const HINAWA_FW_RESP_ERROR_FAILED: HinawaFwRespError = 0;
+pub const HINAWA_FW_RESP_ERROR_RESERVED: HinawaFwRespError = 1;
+pub const HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED: HinawaFwRespError = 2;
+
 pub type HinawaFwTcode = c_int;
 pub const HINAWA_FW_TCODE_WRITE_QUADLET_REQUEST: HinawaFwTcode = 0;
 pub const HINAWA_FW_TCODE_WRITE_BLOCK_REQUEST: HinawaFwTcode = 1;
@@ -174,6 +179,7 @@ pub type HinawaFwReqPrivate = *mut _HinawaFwReqPrivate;
 pub struct HinawaFwRespClass {
     pub parent_class: gobject::GObjectClass,
     pub requested: Option<unsafe extern "C" fn(*mut HinawaFwResp, HinawaFwTcode) -> HinawaFwRcode>,
+    pub requested2: Option<unsafe extern "C" fn(*mut HinawaFwResp, HinawaFwTcode, u64, u32, u32, u32, u32, *const u8, c_uint) -> HinawaFwRcode>,
 }
 
 impl ::std::fmt::Debug for HinawaFwRespClass {
@@ -181,6 +187,7 @@ impl ::std::fmt::Debug for HinawaFwRespClass {
         f.debug_struct(&format!("HinawaFwRespClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
          .field("requested", &self.requested)
+         .field("requested2", &self.requested2)
          .finish()
     }
 }
@@ -492,6 +499,12 @@ extern "C" {
     pub fn hinawa_fw_rcode_get_type() -> GType;
 
     //=========================================================================
+    // HinawaFwRespError
+    //=========================================================================
+    pub fn hinawa_fw_resp_error_get_type() -> GType;
+    pub fn hinawa_fw_resp_error_quark() -> glib::GQuark;
+
+    //=========================================================================
     // HinawaFwTcode
     //=========================================================================
     pub fn hinawa_fw_tcode_get_type() -> GType;
@@ -614,6 +627,7 @@ extern "C" {
     // Other functions
     //=========================================================================
     pub fn hinawa_sigs_marshal_ENUM__ENUM(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
+    pub fn hinawa_sigs_marshal_ENUM__ENUM_UINT64_UINT_UINT_UINT_UINT_POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
     pub fn hinawa_sigs_marshal_VOID__ENUM_POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
     pub fn hinawa_sigs_marshal_VOID__ENUM_UINT_UINT_UINT_POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);
     pub fn hinawa_sigs_marshal_VOID__POINTER_UINT(closure: *mut gobject::GClosure, return_value: *mut gobject::GValue, n_param_values: c_uint, param_values: *const gobject::GValue, invocation_hint: gpointer, marshal_data: gpointer);

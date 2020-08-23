@@ -54,6 +54,7 @@ pub trait FwRespExt: 'static {
 
     fn get_property_is_reserved(&self) -> bool;
 
+    #[deprecated]
     fn connect_requested<F: Fn(&Self, FwTcode) -> FwRcode + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;

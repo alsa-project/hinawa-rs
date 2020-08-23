@@ -304,6 +304,97 @@ impl SetValue for FwRcode {
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
+pub enum FwRespError {
+    Failed,
+    Reserved,
+    AddrSpaceUsed,
+    #[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl fmt::Display for FwRespError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "FwRespError::{}", match *self {
+            FwRespError::Failed => "Failed",
+            FwRespError::Reserved => "Reserved",
+            FwRespError::AddrSpaceUsed => "AddrSpaceUsed",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl ToGlib for FwRespError {
+    type GlibType = hinawa_sys::HinawaFwRespError;
+
+    fn to_glib(&self) -> hinawa_sys::HinawaFwRespError {
+        match *self {
+            FwRespError::Failed => hinawa_sys::HINAWA_FW_RESP_ERROR_FAILED,
+            FwRespError::Reserved => hinawa_sys::HINAWA_FW_RESP_ERROR_RESERVED,
+            FwRespError::AddrSpaceUsed => hinawa_sys::HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED,
+            FwRespError::__Unknown(value) => value
+        }
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<hinawa_sys::HinawaFwRespError> for FwRespError {
+    fn from_glib(value: hinawa_sys::HinawaFwRespError) -> Self {
+        match value {
+            0 => FwRespError::Failed,
+            1 => FwRespError::Reserved,
+            2 => FwRespError::AddrSpaceUsed,
+            value => FwRespError::__Unknown(value),
+        }
+    }
+}
+
+impl ErrorDomain for FwRespError {
+    fn domain() -> Quark {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_resp_error_quark()) }
+    }
+
+    fn code(self) -> i32 {
+        self.to_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        match code {
+            0 => Some(FwRespError::Failed),
+            1 => Some(FwRespError::Reserved),
+            2 => Some(FwRespError::AddrSpaceUsed),
+            _ => Some(FwRespError::Failed),
+        }
+    }
+}
+
+impl StaticType for FwRespError {
+    fn static_type() -> Type {
+        unsafe { from_glib(hinawa_sys::hinawa_fw_resp_error_get_type()) }
+    }
+}
+
+impl<'a> FromValueOptional<'a> for FwRespError {
+    unsafe fn from_value_optional(value: &Value) -> Option<Self> {
+        Some(FromValue::from_value(value))
+    }
+}
+
+impl<'a> FromValue<'a> for FwRespError {
+    unsafe fn from_value(value: &Value) -> Self {
+        from_glib(gobject_sys::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl SetValue for FwRespError {
+    unsafe fn set_value(value: &mut Value, this: &Self) {
+        gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
 pub enum FwTcode {
     WriteQuadletRequest,
     WriteBlockRequest,

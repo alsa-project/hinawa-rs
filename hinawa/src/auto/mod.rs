@@ -46,6 +46,7 @@ mod enums;
 pub use self::enums::FwFcpError;
 pub use self::enums::FwNodeError;
 pub use self::enums::FwRcode;
+pub use self::enums::FwRespError;
 pub use self::enums::FwTcode;
 pub use self::enums::SndDiceError;
 pub use self::enums::SndEfwStatus;

@@ -10,6 +10,7 @@ generate = [
     "Hinawa.FwTcode",
     "Hinawa.SndUnitType",
     "Hinawa.FwNodeError",
+    "Hinawa.FwRespError",
     "Hinawa.FwFcpError",
     "Hinawa.SndUnitError",
     "Hinawa.SndDiceError",
@@ -63,6 +64,10 @@ status = "generate"
 manual_traits = ["FwRespExtManual"]
     [[object.function]]
     pattern = "get_req_frame"
+    ignore = true
+    doc_trait_name = "FwRespExtManual"
+    [[object.signal]]
+    pattern = "requested2"
     ignore = true
     doc_trait_name = "FwRespExtManual"
 
