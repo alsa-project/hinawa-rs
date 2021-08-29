@@ -41,10 +41,13 @@ impl Default for FwReq {
 pub const NONE_FW_REQ: Option<&FwReq> = None;
 
 pub trait FwReqExt: 'static {
+    #[deprecated]
     fn get_property_timeout(&self) -> u32;
 
+    #[deprecated]
     fn set_property_timeout(&self, timeout: u32);
 
+    #[deprecated]
     fn connect_property_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 

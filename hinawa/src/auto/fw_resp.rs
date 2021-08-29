@@ -50,14 +50,24 @@ pub trait FwRespExt: 'static {
 
     fn reserve<P: IsA<FwNode>>(&self, node: &P, addr: u64, width: u32) -> Result<(), glib::Error>;
 
+    fn reserve_within_region<P: IsA<FwNode>>(&self, node: &P, region_start: u64, region_end: u64, width: u32) -> Result<(), glib::Error>;
+
     fn set_resp_frame(&self, frame: &[u8]);
 
     fn get_property_is_reserved(&self) -> bool;
+
+    fn get_property_offset(&self) -> u64;
+
+    fn get_property_width(&self) -> u32;
 
     #[deprecated]
     fn connect_requested<F: Fn(&Self, FwTcode) -> FwRcode + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    fn connect_property_offset_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    fn connect_property_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<FwResp>> FwRespExt for O {
@@ -75,6 +85,14 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 
+    fn reserve_within_region<P: IsA<FwNode>>(&self, node: &P, region_start: u64, region_end: u64, width: u32) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let _ = hinawa_sys::hinawa_fw_resp_reserve_within_region(self.as_ref().to_glib_none().0, node.as_ref().to_glib_none().0, region_start, region_end, width, &mut error);
+            if error.is_null() { Ok(()) } else { Err(from_glib_full(error)) }
+        }
+    }
+
     fn set_resp_frame(&self, frame: &[u8]) {
         let length = frame.len() as usize;
         unsafe {
@@ -87,6 +105,22 @@ impl<O: IsA<FwResp>> FwRespExt for O {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
             gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"is-reserved\0".as_ptr() as *const _, value.to_glib_none_mut().0);
             value.get().expect("Return Value for property `is-reserved` getter").unwrap()
+        }
+    }
+
+    fn get_property_offset(&self) -> u64 {
+        unsafe {
+            let mut value = Value::from_type(<u64 as StaticType>::static_type());
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"offset\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `offset` getter").unwrap()
+        }
+    }
+
+    fn get_property_width(&self) -> u32 {
+        unsafe {
+            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"width\0".as_ptr() as *const _, value.to_glib_none_mut().0);
+            value.get().expect("Return Value for property `width` getter").unwrap()
         }
     }
 
@@ -115,6 +149,34 @@ impl<O: IsA<FwResp>> FwRespExt for O {
             let f: Box_<F> = Box_::new(f);
             connect_raw(self.as_ptr() as *mut _, b"notify::is-reserved\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(notify_is_reserved_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
+
+    fn connect_property_offset_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_offset_trampoline<P, F: Fn(&P) + 'static>(this: *mut hinawa_sys::HinawaFwResp, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<FwResp>
+        {
+            let f: &F = &*(f as *const F);
+            f(&FwResp::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::offset\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_offset_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
+
+    fn connect_property_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_width_trampoline<P, F: Fn(&P) + 'static>(this: *mut hinawa_sys::HinawaFwResp, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
+            where P: IsA<FwResp>
+        {
+            let f: &F = &*(f as *const F);
+            f(&FwResp::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"notify::width\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(notify_width_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
         }
     }
 }

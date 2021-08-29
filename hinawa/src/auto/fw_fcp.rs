@@ -53,12 +53,15 @@ pub trait FwFcpExt: 'static {
 
     fn get_property_is_bound(&self) -> bool;
 
+    #[deprecated]
     fn get_property_timeout(&self) -> u32;
 
+    #[deprecated]
     fn set_property_timeout(&self, timeout: u32);
 
     fn connect_property_is_bound_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    #[deprecated]
     fn connect_property_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 

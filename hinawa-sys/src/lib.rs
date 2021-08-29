@@ -569,6 +569,7 @@ extern "C" {
     pub fn hinawa_fw_resp_get_req_frame(self_: *mut HinawaFwResp, frame: *mut *const u8, length: *mut size_t);
     pub fn hinawa_fw_resp_release(self_: *mut HinawaFwResp);
     pub fn hinawa_fw_resp_reserve(self_: *mut HinawaFwResp, node: *mut HinawaFwNode, addr: u64, width: c_uint, error: *mut *mut glib::GError);
+    pub fn hinawa_fw_resp_reserve_within_region(self_: *mut HinawaFwResp, node: *mut HinawaFwNode, region_start: u64, region_end: u64, width: c_uint, error: *mut *mut glib::GError);
     pub fn hinawa_fw_resp_set_resp_frame(self_: *mut HinawaFwResp, frame: *mut u8, length: size_t);
 
     //=========================================================================
