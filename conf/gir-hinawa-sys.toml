@@ -2,7 +2,7 @@
 work_mode = "sys"
 library = "Hinawa"
 version = "3.0"
-min_cfg_version = "2.2"
+min_cfg_version = "2.3"
 single_version_file = "."
 external_libraries = [
   "GLib",
