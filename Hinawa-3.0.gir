@@ -129,27 +129,27 @@ and/or use gtk-doc annotations.  -->
            glib:type-name="HinawaFwFcp"
            glib:get-type="hinawa_fw_fcp_get_type"
            glib:type-struct="FwFcpClass">
-      <source-position filename="../src/fw_fcp.h" line="66"/>
+      <source-position filename="../src/fw_fcp.h" line="68"/>
       <constructor name="new" c:identifier="hinawa_fw_fcp_new" version="1.3.">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="194">Instantiate #HinawaFwFcp object and return the instance.</doc>
-        <source-position filename="../src/fw_fcp.h" line="70"/>
+             line="210">Instantiate #HinawaFwFcp object and return the instance.</doc>
+        <source-position filename="../src/fw_fcp.h" line="72"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/fw_fcp.c"
-               line="199">an instance of #HinawaFwFcp.</doc>
+               line="215">an instance of #HinawaFwFcp.</doc>
           <type name="FwFcp" c:type="HinawaFwFcp*"/>
         </return-value>
       </constructor>
-      <virtual-method name="responded">
+      <virtual-method name="responded" version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.h"
              line="53">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
 protocol, and the process successfully reads the content of packet from ALSA
 Fireworks driver, the #HinawaFwFcpClass::responded signal handler is called with
 parameters of the response.</doc>
-        <source-position filename="../src/fw_fcp.h" line="65"/>
+        <source-position filename="../src/fw_fcp.h" line="67"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -183,11 +183,11 @@ parameters of the response.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="269">Finish the pair of AV/C command and response transactions. The timeout_ms parameter is
+             line="285">Finish the pair of AV/C command and response transactions. The timeout_ms parameter is
 used to wait for response transaction since the command transaction is initiated, ignoring
 #HinawaFwFcp:timeout property of instance. The timeout is not expanded in the case that AV/C
 INTERIM status is arrived, thus the caller should expand the timeout in advance for the case.</doc>
-        <source-position filename="../src/fw_fcp.h" line="84"/>
+        <source-position filename="../src/fw_fcp.h" line="86"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -195,13 +195,13 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="271">A #HinawaFwFcp.</doc>
+                 line="287">A #HinawaFwFcp.</doc>
             <type name="FwFcp" c:type="HinawaFwFcp*"/>
           </instance-parameter>
           <parameter name="cmd" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="272">An array with elements for request byte data. The value of
+                 line="288">An array with elements for request byte data. The value of
  this argument should point to the array and immutable.</doc>
             <array length="1" zero-terminated="0" c:type="const guint8*">
               <type name="guint8" c:type="guint8"/>
@@ -210,7 +210,7 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
           <parameter name="cmd_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="274">The size of array for request in byte unit.</doc>
+                 line="290">The size of array for request in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="resp"
@@ -219,7 +219,7 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="275">An array with elements for response byte data. Callers
+                 line="291">An array with elements for response byte data. Callers
   should give it for buffer with enough space against the request since this library
   performs no reallocation. Due to the reason, the value of this argument should point to
   the pointer to the array and immutable. The content of array is mutable.</doc>
@@ -233,23 +233,26 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="279">The size of array for response in byte unit. The value of this argument should point to
+                 line="295">The size of array for response in byte unit. The value of this argument should point to
        the numerical number and mutable.</doc>
             <type name="gsize" c:type="gsize*"/>
           </parameter>
           <parameter name="timeout_ms" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="281">The timeout to wait for response transaction since command transactions finishes.</doc>
+                 line="297">The timeout to wait for response transaction since command transactions finishes.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
       </method>
-      <method name="bind" c:identifier="hinawa_fw_fcp_bind" throws="1">
+      <method name="bind"
+              c:identifier="hinawa_fw_fcp_bind"
+              version="1.4"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="412">Start to listen to FCP responses.</doc>
-        <source-position filename="../src/fw_fcp.h" line="77"/>
+             line="428">Start to listen to FCP responses.</doc>
+        <source-position filename="../src/fw_fcp.h" line="79"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -257,13 +260,13 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="414">A #HinawaFwFcp.</doc>
+                 line="430">A #HinawaFwFcp.</doc>
             <type name="FwFcp" c:type="HinawaFwFcp*"/>
           </instance-parameter>
           <parameter name="node" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="415">A #HinawaFwNode.</doc>
+                 line="431">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </parameter>
         </parameters>
@@ -274,9 +277,9 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="207">Transfer command frame for FCP. When receiving response frame for FCP,
+             line="223">Transfer command frame for FCP. When receiving response frame for FCP,
 #HinawaFwFcp::responded signal is emitted.</doc>
-        <source-position filename="../src/fw_fcp.h" line="81"/>
+        <source-position filename="../src/fw_fcp.h" line="83"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -284,13 +287,13 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="209">A #HinawaFwFcp.</doc>
+                 line="225">A #HinawaFwFcp.</doc>
             <type name="FwFcp" c:type="HinawaFwFcp*"/>
           </instance-parameter>
           <parameter name="cmd" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="210">An array with elements for request byte data. The value of this
+                 line="226">An array with elements for request byte data. The value of this
  argument should point to the array and immutable.</doc>
             <array length="1" zero-terminated="0" c:type="const guint8*">
               <type name="guint8" c:type="guint8"/>
@@ -299,13 +302,13 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
           <parameter name="cmd_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="212">The size of array for request in byte unit.</doc>
+                 line="228">The size of array for request in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="timeout_ms" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="213">The timeout to wait for response subaction of transaction for command frame.</doc>
+                 line="229">The timeout to wait for response subaction of transaction for command frame.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -318,10 +321,10 @@ INTERIM status is arrived, thus the caller should expand the timeout in advance 
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="356">Finish the pair of command and response transactions for FCP. The value of #HinawaFwFcp:timeout
+             line="372">Finish the pair of command and response transactions for FCP. The value of #HinawaFwFcp:timeout
 property is used to wait for response transaction since the command transaction is initiated.</doc>
         <doc-deprecated xml:space="preserve">Use #hinawa_fw_fcp_avc_transaction(), instead.</doc-deprecated>
-        <source-position filename="../src/fw_fcp.h" line="72"/>
+        <source-position filename="../src/fw_fcp.h" line="74"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -329,13 +332,13 @@ property is used to wait for response transaction since the command transaction 
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="358">A #HinawaFwFcp.</doc>
+                 line="374">A #HinawaFwFcp.</doc>
             <type name="FwFcp" c:type="HinawaFwFcp*"/>
           </instance-parameter>
           <parameter name="req_frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="359">An array with elements for
+                 line="375">An array with elements for
        request byte data. The value of this argument should point to
        the array and immutable.</doc>
             <array length="1" zero-terminated="0" c:type="const guint8*">
@@ -345,7 +348,7 @@ property is used to wait for response transaction since the command transaction 
           <parameter name="req_frame_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="362">The size of array for request in byte unit.</doc>
+                 line="378">The size of array for request in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="resp_frame"
@@ -354,7 +357,7 @@ property is used to wait for response transaction since the command transaction 
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="363">An array with elements
+                 line="379">An array with elements
 	for response byte data. Callers should give it for buffer with
 	enough space against the request since this library performs no
 	reallocation. Due to the reason, the value of this argument
@@ -370,7 +373,7 @@ property is used to wait for response transaction since the command transaction 
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="369">The size of array for response in byte unit. The value of
+                 line="385">The size of array for response in byte unit. The value of
 	     this argument should point to the numerical number and
 	     mutable.</doc>
             <type name="gsize" c:type="gsize*"/>
@@ -380,8 +383,8 @@ property is used to wait for response transaction since the command transaction 
       <method name="unbind" c:identifier="hinawa_fw_fcp_unbind" version="1.4.">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="441">Stop to listen to FCP responses.</doc>
-        <source-position filename="../src/fw_fcp.h" line="79"/>
+             line="459">Stop to listen to FCP responses.</doc>
+        <source-position filename="../src/fw_fcp.h" line="81"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -389,18 +392,24 @@ property is used to wait for response transaction since the command transaction 
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="443">A #HinawaFwFcp.</doc>
+                 line="461">A #HinawaFwFcp.</doc>
             <type name="FwFcp" c:type="HinawaFwFcp*"/>
           </instance-parameter>
         </parameters>
       </method>
-      <property name="is-bound" transfer-ownership="none">
+      <property name="is-bound" version="2.0" transfer-ownership="none">
         <type name="gboolean" c:type="gboolean"/>
       </property>
       <property name="timeout"
+                deprecated="1"
+                deprecated-version="2.1"
                 writable="1"
                 construct="1"
                 transfer-ownership="none">
+        <doc xml:space="preserve"
+             filename="../src/fw_fcp.c"
+             line="149">Since 1.4</doc>
+        <doc-deprecated xml:space="preserve">Use timeout_ms parameter of #hinawa_fw_fcp_avc_transaction().</doc-deprecated>
         <type name="guint" c:type="guint"/>
       </property>
       <field name="parent_instance">
@@ -409,10 +418,10 @@ property is used to wait for response transaction since the command transaction 
       <field name="priv">
         <type name="FwFcpPrivate" c:type="HinawaFwFcpPrivate*"/>
       </field>
-      <glib:signal name="responded" when="last">
+      <glib:signal name="responded" when="last" version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="165">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
+             line="179">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
 protocol, and the process successfully reads the content of packet from ALSA
 Fireworks driver, the #HinawaFwFcp::responded signal handler is called with parameters
 of the response.</doc>
@@ -423,7 +432,7 @@ of the response.</doc>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="168">The array with elements for byte
+                 line="182">The array with elements for byte
         data of response for Function Control Protocol.</doc>
             <array length="1" zero-terminated="0" c:type="gpointer">
               <type name="guint8"/>
@@ -432,7 +441,7 @@ of the response.</doc>
           <parameter name="frame_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_fcp.c"
-                 line="170">The number of elements of the array.</doc>
+                 line="184">The number of elements of the array.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -441,13 +450,13 @@ of the response.</doc>
     <record name="FwFcpClass"
             c:type="HinawaFwFcpClass"
             glib:is-gtype-struct-for="FwFcp">
-      <source-position filename="../src/fw_fcp.h" line="66"/>
+      <source-position filename="../src/fw_fcp.h" line="68"/>
       <field name="parent_class">
         <type name="FwRespClass" c:type="HinawaFwRespClass"/>
       </field>
       <field name="responded">
         <callback name="responded">
-          <source-position filename="../src/fw_fcp.h" line="65"/>
+          <source-position filename="../src/fw_fcp.h" line="67"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -478,20 +487,21 @@ of the response.</doc>
       </field>
     </record>
     <enumeration name="FwFcpError"
+                 version="2.1"
                  glib:type-name="HinawaFwFcpError"
                  glib:get-type="hinawa_fw_fcp_error_get_type"
                  c:type="HinawaFwFcpError"
                  glib:error-domain="hinawa-fw-fcp-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="141">A set of error code for GError with domain which equals to #hinawa_fw_fcp_error_quark().</doc>
+           line="149">A set of error code for GError with domain which equals to #hinawa_fw_fcp_error_quark().</doc>
       <member name="timeout"
               value="0"
               c:identifier="HINAWA_FW_FCP_ERROR_TIMEOUT"
               glib:nick="timeout">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="143">The transaction is canceled due to response timeout.</doc>
+             line="151">The transaction is canceled due to response timeout.</doc>
       </member>
       <member name="large_resp"
               value="1"
@@ -499,16 +509,18 @@ of the response.</doc>
               glib:nick="large-resp">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="144">The size of response is larger than expected.</doc>
+             line="152">The size of response is larger than expected.</doc>
       </member>
-      <function name="quark" c:identifier="hinawa_fw_fcp_error_quark">
+      <function name="quark"
+                c:identifier="hinawa_fw_fcp_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
              line="25">Return the GQuark for error domain of GError which has code in #HinawaFwFcpError.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_fcp.c"
-               line="30">A #GQuark.</doc>
+               line="32">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
@@ -527,12 +539,12 @@ of the response.</doc>
       <constructor name="new" c:identifier="hinawa_fw_node_new" version="1.4.">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="240">Instantiate #HinawaFwNode object and return the instance.</doc>
+             line="279">Instantiate #HinawaFwNode object and return the instance.</doc>
         <source-position filename="../src/fw_node.h" line="76"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/fw_node.c"
-               line="245">an instance of #HinawaFwNode.</doc>
+               line="284">an instance of #HinawaFwNode.</doc>
           <type name="FwNode" c:type="HinawaFwNode*"/>
         </return-value>
       </constructor>
@@ -579,7 +591,7 @@ the #HinawaFwNodeClass::disconnected handler is called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="458">Create Gsource for GMainContext to dispatch events for the node on IEEE 1394
+             line="497">Create Gsource for GMainContext to dispatch events for the node on IEEE 1394
 bus.</doc>
         <source-position filename="../src/fw_node.h" line="84"/>
         <return-value transfer-ownership="none">
@@ -589,7 +601,7 @@ bus.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="460">A #HinawaFwNode.</doc>
+                 line="499">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </instance-parameter>
           <parameter name="gsrc"
@@ -598,7 +610,7 @@ bus.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="461">A #GSource.</doc>
+                 line="500">A #GSource.</doc>
             <type name="GLib.Source" c:type="GSource**"/>
           </parameter>
         </parameters>
@@ -609,7 +621,7 @@ bus.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="336">Get cached content of configuration ROM.</doc>
+             line="375">Get cached content of configuration ROM aligned to big-endian.</doc>
         <source-position filename="../src/fw_node.h" line="81"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -618,7 +630,7 @@ bus.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="338">A #HinawaFwNode</doc>
+                 line="377">A #HinawaFwNode</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </instance-parameter>
           <parameter name="image"
@@ -627,7 +639,7 @@ bus.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="339">The content of
+                 line="378">The content of
    configuration ROM.</doc>
             <array length="1" zero-terminated="0" c:type="const guint8**">
               <type name="guint8" c:type="guint8*"/>
@@ -639,7 +651,7 @@ bus.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="341">The number of bytes consists of the configuration rom.</doc>
+                 line="380">The number of bytes consists of the configuration rom.</doc>
             <type name="gsize" c:type="gsize*"/>
           </parameter>
         </parameters>
@@ -650,7 +662,7 @@ bus.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="281">Open Linux FireWire character device to operate node on IEEE 1394 bus.</doc>
+             line="320">Open Linux FireWire character device to operate node on IEEE 1394 bus.</doc>
         <source-position filename="../src/fw_node.h" line="78"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -659,33 +671,37 @@ bus.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="283">A #HinawaFwNode</doc>
+                 line="322">A #HinawaFwNode</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_node.c"
-                 line="284">A path to Linux FireWire character device</doc>
+                 line="323">A path to Linux FireWire character device</doc>
             <type name="utf8" c:type="const gchar*"/>
           </parameter>
         </parameters>
       </method>
-      <property name="bus-manager-node-id" transfer-ownership="none">
+      <property name="bus-manager-node-id"
+                version="1.4"
+                transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="generation" transfer-ownership="none">
+      <property name="generation" version="1.4" transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="ir-manager-node-id" transfer-ownership="none">
+      <property name="ir-manager-node-id"
+                version="1.4"
+                transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="local-node-id" transfer-ownership="none">
+      <property name="local-node-id" version="1.4" transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="node-id" transfer-ownership="none">
+      <property name="node-id" version="1.4" transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="root-node-id" transfer-ownership="none">
+      <property name="root-node-id" version="1.4" transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
       <field name="parent_instance">
@@ -694,20 +710,20 @@ bus.</doc>
       <field name="priv">
         <type name="FwNodePrivate" c:type="HinawaFwNodePrivate*"/>
       </field>
-      <glib:signal name="bus-update" when="last" version="1.4.">
+      <glib:signal name="bus-update" when="last" version="1.4">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="193">When IEEE 1394 bus is updated, the #HinawaFwNode::bus-update signal is generated.
+             line="232">When IEEE 1394 bus is updated, the #HinawaFwNode::bus-update signal is generated.
 Handlers can read current generation in the bus via 'generation'
 property.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
       </glib:signal>
-      <glib:signal name="disconnected" when="last" version="1.4.">
+      <glib:signal name="disconnected" when="last" version="1.4">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="212">When phicical FireWire devices are disconnected from IEEE 1394 bus,
+             line="251">When phicical FireWire devices are disconnected from IEEE 1394 bus,
 the #HinawaFwNode::disconnected signal is generated.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -755,20 +771,21 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
       </field>
     </record>
     <enumeration name="FwNodeError"
+                 version="2.1"
                  glib:type-name="HinawaFwNodeError"
                  glib:get-type="hinawa_fw_node_error_get_type"
                  c:type="HinawaFwNodeError"
                  glib:error-domain="hinawa-fw-node-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="109">A set of error code for GError with domain which equals to #hinawa_fw_node_error_quark().</doc>
+           line="113">A set of error code for GError with domain which equals to #hinawa_fw_node_error_quark().</doc>
       <member name="disconnected"
               value="0"
               c:identifier="HINAWA_FW_NODE_ERROR_DISCONNECTED"
               glib:nick="disconnected">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="111">The node associated to the instance is disconnected.</doc>
+             line="115">The node associated to the instance is disconnected.</doc>
       </member>
       <member name="opened"
               value="1"
@@ -776,7 +793,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="opened">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="112">The instance is already associated to node by opening
+             line="116">The instance is already associated to node by opening
 				firewire character device.</doc>
       </member>
       <member name="not_opened"
@@ -785,7 +802,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="not-opened">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="114">The instance is not associated to node by opening
+             line="118">The instance is not associated to node by opening
 				firewire character device.</doc>
       </member>
       <member name="failed"
@@ -794,16 +811,18 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="failed">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="116">The system call fails.</doc>
+             line="120">The system call fails.</doc>
       </member>
-      <function name="quark" c:identifier="hinawa_fw_node_error_quark">
+      <function name="quark"
+                c:identifier="hinawa_fw_node_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
              line="46">Return the GQuark for error domain of GError which has code in #HinawaFwNodeError.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_node.c"
-               line="51">A #GQuark.</doc>
+               line="53">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
@@ -812,19 +831,20 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
       <source-position filename="../src/fw_node.h" line="38"/>
     </record>
     <enumeration name="FwRcode"
+                 version="1.0"
                  glib:type-name="HinawaFwRcode"
                  glib:get-type="hinawa_fw_rcode_get_type"
                  c:type="HinawaFwRcode">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="54">A representation for rcode of asynchronous transaction on IEEE 1394 bus.</doc>
+           line="55">A representation for rcode of asynchronous transaction on IEEE 1394 bus.</doc>
       <member name="complete"
               value="0"
               c:identifier="HINAWA_FW_RCODE_COMPLETE"
               glib:nick="complete">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="56">For completion.</doc>
+             line="57">For completion.</doc>
       </member>
       <member name="conflict_error"
               value="4"
@@ -832,7 +852,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="conflict-error">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="57">For error of conflicting.</doc>
+             line="58">For error of conflicting.</doc>
       </member>
       <member name="data_error"
               value="5"
@@ -840,7 +860,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="data-error">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="58">For error of data.</doc>
+             line="59">For error of data.</doc>
       </member>
       <member name="type_error"
               value="6"
@@ -848,7 +868,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="type-error">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="59">For error of type.</doc>
+             line="60">For error of type.</doc>
       </member>
       <member name="address_error"
               value="7"
@@ -856,7 +876,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="address-error">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="60">For error of address.</doc>
+             line="61">For error of address.</doc>
       </member>
       <member name="send_error"
               value="16"
@@ -864,7 +884,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="send-error">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="61">For error of sending.</doc>
+             line="62">For error of sending.</doc>
       </member>
       <member name="cancelled"
               value="17"
@@ -872,7 +892,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="cancelled">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="62">For cancellation.</doc>
+             line="63">For cancellation.</doc>
       </member>
       <member name="busy"
               value="18"
@@ -880,7 +900,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="busy">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="63">For busyness.</doc>
+             line="64">For busyness.</doc>
       </member>
       <member name="generation"
               value="19"
@@ -888,7 +908,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="generation">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="64">For generation.</doc>
+             line="65">For generation.</doc>
       </member>
       <member name="no_ack"
               value="20"
@@ -896,7 +916,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="no-ack">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="65">For no acknowledge.</doc>
+             line="66">For no acknowledge.</doc>
       </member>
       <member name="invalid"
               value="21"
@@ -904,7 +924,7 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
               glib:nick="invalid">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="66">For rcode out of specification.</doc>
+             line="67">For rcode out of specification.</doc>
       </member>
     </enumeration>
     <class name="FwReq"
@@ -914,37 +934,39 @@ the #HinawaFwNode::disconnected signal is generated.</doc>
            glib:type-name="HinawaFwReq"
            glib:get-type="hinawa_fw_req_get_type"
            glib:type-struct="FwReqClass">
-      <source-position filename="../src/fw_req.h" line="66"/>
+      <source-position filename="../src/fw_req.h" line="68"/>
       <constructor name="new" c:identifier="hinawa_fw_req_new" version="1.3.">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
-             line="144">Instantiate #HinawaFwReq object and return the instance.</doc>
-        <source-position filename="../src/fw_req.h" line="70"/>
+             line="153">Instantiate #HinawaFwReq object and return the instance.</doc>
+        <source-position filename="../src/fw_req.h" line="72"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/fw_req.c"
-               line="149">an instance of #HinawaFwReq.</doc>
+               line="158">an instance of #HinawaFwReq.</doc>
           <type name="FwReq" c:type="HinawaFwReq*"/>
         </return-value>
       </constructor>
-      <function name="error_quark" c:identifier="hinawa_fw_req_error_quark">
+      <function name="error_quark"
+                c:identifier="hinawa_fw_req_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
              line="22">Return the GQuark for error domain of GError which has code in #HinawaFwRcode.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_req.c"
-               line="27">A #GQuark.</doc>
+               line="29">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
-      <virtual-method name="responded">
+      <virtual-method name="responded" version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_req.h"
              line="52">When the unit transfers asynchronous packet as response subaction for the transaction,
 and the process successfully reads the content of packet from Linux firewire subsystem,
 the #HinawaFwReqClass::responded handler is called.</doc>
-        <source-position filename="../src/fw_req.h" line="64"/>
+        <source-position filename="../src/fw_req.h" line="66"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -980,13 +1002,16 @@ the #HinawaFwReqClass::responded handler is called.</doc>
       </virtual-method>
       <method name="transaction"
               c:identifier="hinawa_fw_req_transaction"
-              version="1.4."
+              version="1.4"
+              deprecated="1"
+              deprecated-version="2.1"
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
-             line="377">Execute request subaction of transaction to the given node according to given code, then wait
+             line="386">Execute request subaction of transaction to the given node according to given code, then wait
 for response subaction within #HinawaFwReq:timeout.</doc>
-        <source-position filename="../src/fw_req.h" line="82"/>
+        <doc-deprecated xml:space="preserve">Use #hinawa_fw_req_transaction_sync(), instead.</doc-deprecated>
+        <source-position filename="../src/fw_req.h" line="84"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -994,31 +1019,31 @@ for response subaction within #HinawaFwReq:timeout.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="379">A #HinawaFwReq.</doc>
+                 line="388">A #HinawaFwReq.</doc>
             <type name="FwReq" c:type="HinawaFwReq*"/>
           </instance-parameter>
           <parameter name="node" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="380">A #HinawaFwNode.</doc>
+                 line="389">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </parameter>
           <parameter name="tcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="381">A transaction code of HinawaFwTcode.</doc>
+                 line="390">A transaction code of HinawaFwTcode.</doc>
             <type name="FwTcode" c:type="HinawaFwTcode"/>
           </parameter>
           <parameter name="addr" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="382">A destination address of target device</doc>
+                 line="391">A destination address of target device</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="length" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="383">The range of address in byte unit.</doc>
+                 line="392">The range of address in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="frame"
@@ -1027,7 +1052,7 @@ for response subaction within #HinawaFwReq:timeout.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="384">An array with elements for byte
+                 line="393">An array with elements for byte
    data. Callers should give it for buffer with enough space against the
    request since this library performs no reallocation. Due to the
    reason, the value of this argument should point to the pointer to the
@@ -1043,7 +1068,7 @@ for response subaction within #HinawaFwReq:timeout.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="390">The size of array in byte unit. The value of this argument
+                 line="399">The size of array in byte unit. The value of this argument
 	should point to the numerical number and mutable for read and
 	lock transaction.</doc>
             <type name="gsize" c:type="gsize*"/>
@@ -1056,10 +1081,10 @@ for response subaction within #HinawaFwReq:timeout.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
-             line="157">Execute request subaction of transactions to the given node according to given code. When the
+             line="166">Execute request subaction of transactions to the given node according to given code. When the
 response subaction arrives and read the contents, #HinawaFwReq::responded signal handler is called
 as long as event dispatcher runs.</doc>
-        <source-position filename="../src/fw_req.h" line="72"/>
+        <source-position filename="../src/fw_req.h" line="74"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1067,31 +1092,31 @@ as long as event dispatcher runs.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="159">A #HinawaFwReq.</doc>
+                 line="168">A #HinawaFwReq.</doc>
             <type name="FwReq" c:type="HinawaFwReq*"/>
           </instance-parameter>
           <parameter name="node" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="160">A #HinawaFwNode.</doc>
+                 line="169">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </parameter>
           <parameter name="tcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="161">A transaction code of HinawaFwTcode.</doc>
+                 line="170">A transaction code of HinawaFwTcode.</doc>
             <type name="FwTcode" c:type="HinawaFwTcode"/>
           </parameter>
           <parameter name="addr" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="162">A destination address of target device</doc>
+                 line="171">A destination address of target device</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="length" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="163">The range of address in byte unit.</doc>
+                 line="172">The range of address in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="frame"
@@ -1100,7 +1125,7 @@ as long as event dispatcher runs.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="164">An array with elements for byte
+                 line="173">An array with elements for byte
    data. Callers should give it for buffer with enough space against the
    request since this library performs no reallocation. Due to the
    reason, the value of this argument should point to the pointer to the
@@ -1116,7 +1141,7 @@ as long as event dispatcher runs.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="170">The size of array in byte unit. The value of this argument
+                 line="179">The size of array in byte unit. The value of this argument
 	should point to the numerical number and mutable for read and
 	lock transaction.</doc>
             <type name="gsize" c:type="gsize*"/>
@@ -1129,10 +1154,10 @@ as long as event dispatcher runs.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
-             line="274">Execute request subaction of transaction to the given node according to given code, then wait
+             line="283">Execute request subaction of transaction to the given node according to given code, then wait
 for response subaction within the given timeout. The #HinawaFwReq:timeout property of instance
 is ignored.</doc>
-        <source-position filename="../src/fw_req.h" line="77"/>
+        <source-position filename="../src/fw_req.h" line="79"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1140,31 +1165,31 @@ is ignored.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="276">A #HinawaFwReq.</doc>
+                 line="285">A #HinawaFwReq.</doc>
             <type name="FwReq" c:type="HinawaFwReq*"/>
           </instance-parameter>
           <parameter name="node" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="277">A #HinawaFwNode.</doc>
+                 line="286">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </parameter>
           <parameter name="tcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="278">A transaction code of HinawaFwTcode.</doc>
+                 line="287">A transaction code of HinawaFwTcode.</doc>
             <type name="FwTcode" c:type="HinawaFwTcode"/>
           </parameter>
           <parameter name="addr" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="279">A destination address of target device</doc>
+                 line="288">A destination address of target device</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="length" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="280">The range of address in byte unit.</doc>
+                 line="289">The range of address in byte unit.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="frame"
@@ -1173,7 +1198,7 @@ is ignored.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="281">An array with elements for byte
+                 line="290">An array with elements for byte
    data. Callers should give it for buffer with enough space against the
    request since this library performs no reallocation. Due to the
    reason, the value of this argument should point to the pointer to the
@@ -1189,7 +1214,7 @@ is ignored.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="287">The size of array in byte unit. The value of this argument
+                 line="296">The size of array in byte unit. The value of this argument
 	should point to the numerical number and mutable for read and
 	lock transaction.</doc>
             <type name="gsize" c:type="gsize*"/>
@@ -1197,16 +1222,20 @@ is ignored.</doc>
           <parameter name="timeout_ms" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="290">The timeout to wait for response subaction of the transaction since request
+                 line="299">The timeout to wait for response subaction of the transaction since request
 	subaction is initiated, in milliseconds.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
       </method>
       <property name="timeout"
+                version="1.4"
+                deprecated="1"
+                deprecated-version="2.1"
                 writable="1"
                 construct="1"
                 transfer-ownership="none">
+        <doc-deprecated xml:space="preserve">Use timeout_ms parameter of #hinawa_fw_req_transaction_sync().</doc-deprecated>
         <type name="guint" c:type="guint"/>
       </property>
       <field name="parent_instance">
@@ -1215,10 +1244,10 @@ is ignored.</doc>
       <field name="priv">
         <type name="FwReqPrivate" c:type="HinawaFwReqPrivate*"/>
       </field>
-      <glib:signal name="responded" when="last">
+      <glib:signal name="responded" when="last" version="2.1">
         <doc xml:space="preserve"
              filename="../src/fw_req.c"
-             line="116">When the unit transfers asynchronous packet as response subaction for the transaction,
+             line="123">When the unit transfers asynchronous packet as response subaction for the transaction,
 and the process successfully reads the content of packet from Linux firewire subsystem,
 the #HinawaFwReq::responded signal handler is called.</doc>
         <return-value transfer-ownership="none">
@@ -1228,13 +1257,13 @@ the #HinawaFwReq::responded signal handler is called.</doc>
           <parameter name="rcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="119">One of #HinawaFwRcode.</doc>
+                 line="126">One of #HinawaFwRcode.</doc>
             <type name="FwRcode"/>
           </parameter>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="120">The array with elements for
+                 line="127">The array with elements for
    byte data of response subaction for transaction.</doc>
             <array length="2" zero-terminated="0" c:type="gpointer">
               <type name="guint8"/>
@@ -1243,7 +1272,7 @@ the #HinawaFwReq::responded signal handler is called.</doc>
           <parameter name="frame_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_req.c"
-                 line="122">The number of elements of the array.</doc>
+                 line="129">The number of elements of the array.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -1252,13 +1281,13 @@ the #HinawaFwReq::responded signal handler is called.</doc>
     <record name="FwReqClass"
             c:type="HinawaFwReqClass"
             glib:is-gtype-struct-for="FwReq">
-      <source-position filename="../src/fw_req.h" line="66"/>
+      <source-position filename="../src/fw_req.h" line="68"/>
       <field name="parent_class">
         <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
       <field name="responded">
         <callback name="responded">
-          <source-position filename="../src/fw_req.h" line="64"/>
+          <source-position filename="../src/fw_req.h" line="66"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -1304,16 +1333,16 @@ the #HinawaFwReq::responded signal handler is called.</doc>
            glib:type-name="HinawaFwResp"
            glib:get-type="hinawa_fw_resp_get_type"
            glib:type-struct="FwRespClass">
-      <source-position filename="../src/fw_resp.h" line="95"/>
+      <source-position filename="../src/fw_resp.h" line="97"/>
       <constructor name="new" c:identifier="hinawa_fw_resp_new" version="1.3.">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="178">Instantiate #HinawaFwResp object and return the instance.</doc>
-        <source-position filename="../src/fw_resp.h" line="99"/>
+             line="220">Instantiate #HinawaFwResp object and return the instance.</doc>
+        <source-position filename="../src/fw_resp.h" line="101"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/fw_resp.c"
-               line="183">a new instance of #HinawaFwResp.</doc>
+               line="225">a new instance of #HinawaFwResp.</doc>
           <type name="FwResp" c:type="HinawaFwResp*"/>
         </return-value>
       </constructor>
@@ -1350,14 +1379,14 @@ specification.</doc>
           </parameter>
         </parameters>
       </virtual-method>
-      <virtual-method name="requested2">
+      <virtual-method name="requested2" version="2.2">
         <doc xml:space="preserve"
              filename="../src/fw_resp.h"
              line="71">When any node transfers request subaction to the range of address to which this object
 listening, the #HinawaFwResp::requested signal handler is called with arrived frame for
 the subaction. The handler is expected to call #hinawa_fw_resp_set_resp_frame() with
 frame and return rcode for response subaction.</doc>
-        <source-position filename="../src/fw_resp.h" line="92"/>
+        <source-position filename="../src/fw_resp.h" line="94"/>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_resp.h"
@@ -1427,14 +1456,15 @@ frame and return rcode for response subaction.</doc>
       </virtual-method>
       <method name="get_req_frame"
               c:identifier="hinawa_fw_resp_get_req_frame"
+              version="2.0"
               deprecated="1"
               deprecated-version="2.2">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="285">Retrieve byte frame to be requested.</doc>
+             line="355">Retrieve byte frame to be requested.</doc>
         <doc-deprecated xml:space="preserve">handler for #HinawaFwResp::requested2 signal can receive the frame in its
 	    argument.</doc-deprecated>
-        <source-position filename="../src/fw_resp.h" line="105"/>
+        <source-position filename="../src/fw_resp.h" line="110"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1442,7 +1472,7 @@ frame and return rcode for response subaction.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="287">A #HinawaFwResp</doc>
+                 line="357">A #HinawaFwResp</doc>
             <type name="FwResp" c:type="HinawaFwResp*"/>
           </instance-parameter>
           <parameter name="frame"
@@ -1451,7 +1481,7 @@ frame and return rcode for response subaction.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="288">a 8bit array for response
+                 line="358">a 8bit array for response
 	   frame.</doc>
             <array length="1" zero-terminated="0" c:type="const guint8**">
               <type name="guint8" c:type="guint8*"/>
@@ -1463,7 +1493,7 @@ frame and return rcode for response subaction.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="290">The length of bytes for the frame.</doc>
+                 line="360">The length of bytes for the frame.</doc>
             <type name="gsize" c:type="gsize*"/>
           </parameter>
         </parameters>
@@ -1473,8 +1503,8 @@ frame and return rcode for response subaction.</doc>
               version="1.4.">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="248">stop to listen to a range of address in host controller.</doc>
-        <source-position filename="../src/fw_resp.h" line="103"/>
+             line="315">stop to listen to a range of address in host controller.</doc>
+        <source-position filename="../src/fw_resp.h" line="108"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1482,7 +1512,7 @@ frame and return rcode for response subaction.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="250">A HinawaFwResp.</doc>
+                 line="317">A HinawaFwResp.</doc>
             <type name="FwResp" c:type="HinawaFwResp*"/>
           </instance-parameter>
         </parameters>
@@ -1493,9 +1523,10 @@ frame and return rcode for response subaction.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="191">Start to listen to a range of address in host controller which connects to
-the node.</doc>
-        <source-position filename="../src/fw_resp.h" line="101"/>
+             line="294">Start to listen to a range of address in host controller which connects to the node. The function
+is a variant of #hinawa_fw_resp_reserve_within_region() so that the exact range of address should
+be reserved as given.</doc>
+        <source-position filename="../src/fw_resp.h" line="106"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1503,35 +1534,39 @@ the node.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="193">A #HinawaFwResp.</doc>
+                 line="296">A #HinawaFwResp.</doc>
             <type name="FwResp" c:type="HinawaFwResp*"/>
           </instance-parameter>
           <parameter name="node" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="194">A #HinawaFwNode.</doc>
+                 line="297">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode*"/>
           </parameter>
           <parameter name="addr" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="195">A start address to listen to in host controller.</doc>
+                 line="298">A start address to listen to in host controller.</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="width" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="196">The byte width of address to listen to host controller.</doc>
+                 line="299">The byte width of address to listen to host controller.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
       </method>
-      <method name="set_resp_frame"
-              c:identifier="hinawa_fw_resp_set_resp_frame">
+      <method name="reserve_within_region"
+              c:identifier="hinawa_fw_resp_reserve_within_region"
+              version="2.3."
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="314">Register byte frame as response.</doc>
-        <source-position filename="../src/fw_resp.h" line="107"/>
+             line="233">Start to listen to range of address equals to #width in local node (e.g. 1394 OHCI host
+controller), which is used to communicate to the node given as parameter. The range of address
+is looked up in region between #region_start and #region_end.</doc>
+        <source-position filename="../src/fw_resp.h" line="103"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1539,13 +1574,56 @@ the node.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="316">A #HinawaFwResp</doc>
+                 line="235">A #HinawaFwResp.</doc>
+            <type name="FwResp" c:type="HinawaFwResp*"/>
+          </instance-parameter>
+          <parameter name="node" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/fw_resp.c"
+                 line="236">A #HinawaFwNode.</doc>
+            <type name="FwNode" c:type="HinawaFwNode*"/>
+          </parameter>
+          <parameter name="region_start" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/fw_resp.c"
+                 line="237">Start offset of address region in which range of address is looked up.</doc>
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="region_end" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/fw_resp.c"
+                 line="238">End offset of address region in which range of address is looked up.</doc>
+            <type name="guint64" c:type="guint64"/>
+          </parameter>
+          <parameter name="width" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/fw_resp.c"
+                 line="239">The width for range of address to be looked up.</doc>
+            <type name="guint" c:type="guint"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="set_resp_frame"
+              c:identifier="hinawa_fw_resp_set_resp_frame"
+              version="2.0">
+        <doc xml:space="preserve"
+             filename="../src/fw_resp.c"
+             line="385">Register byte frame as response.</doc>
+        <source-position filename="../src/fw_resp.h" line="112"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/fw_resp.c"
+                 line="387">A #HinawaFwResp</doc>
             <type name="FwResp" c:type="HinawaFwResp*"/>
           </instance-parameter>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="317">a 8bit array for response
+                 line="388">a 8bit array for response
 	   frame.</doc>
             <array length="1" zero-terminated="0" c:type="guint8*">
               <type name="guint8"/>
@@ -1554,13 +1632,19 @@ the node.</doc>
           <parameter name="length" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="319">The length of bytes for the frame.</doc>
+                 line="390">The length of bytes for the frame.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
         </parameters>
       </method>
-      <property name="is-reserved" transfer-ownership="none">
+      <property name="is-reserved" version="2.0" transfer-ownership="none">
         <type name="gboolean" c:type="gboolean"/>
+      </property>
+      <property name="offset" version="2.3" transfer-ownership="none">
+        <type name="guint64" c:type="guint64"/>
+      </property>
+      <property name="width" version="2.3" transfer-ownership="none">
+        <type name="guint" c:type="guint"/>
       </property>
       <field name="parent_instance">
         <type name="GObject.Object" c:type="GObject"/>
@@ -1570,11 +1654,12 @@ the node.</doc>
       </field>
       <glib:signal name="requested"
                    when="last"
+                   version="0.3"
                    deprecated="1"
                    deprecated-version="2.2">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="114">When any node transfers requests to the range of address to which this object listening,
+             line="154">When any node transfers requests to the range of address to which this object listening,
 the #HinawaFwResp::requested signal handler is called with #HinawaFwTcode, without the
 case that #HinawaFwResp::requested2 signal handler is already assigned.
 
@@ -1584,7 +1669,7 @@ frame by a call of #hinawa_fw_resp_set_resp_frame(), then returns rcode.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_resp.c"
-               line="126">One of #HinawaRcode enumerators corresponding to rcodes defined in IEEE 1394
+               line="166">One of #HinawaRcode enumerators corresponding to rcodes defined in IEEE 1394
 specification.</doc>
           <type name="FwRcode"/>
         </return-value>
@@ -1592,22 +1677,22 @@ specification.</doc>
           <parameter name="tcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="117">One of #HinawaTcode enumerators</doc>
+                 line="157">One of #HinawaTcode enumerators</doc>
             <type name="FwTcode"/>
           </parameter>
         </parameters>
       </glib:signal>
-      <glib:signal name="requested2" when="last">
+      <glib:signal name="requested2" when="last" version="2.2">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="140">When any node transfers request subaction to the range of address to which this object
+             line="181">When any node transfers request subaction to the range of address to which this object
 listening, the #HinawaFwResp::requested signal handler is called with arrived frame for
 the subaction. The handler is expected to call #hinawa_fw_resp_set_resp_frame() with
 frame and return rcode for response subaction.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_resp.c"
-               line="158">One of #HinawaRcode enumerators corresponding to rcodes defined in IEEE 1394
+               line="199">One of #HinawaRcode enumerators corresponding to rcodes defined in IEEE 1394
     specification.</doc>
           <type name="FwRcode"/>
         </return-value>
@@ -1615,43 +1700,43 @@ frame and return rcode for response subaction.</doc>
           <parameter name="tcode" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="143">One of #HinawaTcode enumerations</doc>
+                 line="184">One of #HinawaTcode enumerations</doc>
             <type name="FwTcode"/>
           </parameter>
           <parameter name="offset" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="144">The address offset at which the transaction arrives.</doc>
+                 line="185">The address offset at which the transaction arrives.</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="src" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="145">The node ID of source for the transaction.</doc>
+                 line="186">The node ID of source for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="dst" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="146">The node ID of destination for the transaction.</doc>
+                 line="187">The node ID of destination for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="card" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="147">The index of card corresponding to 1394 OHCI controller.</doc>
+                 line="188">The index of card corresponding to 1394 OHCI controller.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="generation" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="148">The generation of bus when the transaction is transferred.</doc>
+                 line="189">The generation of bus when the transaction is transferred.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="149">The array with elements for byte
+                 line="190">The array with elements for byte
    data.</doc>
             <array length="7" zero-terminated="0" c:type="gpointer">
               <type name="guint8"/>
@@ -1660,7 +1745,7 @@ frame and return rcode for response subaction.</doc>
           <parameter name="length" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.c"
-                 line="151">The length of bytes for the frame.</doc>
+                 line="192">The length of bytes for the frame.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -1669,7 +1754,7 @@ frame and return rcode for response subaction.</doc>
     <record name="FwRespClass"
             c:type="HinawaFwRespClass"
             glib:is-gtype-struct-for="FwResp">
-      <source-position filename="../src/fw_resp.h" line="95"/>
+      <source-position filename="../src/fw_resp.h" line="97"/>
       <field name="parent_class">
         <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
@@ -1701,7 +1786,7 @@ specification.</doc>
       </field>
       <field name="requested2">
         <callback name="requested2">
-          <source-position filename="../src/fw_resp.h" line="92"/>
+          <source-position filename="../src/fw_resp.h" line="94"/>
           <return-value transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/fw_resp.h"
@@ -1772,20 +1857,21 @@ specification.</doc>
       </field>
     </record>
     <enumeration name="FwRespError"
+                 version="2.2"
                  glib:type-name="HinawaFwRespError"
                  glib:get-type="hinawa_fw_resp_error_get_type"
                  c:type="HinawaFwRespError"
                  glib:error-domain="hinawa-fw-resp-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="127">A set of error code for GError with domain which equals to #hinawa_fw_resp_error_quark().</doc>
+           line="133">A set of error code for GError with domain which equals to #hinawa_fw_resp_error_quark().</doc>
       <member name="failed"
               value="0"
               c:identifier="HINAWA_FW_RESP_ERROR_FAILED"
               glib:nick="failed">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="129">The generic system call error.</doc>
+             line="135">The generic system call error.</doc>
       </member>
       <member name="reserved"
               value="1"
@@ -1793,7 +1879,7 @@ specification.</doc>
               glib:nick="reserved">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="130">The instance is already associated to reserved address range.</doc>
+             line="136">The instance is already associated to reserved address range.</doc>
       </member>
       <member name="addr_space_used"
               value="2"
@@ -1801,16 +1887,18 @@ specification.</doc>
               glib:nick="addr-space-used">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="131">The address space is used exclusively.</doc>
+             line="137">The address space is used exclusively.</doc>
       </member>
-      <function name="quark" c:identifier="hinawa_fw_resp_error_quark">
+      <function name="quark"
+                c:identifier="hinawa_fw_resp_error_quark"
+                version="2.2">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
              line="22">Return the GQuark for error domain of GError which has code in #HinawaFwRespError.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/fw_resp.c"
-               line="27">A #GQuark.</doc>
+               line="29">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
@@ -1819,6 +1907,7 @@ specification.</doc>
       <source-position filename="../src/fw_resp.h" line="41"/>
     </record>
     <enumeration name="FwTcode"
+                 version="1.0"
                  glib:type-name="HinawaFwTcode"
                  glib:get-type="hinawa_fw_tcode_get_type"
                  c:type="HinawaFwTcode">
@@ -2319,27 +2408,27 @@ specification.</doc>
            glib:type-name="HinawaSndDg00x"
            glib:get-type="hinawa_snd_dg00x_get_type"
            glib:type-struct="SndDg00xClass">
-      <source-position filename="../src/snd_dg00x.h" line="53"/>
+      <source-position filename="../src/snd_dg00x.h" line="55"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_dg00x_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_dg00x.c"
-             line="51">Instantiate #HinawaSndDg00x object and return the instance.</doc>
-        <source-position filename="../src/snd_dg00x.h" line="57"/>
+             line="53">Instantiate #HinawaSndDg00x object and return the instance.</doc>
+        <source-position filename="../src/snd_dg00x.h" line="59"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_dg00x.c"
-               line="56">an instance of #HinawaSndDg00x.</doc>
+               line="58">an instance of #HinawaSndDg00x.</doc>
           <type name="SndDg00x" c:type="HinawaSndDg00x*"/>
         </return-value>
       </constructor>
-      <virtual-method name="message">
+      <virtual-method name="message" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_dg00x.h"
              line="44">When Dg00x models transfer notification, the #HinawaSndDg00xClass::message handler is
 called.</doc>
-        <source-position filename="../src/snd_dg00x.h" line="52"/>
+        <source-position filename="../src/snd_dg00x.h" line="54"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2358,11 +2447,14 @@ called.</doc>
           </parameter>
         </parameters>
       </virtual-method>
-      <method name="open" c:identifier="hinawa_snd_dg00x_open" throws="1">
+      <method name="open"
+              c:identifier="hinawa_snd_dg00x_open"
+              version="0.7"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_dg00x.c"
-             line="64">Open ALSA hwdep character device and check it for Dg00x  devices.</doc>
-        <source-position filename="../src/snd_dg00x.h" line="59"/>
+             line="66">Open ALSA hwdep character device and check it for Dg00x  devices.</doc>
+        <source-position filename="../src/snd_dg00x.h" line="61"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2370,13 +2462,13 @@ called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dg00x.c"
-                 line="66">A #HinawaSndUnit</doc>
+                 line="68">A #HinawaSndUnit</doc>
             <type name="SndDg00x" c:type="HinawaSndDg00x*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dg00x.c"
-                 line="67">A full path of a special file for ALSA hwdep character device</doc>
+                 line="69">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
@@ -2384,7 +2476,7 @@ called.</doc>
       <field name="parent_instance">
         <type name="SndUnit" c:type="HinawaSndUnit"/>
       </field>
-      <glib:signal name="message" when="last">
+      <glib:signal name="message" when="last" version="0.7">
         <doc xml:space="preserve"
              filename="../src/snd_dg00x.c"
              line="28">When Dg00x models transfer notification, the #HinawaSndDg00x::message signal is
@@ -2405,13 +2497,13 @@ generated.</doc>
     <record name="SndDg00xClass"
             c:type="HinawaSndDg00xClass"
             glib:is-gtype-struct-for="SndDg00x">
-      <source-position filename="../src/snd_dg00x.h" line="53"/>
+      <source-position filename="../src/snd_dg00x.h" line="55"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="message">
         <callback name="message">
-          <source-position filename="../src/snd_dg00x.h" line="52"/>
+          <source-position filename="../src/snd_dg00x.h" line="54"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -2439,27 +2531,27 @@ generated.</doc>
            glib:type-name="HinawaSndDice"
            glib:get-type="hinawa_snd_dice_get_type"
            glib:type-struct="SndDiceClass">
-      <source-position filename="../src/snd_dice.h" line="60"/>
+      <source-position filename="../src/snd_dice.h" line="62"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_dice_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
-             line="93">Instantiate #HinawaSndDice object and return the instance.</doc>
-        <source-position filename="../src/snd_dice.h" line="64"/>
+             line="97">Instantiate #HinawaSndDice object and return the instance.</doc>
+        <source-position filename="../src/snd_dice.h" line="66"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_dice.c"
-               line="98">an instance of #HinawaSndDice.</doc>
+               line="102">an instance of #HinawaSndDice.</doc>
           <type name="SndDice" c:type="HinawaSndDice*"/>
         </return-value>
       </constructor>
-      <virtual-method name="notified">
+      <virtual-method name="notified" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_dice.h"
              line="51">When Dice models transfer notification, the #HinawaSndDiceClass::notified handler is
 called.</doc>
-        <source-position filename="../src/snd_dice.h" line="59"/>
+        <source-position filename="../src/snd_dice.h" line="61"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2478,11 +2570,14 @@ called.</doc>
           </parameter>
         </parameters>
       </virtual-method>
-      <method name="open" c:identifier="hinawa_snd_dice_open" throws="1">
+      <method name="open"
+              c:identifier="hinawa_snd_dice_open"
+              version="0.4"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
-             line="106">Open ALSA hwdep character device and check it for Dice  devices.</doc>
-        <source-position filename="../src/snd_dice.h" line="66"/>
+             line="110">Open ALSA hwdep character device and check it for Dice  devices.</doc>
+        <source-position filename="../src/snd_dice.h" line="68"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2490,13 +2585,13 @@ called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="108">A #HinawaSndUnit</doc>
+                 line="112">A #HinawaSndUnit</doc>
             <type name="SndDice" c:type="HinawaSndDice*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="109">A full path of a special file for ALSA hwdep character device</doc>
+                 line="113">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
@@ -2507,9 +2602,9 @@ called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
-             line="135">Execute write transactions to the given address, then wait and check
+             line="141">Execute write transactions to the given address, then wait and check
 notification.</doc>
-        <source-position filename="../src/snd_dice.h" line="68"/>
+        <source-position filename="../src/snd_dice.h" line="70"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2517,19 +2612,19 @@ notification.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="137">A #HinawaSndDice</doc>
+                 line="143">A #HinawaSndDice</doc>
             <type name="SndDice" c:type="HinawaSndDice*"/>
           </instance-parameter>
           <parameter name="addr" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="138">A destination address of target device</doc>
+                 line="144">A destination address of target device</doc>
             <type name="guint64" c:type="guint64"/>
           </parameter>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="139">An array with elements for quadlet
+                 line="145">An array with elements for quadlet
    data to transmit.</doc>
             <array length="2" zero-terminated="0" c:type="const guint32*">
               <type name="guint32" c:type="guint32"/>
@@ -2538,13 +2633,13 @@ notification.</doc>
           <parameter name="frame_count" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="141">The number of quadlets in the frame.</doc>
+                 line="147">The number of quadlets in the frame.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="bit_flag" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="142">bit flag to wait</doc>
+                 line="148">bit flag to wait</doc>
             <type name="guint32" c:type="guint32"/>
           </parameter>
         </parameters>
@@ -2555,10 +2650,10 @@ notification.</doc>
       <field name="priv">
         <type name="SndDicePrivate" c:type="HinawaSndDicePrivate*"/>
       </field>
-      <glib:signal name="notified" when="last">
+      <glib:signal name="notified" when="last" version="0.3">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
-             line="70">When Dice models transfer notification, the #HinawaSndDice::notified signal is
+             line="72">When Dice models transfer notification, the #HinawaSndDice::notified signal is
 generated.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -2567,7 +2662,7 @@ generated.</doc>
           <parameter name="message" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_dice.c"
-                 line="73">A notification message</doc>
+                 line="75">A notification message</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -2576,13 +2671,13 @@ generated.</doc>
     <record name="SndDiceClass"
             c:type="HinawaSndDiceClass"
             glib:is-gtype-struct-for="SndDice">
-      <source-position filename="../src/snd_dice.h" line="60"/>
+      <source-position filename="../src/snd_dice.h" line="62"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="notified">
         <callback name="notified">
-          <source-position filename="../src/snd_dice.h" line="59"/>
+          <source-position filename="../src/snd_dice.h" line="61"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -2604,29 +2699,32 @@ generated.</doc>
       </field>
     </record>
     <enumeration name="SndDiceError"
+                 version="2.1"
                  glib:type-name="HinawaSndDiceError"
                  glib:get-type="hinawa_snd_dice_error_get_type"
                  c:type="HinawaSndDiceError"
                  glib:error-domain="hinawa-snd-dice-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="179">A set of error code for GError with domain which equals to #hinawa_snd_dice_error_quark().</doc>
+           line="191">A set of error code for GError with domain which equals to #hinawa_snd_dice_error_quark().</doc>
       <member name="timeout"
               value="0"
               c:identifier="HINAWA_SND_DICE_ERROR_TIMEOUT"
               glib:nick="timeout">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="181">The transaction is canceled due to response timeout.</doc>
+             line="193">The transaction is canceled due to response timeout.</doc>
       </member>
-      <function name="quark" c:identifier="hinawa_snd_dice_error_quark">
+      <function name="quark"
+                c:identifier="hinawa_snd_dice_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
              line="17">Return the GQuark for error domain of GError which has code in #HinawaSndDiceError.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/snd_dice.c"
-               line="22">A #GQuark.</doc>
+               line="24">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
@@ -2641,38 +2739,40 @@ generated.</doc>
            glib:type-name="HinawaSndEfw"
            glib:get-type="hinawa_snd_efw_get_type"
            glib:type-struct="SndEfwClass">
-      <source-position filename="../src/snd_efw.h" line="69"/>
+      <source-position filename="../src/snd_efw.h" line="71"/>
       <constructor name="new" c:identifier="hinawa_snd_efw_new" version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="99">Instantiate #HinawaSndEfw object and return the instance.</doc>
-        <source-position filename="../src/snd_efw.h" line="73"/>
+             line="103">Instantiate #HinawaSndEfw object and return the instance.</doc>
+        <source-position filename="../src/snd_efw.h" line="75"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_efw.c"
-               line="104">an instance of #HinawaSndEfw.</doc>
+               line="108">an instance of #HinawaSndEfw.</doc>
           <type name="SndEfw" c:type="HinawaSndEfw*"/>
         </return-value>
       </constructor>
-      <function name="error_quark" c:identifier="hinawa_snd_efw_error_quark">
+      <function name="error_quark"
+                c:identifier="hinawa_snd_efw_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
              line="18">Return the GQuark for error domain of GError which has code in #HinawaSndEfwStatus.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/snd_efw.c"
-               line="23">A #GQuark.</doc>
+               line="25">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
-      <virtual-method name="responded">
+      <virtual-method name="responded" version="2.1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.h"
              line="51">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
 protocol, and the process successfully reads the content of response from ALSA
 Fireworks driver, the #HinawaSndEfwClass::responded signal handler is called with parameters
 of the response.</doc>
-        <source-position filename="../src/snd_efw.h" line="67"/>
+        <source-position filename="../src/snd_efw.h" line="69"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2724,11 +2824,14 @@ of the response.</doc>
           </parameter>
         </parameters>
       </virtual-method>
-      <method name="open" c:identifier="hinawa_snd_efw_open" throws="1">
+      <method name="open"
+              c:identifier="hinawa_snd_efw_open"
+              version="0.3"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="112">Open ALSA hwdep character device and check it for Fireworks devices.</doc>
-        <source-position filename="../src/snd_efw.h" line="75"/>
+             line="116">Open ALSA hwdep character device and check it for Fireworks devices.</doc>
+        <source-position filename="../src/snd_efw.h" line="77"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2736,13 +2839,13 @@ of the response.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="114">A #HinawaSndUnit</doc>
+                 line="118">A #HinawaSndUnit</doc>
             <type name="SndEfw" c:type="HinawaSndEfw*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="115">A full path of a special file for ALSA hwdep character device</doc>
+                 line="119">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
@@ -2753,9 +2856,9 @@ of the response.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="323">Transfer request of transaction according to Echo Fireworks Transaction protocol, then wait for
+             line="329">Transfer request of transaction according to Echo Fireworks Transaction protocol, then wait for
 the response of transaction within 200 millisecond timeout.</doc>
-        <source-position filename="../src/snd_efw.h" line="81"/>
+        <source-position filename="../src/snd_efw.h" line="83"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2763,19 +2866,19 @@ the response of transaction within 200 millisecond timeout.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="325">A #HinawaSndEfw.</doc>
+                 line="331">A #HinawaSndEfw.</doc>
             <type name="SndEfw" c:type="HinawaSndEfw*"/>
           </instance-parameter>
           <parameter name="category" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="326">one of category for the transaction.</doc>
+                 line="332">one of category for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="command" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="327">one of commands for the transaction.</doc>
+                 line="333">one of commands for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="args"
@@ -2784,7 +2887,7 @@ the response of transaction within 200 millisecond timeout.</doc>
                      allow-none="1">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="328">An array with elements for
+                 line="334">An array with elements for
   quadlet data as arguments for command.</doc>
             <array length="3" zero-terminated="0" c:type="const guint32*">
               <type name="guint32" c:type="guint32"/>
@@ -2793,7 +2896,7 @@ the response of transaction within 200 millisecond timeout.</doc>
           <parameter name="arg_count" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="330">The number of quadlets in the args array.</doc>
+                 line="336">The number of quadlets in the args array.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="params"
@@ -2802,7 +2905,7 @@ the response of transaction within 200 millisecond timeout.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="331">An array with elements for
+                 line="337">An array with elements for
     quadlet data to save parameters in response. Callers should give it
     for buffer with enough space against the request since this library
     performs no reallocation. Due to the reason, the value of this
@@ -2818,7 +2921,7 @@ the response of transaction within 200 millisecond timeout.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="337">The number of quadlets in the params array.</doc>
+                 line="343">The number of quadlets in the params array.</doc>
             <type name="gsize" c:type="gsize*"/>
           </parameter>
         </parameters>
@@ -2829,9 +2932,9 @@ the response of transaction within 200 millisecond timeout.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="140">Transfer asynchronous transaction for command frame of Echo Fireworks protocol. When receiving
+             line="146">Transfer asynchronous transaction for command frame of Echo Fireworks protocol. When receiving
 asynchronous transaction for response frame, #HinawaSndEfw::responded GObject signal is emitted.</doc>
-        <source-position filename="../src/snd_efw.h" line="77"/>
+        <source-position filename="../src/snd_efw.h" line="79"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2839,19 +2942,19 @@ asynchronous transaction for response frame, #HinawaSndEfw::responded GObject si
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="142">A #HinawaSndEfw.</doc>
+                 line="148">A #HinawaSndEfw.</doc>
             <type name="SndEfw" c:type="HinawaSndEfw*"/>
           </instance-parameter>
           <parameter name="category" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="143">One of category for the transaction.</doc>
+                 line="149">One of category for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="command" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="144">One of commands for the transaction.</doc>
+                 line="150">One of commands for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="args"
@@ -2860,7 +2963,7 @@ asynchronous transaction for response frame, #HinawaSndEfw::responded GObject si
                      allow-none="1">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="145">An array with elements for quadlet data as
+                 line="151">An array with elements for quadlet data as
   arguments for command.</doc>
             <array length="3" zero-terminated="0" c:type="const guint32*">
               <type name="guint32" c:type="guint32"/>
@@ -2869,7 +2972,7 @@ asynchronous transaction for response frame, #HinawaSndEfw::responded GObject si
           <parameter name="arg_count" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="147">The number of quadlets in the args array.</doc>
+                 line="153">The number of quadlets in the args array.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="resp_seqnum"
@@ -2878,7 +2981,7 @@ asynchronous transaction for response frame, #HinawaSndEfw::responded GObject si
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="148">The sequence number for response transaction;</doc>
+                 line="154">The sequence number for response transaction;</doc>
             <type name="guint32" c:type="guint32*"/>
           </parameter>
         </parameters>
@@ -2889,9 +2992,9 @@ asynchronous transaction for response frame, #HinawaSndEfw::responded GObject si
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="239">Transfer asynchronous transaction for command frame of Echo Fireworks protocol, then wait
+             line="245">Transfer asynchronous transaction for command frame of Echo Fireworks protocol, then wait
 asynchronous transaction for response frame within the given timeout.</doc>
-        <source-position filename="../src/snd_efw.h" line="87"/>
+        <source-position filename="../src/snd_efw.h" line="89"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -2899,19 +3002,19 @@ asynchronous transaction for response frame within the given timeout.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="241">A #HinawaSndEfw.</doc>
+                 line="247">A #HinawaSndEfw.</doc>
             <type name="SndEfw" c:type="HinawaSndEfw*"/>
           </instance-parameter>
           <parameter name="category" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="242">one of category for the transaction.</doc>
+                 line="248">one of category for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="command" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="243">one of commands for the transaction.</doc>
+                 line="249">one of commands for the transaction.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="args"
@@ -2920,7 +3023,7 @@ asynchronous transaction for response frame within the given timeout.</doc>
                      allow-none="1">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="244">An array with elements for
+                 line="250">An array with elements for
   quadlet data as arguments for command.</doc>
             <array length="3" zero-terminated="0" c:type="const guint32*">
               <type name="guint32" c:type="guint32"/>
@@ -2929,7 +3032,7 @@ asynchronous transaction for response frame within the given timeout.</doc>
           <parameter name="arg_count" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="246">The number of quadlets in the args array.</doc>
+                 line="252">The number of quadlets in the args array.</doc>
             <type name="gsize" c:type="gsize"/>
           </parameter>
           <parameter name="params"
@@ -2940,7 +3043,7 @@ asynchronous transaction for response frame within the given timeout.</doc>
                      allow-none="1">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="247">An array with elements for
+                 line="253">An array with elements for
     quadlet data to save parameters in response. Callers should give it
     for buffer with enough space against the request since this library
     performs no reallocation. Due to the reason, the value of this
@@ -2956,13 +3059,13 @@ asynchronous transaction for response frame within the given timeout.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="253">The number of quadlets in the params array.</doc>
+                 line="259">The number of quadlets in the params array.</doc>
             <type name="gsize" c:type="gsize*"/>
           </parameter>
           <parameter name="timeout_ms" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="254">The timeout to wait for response of the transaction since request is transferred in
+                 line="260">The timeout to wait for response of the transaction since request is transferred in
 	milliseconds.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
@@ -2974,10 +3077,10 @@ asynchronous transaction for response frame within the given timeout.</doc>
       <field name="priv">
         <type name="SndEfwPrivate" c:type="HinawaSndEfwPrivate*"/>
       </field>
-      <glib:signal name="responded" when="last">
+      <glib:signal name="responded" when="last" version="2.1">
         <doc xml:space="preserve"
              filename="../src/snd_efw.c"
-             line="67">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
+             line="69">When the unit transfers asynchronous packet as response for Echo Audio Fireworks
 protocol, and the process successfully reads the content of response from ALSA
 Fireworks driver, the #HinawaSndEfw::responded signal handler is called with parameters
 of the response.</doc>
@@ -2988,31 +3091,31 @@ of the response.</doc>
           <parameter name="status" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="70">One of #HinawaSndEfwStatus.</doc>
+                 line="72">One of #HinawaSndEfwStatus.</doc>
             <type name="SndEfwStatus"/>
           </parameter>
           <parameter name="seqnum" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="71">The sequence number of response.</doc>
+                 line="73">The sequence number of response.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="category" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="72">The value of category field in the response.</doc>
+                 line="74">The value of category field in the response.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="command" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="73">The value of command field in the response.</doc>
+                 line="75">The value of command field in the response.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
           <parameter name="frame" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="74">The array with elements for
+                 line="76">The array with elements for
    quadlet data of response for Echo Fireworks protocol.</doc>
             <array length="5" zero-terminated="0" c:type="gpointer">
               <type name="guint32"/>
@@ -3021,7 +3124,7 @@ of the response.</doc>
           <parameter name="frame_size" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_efw.c"
-                 line="76">The number of elements of the array.</doc>
+                 line="78">The number of elements of the array.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -3030,13 +3133,13 @@ of the response.</doc>
     <record name="SndEfwClass"
             c:type="HinawaSndEfwClass"
             glib:is-gtype-struct-for="SndEfw">
-      <source-position filename="../src/snd_efw.h" line="69"/>
+      <source-position filename="../src/snd_efw.h" line="71"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="responded">
         <callback name="responded">
-          <source-position filename="../src/snd_efw.h" line="67"/>
+          <source-position filename="../src/snd_efw.h" line="69"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3094,19 +3197,20 @@ of the response.</doc>
       <source-position filename="../src/snd_efw.h" line="40"/>
     </record>
     <enumeration name="SndEfwStatus"
+                 version="2.1"
                  glib:type-name="HinawaSndEfwStatus"
                  glib:get-type="hinawa_snd_efw_status_get_type"
                  c:type="HinawaSndEfwStatus">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="189">A set of status code for Echo Audio Fireworks Transaction.</doc>
+           line="203">A set of status code for Echo Audio Fireworks Transaction.</doc>
       <member name="ok"
               value="0"
               c:identifier="HINAWA_SND_EFW_STATUS_OK"
               glib:nick="ok">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="191">The transaction finishes successfully.</doc>
+             line="205">The transaction finishes successfully.</doc>
       </member>
       <member name="bad"
               value="1"
@@ -3114,7 +3218,7 @@ of the response.</doc>
               glib:nick="bad">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="192">The request or response includes invalid header.</doc>
+             line="206">The request or response includes invalid header.</doc>
       </member>
       <member name="bad_command"
               value="2"
@@ -3122,7 +3226,7 @@ of the response.</doc>
               glib:nick="bad-command">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="193">The request includes invalid category or command.</doc>
+             line="207">The request includes invalid category or command.</doc>
       </member>
       <member name="comm_err"
               value="3"
@@ -3130,7 +3234,7 @@ of the response.</doc>
               glib:nick="comm-err">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="194">The transaction fails due to communication error.</doc>
+             line="208">The transaction fails due to communication error.</doc>
       </member>
       <member name="bad_quad_count"
               value="4"
@@ -3138,7 +3242,7 @@ of the response.</doc>
               glib:nick="bad-quad-count">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="195">The number of quadlets in transaction is invalid.</doc>
+             line="209">The number of quadlets in transaction is invalid.</doc>
       </member>
       <member name="unsupported"
               value="5"
@@ -3146,7 +3250,7 @@ of the response.</doc>
               glib:nick="unsupported">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="196">The request is not supported.</doc>
+             line="210">The request is not supported.</doc>
       </member>
       <member name="timeout"
               value="6"
@@ -3154,7 +3258,7 @@ of the response.</doc>
               glib:nick="timeout">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="197">The transaction is canceled due to response timeout.</doc>
+             line="211">The transaction is canceled due to response timeout.</doc>
       </member>
       <member name="dsp_timeout"
               value="7"
@@ -3162,7 +3266,7 @@ of the response.</doc>
               glib:nick="dsp-timeout">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="198">The operation for DSP did not finish within timeout.</doc>
+             line="212">The operation for DSP did not finish within timeout.</doc>
       </member>
       <member name="bad_rate"
               value="8"
@@ -3170,7 +3274,7 @@ of the response.</doc>
               glib:nick="bad-rate">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="199">The request includes invalid value for sampling frequency.</doc>
+             line="213">The request includes invalid value for sampling frequency.</doc>
       </member>
       <member name="bad_clock"
               value="9"
@@ -3178,7 +3282,7 @@ of the response.</doc>
               glib:nick="bad-clock">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="200">The request includes invalid value for source of clock.</doc>
+             line="214">The request includes invalid value for source of clock.</doc>
       </member>
       <member name="bad_channel"
               value="10"
@@ -3186,7 +3290,7 @@ of the response.</doc>
               glib:nick="bad-channel">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="201">The request includes invalid value for the number of channel.</doc>
+             line="215">The request includes invalid value for the number of channel.</doc>
       </member>
       <member name="bad_pan"
               value="11"
@@ -3194,7 +3298,7 @@ of the response.</doc>
               glib:nick="bad-pan">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="202">The request includes invalid value for panning.</doc>
+             line="216">The request includes invalid value for panning.</doc>
       </member>
       <member name="flash_busy"
               value="12"
@@ -3202,7 +3306,7 @@ of the response.</doc>
               glib:nick="flash-busy">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="203">The on-board flash is busy and not operable.</doc>
+             line="217">The on-board flash is busy and not operable.</doc>
       </member>
       <member name="bad_mirror"
               value="13"
@@ -3210,7 +3314,7 @@ of the response.</doc>
               glib:nick="bad-mirror">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="204">The request includes invalid value for mirroring channel.</doc>
+             line="218">The request includes invalid value for mirroring channel.</doc>
       </member>
       <member name="bad_led"
               value="14"
@@ -3218,7 +3322,7 @@ of the response.</doc>
               glib:nick="bad-led">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="205">The request includes invalid value for LED.</doc>
+             line="219">The request includes invalid value for LED.</doc>
       </member>
       <member name="bad_parameter"
               value="15"
@@ -3226,7 +3330,7 @@ of the response.</doc>
               glib:nick="bad-parameter">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="206">The request includes invalid value of parameter.</doc>
+             line="220">The request includes invalid value of parameter.</doc>
       </member>
       <member name="large_resp"
               value="16"
@@ -3234,7 +3338,7 @@ of the response.</doc>
               glib:nick="large-resp">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="207">The size of response is larger than expected.</doc>
+             line="221">The size of response is larger than expected.</doc>
       </member>
     </enumeration>
     <class name="SndMotu"
@@ -3244,27 +3348,27 @@ of the response.</doc>
            glib:type-name="HinawaSndMotu"
            glib:get-type="hinawa_snd_motu_get_type"
            glib:type-struct="SndMotuClass">
-      <source-position filename="../src/snd_motu.h" line="56"/>
+      <source-position filename="../src/snd_motu.h" line="58"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_motu_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
-             line="54">Instantiate #HinawaSndMotu object and return the instance.</doc>
-        <source-position filename="../src/snd_motu.h" line="60"/>
+             line="56">Instantiate #HinawaSndMotu object and return the instance.</doc>
+        <source-position filename="../src/snd_motu.h" line="62"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_motu.c"
-               line="59">an instance of #HinawaSndMotu.</doc>
+               line="61">an instance of #HinawaSndMotu.</doc>
           <type name="SndMotu" c:type="HinawaSndMotu*"/>
         </return-value>
       </constructor>
-      <virtual-method name="notified">
+      <virtual-method name="notified" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_motu.h"
              line="47">When Motu models transfer notification, the #HinawaSndMotuClass::notified handler is
 called.</doc>
-        <source-position filename="../src/snd_motu.h" line="55"/>
+        <source-position filename="../src/snd_motu.h" line="57"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3283,11 +3387,14 @@ called.</doc>
           </parameter>
         </parameters>
       </virtual-method>
-      <method name="open" c:identifier="hinawa_snd_motu_open" throws="1">
+      <method name="open"
+              c:identifier="hinawa_snd_motu_open"
+              version="0.8"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
-             line="67">Open ALSA hwdep character device and check it for Motu devices.</doc>
-        <source-position filename="../src/snd_motu.h" line="62"/>
+             line="69">Open ALSA hwdep character device and check it for Motu devices.</doc>
+        <source-position filename="../src/snd_motu.h" line="64"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3295,13 +3402,13 @@ called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.c"
-                 line="69">A #HinawaSndUnit</doc>
+                 line="71">A #HinawaSndUnit</doc>
             <type name="SndMotu" c:type="HinawaSndMotu*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.c"
-                 line="70">A full path of a special file for ALSA hwdep character device</doc>
+                 line="72">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
@@ -3312,7 +3419,7 @@ called.</doc>
       <field name="priv">
         <type name="SndMotuPrivate" c:type="HinawaSndMotuPrivate*"/>
       </field>
-      <glib:signal name="notified" when="last">
+      <glib:signal name="notified" when="last" version="0.8">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
              line="31">When Motu models transfer notification, the #HinawaSndMotu::notified signal is
@@ -3333,13 +3440,13 @@ generated.</doc>
     <record name="SndMotuClass"
             c:type="HinawaSndMotuClass"
             glib:is-gtype-struct-for="SndMotu">
-      <source-position filename="../src/snd_motu.h" line="56"/>
+      <source-position filename="../src/snd_motu.h" line="58"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="notified">
         <callback name="notified">
-          <source-position filename="../src/snd_motu.h" line="55"/>
+          <source-position filename="../src/snd_motu.h" line="57"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3370,27 +3477,27 @@ generated.</doc>
            glib:type-name="HinawaSndTscm"
            glib:get-type="hinawa_snd_tscm_get_type"
            glib:type-struct="SndTscmClass">
-      <source-position filename="../src/snd_tscm.h" line="59"/>
+      <source-position filename="../src/snd_tscm.h" line="61"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_tscm_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_tscm.c"
-             line="60">Instantiate #HinawaSndTscm object and return the instance.</doc>
-        <source-position filename="../src/snd_tscm.h" line="63"/>
+             line="62">Instantiate #HinawaSndTscm object and return the instance.</doc>
+        <source-position filename="../src/snd_tscm.h" line="65"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_tscm.c"
-               line="65">an instance of #HinawaSndTscm.</doc>
+               line="67">an instance of #HinawaSndTscm.</doc>
           <type name="SndTscm" c:type="HinawaSndTscm*"/>
         </return-value>
       </constructor>
-      <virtual-method name="control">
+      <virtual-method name="control" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_tscm.h"
              line="47">When TASCAM FireWire unit transfer control message, the #HinawaSndTscmClass::control
 handler is emitted.</doc>
-        <source-position filename="../src/snd_tscm.h" line="57"/>
+        <source-position filename="../src/snd_tscm.h" line="59"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3423,16 +3530,16 @@ handler is emitted.</doc>
       </virtual-method>
       <method name="get_state"
               c:identifier="hinawa_snd_tscm_get_state"
+              version="1.1"
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_tscm.c"
-             line="91">Get the latest states of target device.</doc>
-        <source-position filename="../src/snd_tscm.h" line="67"/>
+             line="95">Get the latest states of target device.</doc>
+        <source-position filename="../src/snd_tscm.h" line="69"/>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/snd_tscm.c"
-               line="98">state
-	    image.</doc>
+               line="102">state image.</doc>
           <array zero-terminated="0" c:type="const guint32*" fixed-size="64">
             <type name="guint32"/>
           </array>
@@ -3441,16 +3548,19 @@ handler is emitted.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_tscm.c"
-                 line="93">A #HinawaSndTscm</doc>
+                 line="97">A #HinawaSndTscm</doc>
             <type name="SndTscm" c:type="HinawaSndTscm*"/>
           </instance-parameter>
         </parameters>
       </method>
-      <method name="open" c:identifier="hinawa_snd_tscm_open" throws="1">
+      <method name="open"
+              c:identifier="hinawa_snd_tscm_open"
+              version="1.1"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_tscm.c"
-             line="73">Open ALSA hwdep character device and check it for Dg00x  devices.</doc>
-        <source-position filename="../src/snd_tscm.h" line="65"/>
+             line="75">Open ALSA hwdep character device and check it for Dg00x  devices.</doc>
+        <source-position filename="../src/snd_tscm.h" line="67"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3458,13 +3568,13 @@ handler is emitted.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_tscm.c"
-                 line="75">A #HinawaSndUnit</doc>
+                 line="77">A #HinawaSndUnit</doc>
             <type name="SndTscm" c:type="HinawaSndTscm*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_tscm.c"
-                 line="76">A full path of a special file for ALSA hwdep character device</doc>
+                 line="78">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
@@ -3475,7 +3585,7 @@ handler is emitted.</doc>
       <field name="priv">
         <type name="SndTscmPrivate" c:type="HinawaSndTscmPrivate*"/>
       </field>
-      <glib:signal name="control" when="last">
+      <glib:signal name="control" when="last" version="1.1">
         <doc xml:space="preserve"
              filename="../src/snd_tscm.c"
              line="34">When TASCAM FireWire unit transfer control message, the #HinawaSndTscm::control
@@ -3508,13 +3618,13 @@ signal is emitted.</doc>
     <record name="SndTscmClass"
             c:type="HinawaSndTscmClass"
             glib:is-gtype-struct-for="SndTscm">
-      <source-position filename="../src/snd_tscm.h" line="59"/>
+      <source-position filename="../src/snd_tscm.h" line="61"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="control">
         <callback name="control">
-          <source-position filename="../src/snd_tscm.h" line="57"/>
+          <source-position filename="../src/snd_tscm.h" line="59"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3557,29 +3667,29 @@ signal is emitted.</doc>
            glib:type-name="HinawaSndUnit"
            glib:get-type="hinawa_snd_unit_get_type"
            glib:type-struct="SndUnitClass">
-      <source-position filename="../src/snd_unit.h" line="71"/>
+      <source-position filename="../src/snd_unit.h" line="75"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_unit_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="215">Instantiate #HinawaSndUnit object and return the instance.</doc>
-        <source-position filename="../src/snd_unit.h" line="75"/>
+             line="251">Instantiate #HinawaSndUnit object and return the instance.</doc>
+        <source-position filename="../src/snd_unit.h" line="79"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_unit.c"
-               line="220">an instance of #HinawaSndUnit.</doc>
+               line="256">an instance of #HinawaSndUnit.</doc>
           <type name="SndUnit" c:type="HinawaSndUnit*"/>
         </return-value>
       </constructor>
-      <virtual-method name="disconnected">
+      <virtual-method name="disconnected" version="2.0">
         <doc xml:space="preserve"
              filename="../src/snd_unit.h"
-             line="61">When the sound card is not available anymore due to unbinding driver
+             line="63">When the sound card is not available anymore due to unbinding driver
 or hot unplugging, this signal is emit. The owner of this object
 should call g_object_free() as quickly as possible to release ALSA
 hwdep character device.</doc>
-        <source-position filename="../src/snd_unit.h" line="70"/>
+        <source-position filename="../src/snd_unit.h" line="74"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3587,17 +3697,17 @@ hwdep character device.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.h"
-                 line="63">A #HinawaSndUnit</doc>
+                 line="65">A #HinawaSndUnit</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
         </parameters>
       </virtual-method>
-      <virtual-method name="lock_status">
+      <virtual-method name="lock_status" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_unit.h"
              line="51">When ALSA kernel-streaming status is changed, this #HinawaSndUnitClass::lock_status
 handler is called.</doc>
-        <source-position filename="../src/snd_unit.h" line="59"/>
+        <source-position filename="../src/snd_unit.h" line="61"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3622,8 +3732,8 @@ handler is called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="561">Create Gsource for GMainContext to dispatch events for the sound device.</doc>
-        <source-position filename="../src/snd_unit.h" line="84"/>
+             line="603">Create Gsource for GMainContext to dispatch events for the sound device.</doc>
+        <source-position filename="../src/snd_unit.h" line="88"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3631,7 +3741,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="563">A #HinawaSndUnit.</doc>
+                 line="605">A #HinawaSndUnit.</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
           <parameter name="gsrc"
@@ -3640,7 +3750,7 @@ handler is called.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="564">A #GSource.</doc>
+                 line="606">A #GSource.</doc>
             <type name="GLib.Source" c:type="GSource**"/>
           </parameter>
         </parameters>
@@ -3650,8 +3760,8 @@ handler is called.</doc>
               version="2.0.">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="317">Retrieve an instance of #HinawaFwNode associated to the given unit.</doc>
-        <source-position filename="../src/snd_unit.h" line="79"/>
+             line="355">Retrieve an instance of #HinawaFwNode associated to the given unit.</doc>
+        <source-position filename="../src/snd_unit.h" line="83"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3659,7 +3769,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="319">A #HinawaSndUnit.</doc>
+                 line="357">A #HinawaSndUnit.</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
           <parameter name="node"
@@ -3668,15 +3778,38 @@ handler is called.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="320">A #HinawaFwNode.</doc>
+                 line="358">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode**"/>
           </parameter>
         </parameters>
       </method>
-      <method name="lock" c:identifier="hinawa_snd_unit_lock" throws="1">
+      <method name="lock"
+              c:identifier="hinawa_snd_unit_lock"
+              version="0.3"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="338">Disallow ALSA to start kernel-streaming.</doc>
+             line="376">Disallow ALSA to start kernel-streaming.</doc>
+        <source-position filename="../src/snd_unit.h" line="85"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_unit.c"
+                 line="378">A #HinawaSndUnit</doc>
+            <type name="SndUnit" c:type="HinawaSndUnit*"/>
+          </instance-parameter>
+        </parameters>
+      </method>
+      <method name="open"
+              c:identifier="hinawa_snd_unit_open"
+              version="0.4"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="../src/snd_unit.c"
+             line="264">Open ALSA hwdep character device and check it for FireWire sound devices.</doc>
         <source-position filename="../src/snd_unit.h" line="81"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3685,39 +3818,25 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="340">A #HinawaSndUnit</doc>
-            <type name="SndUnit" c:type="HinawaSndUnit*"/>
-          </instance-parameter>
-        </parameters>
-      </method>
-      <method name="open" c:identifier="hinawa_snd_unit_open" throws="1">
-        <doc xml:space="preserve"
-             filename="../src/snd_unit.c"
-             line="228">Open ALSA hwdep character device and check it for FireWire sound devices.</doc>
-        <source-position filename="../src/snd_unit.h" line="77"/>
-        <return-value transfer-ownership="none">
-          <type name="none" c:type="void"/>
-        </return-value>
-        <parameters>
-          <instance-parameter name="self" transfer-ownership="none">
-            <doc xml:space="preserve"
-                 filename="../src/snd_unit.c"
-                 line="230">A #HinawaSndUnit</doc>
+                 line="266">A #HinawaSndUnit</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="231">A full path of a special file for ALSA hwdep character device</doc>
+                 line="267">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
           </parameter>
         </parameters>
       </method>
-      <method name="unlock" c:identifier="hinawa_snd_unit_unlock" throws="1">
+      <method name="unlock"
+              c:identifier="hinawa_snd_unit_unlock"
+              version="0.3"
+              throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="368">Allow ALSA to start kernel-streaming.</doc>
-        <source-position filename="../src/snd_unit.h" line="82"/>
+             line="408">Allow ALSA to start kernel-streaming.</doc>
+        <source-position filename="../src/snd_unit.h" line="86"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3725,24 +3844,24 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="370">A #HinawaSndUnit</doc>
+                 line="410">A #HinawaSndUnit</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
         </parameters>
       </method>
-      <property name="card" transfer-ownership="none">
+      <property name="card" version="2.0" transfer-ownership="none">
         <type name="guint" c:type="guint"/>
       </property>
-      <property name="device" transfer-ownership="none">
+      <property name="device" version="0.3" transfer-ownership="none">
         <type name="utf8" c:type="gchar*"/>
       </property>
-      <property name="guid" transfer-ownership="none">
+      <property name="guid" version="0.4" transfer-ownership="none">
         <type name="guint64" c:type="guint64"/>
       </property>
-      <property name="streaming" transfer-ownership="none">
+      <property name="streaming" version="0.4" transfer-ownership="none">
         <type name="gboolean" c:type="gboolean"/>
       </property>
-      <property name="type" transfer-ownership="none">
+      <property name="type" version="1.0" transfer-ownership="none">
         <type name="SndUnitType"/>
       </property>
       <field name="parent_instance">
@@ -3751,10 +3870,10 @@ handler is called.</doc>
       <field name="priv">
         <type name="SndUnitPrivate" c:type="HinawaSndUnitPrivate*"/>
       </field>
-      <glib:signal name="disconnected" when="last">
+      <glib:signal name="disconnected" when="last" version="2.0">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="188">When the sound card is not available anymore due to unbinding driver
+             line="222">When the sound card is not available anymore due to unbinding driver
 or hot unplugging, this signal is emit. The owner of this object
 should call g_object_free() as quickly as possible to release ALSA
 hwdep character device.</doc>
@@ -3762,10 +3881,10 @@ hwdep character device.</doc>
           <type name="none" c:type="void"/>
         </return-value>
       </glib:signal>
-      <glib:signal name="lock-status" when="last">
+      <glib:signal name="lock-status" when="last" version="0.3">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="171">When ALSA kernel-streaming status is changed, this #HinawaSndUnit::lock-status
+             line="203">When ALSA kernel-streaming status is changed, this #HinawaSndUnit::lock-status
 signal is generated.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3774,7 +3893,7 @@ signal is generated.</doc>
           <parameter name="state" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="174">%TRUE when locked, %FALSE when unlocked.</doc>
+                 line="206">%TRUE when locked, %FALSE when unlocked.</doc>
             <type name="gboolean" c:type="gboolean"/>
           </parameter>
         </parameters>
@@ -3783,13 +3902,13 @@ signal is generated.</doc>
     <record name="SndUnitClass"
             c:type="HinawaSndUnitClass"
             glib:is-gtype-struct-for="SndUnit">
-      <source-position filename="../src/snd_unit.h" line="71"/>
+      <source-position filename="../src/snd_unit.h" line="75"/>
       <field name="parent_class">
         <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
       <field name="lock_status">
         <callback name="lock_status">
-          <source-position filename="../src/snd_unit.h" line="59"/>
+          <source-position filename="../src/snd_unit.h" line="61"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3811,7 +3930,7 @@ signal is generated.</doc>
       </field>
       <field name="disconnected">
         <callback name="disconnected">
-          <source-position filename="../src/snd_unit.h" line="70"/>
+          <source-position filename="../src/snd_unit.h" line="74"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3819,7 +3938,7 @@ signal is generated.</doc>
             <parameter name="self" transfer-ownership="none">
               <doc xml:space="preserve"
                    filename="../src/snd_unit.h"
-                   line="63">A #HinawaSndUnit</doc>
+                   line="65">A #HinawaSndUnit</doc>
               <type name="SndUnit" c:type="HinawaSndUnit*"/>
             </parameter>
           </parameters>
@@ -3827,20 +3946,21 @@ signal is generated.</doc>
       </field>
     </record>
     <enumeration name="SndUnitError"
+                 version="2.1"
                  glib:type-name="HinawaSndUnitError"
                  glib:get-type="hinawa_snd_unit_error_get_type"
                  c:type="HinawaSndUnitError"
                  glib:error-domain="hinawa-snd-unit-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="153">A set of error code for GError with domain which equals to #hinawa_snd_unit_error_quark().</doc>
+           line="163">A set of error code for GError with domain which equals to #hinawa_snd_unit_error_quark().</doc>
       <member name="disconnected"
               value="0"
               c:identifier="HINAWA_SND_UNIT_ERROR_DISCONNECTED"
               glib:nick="disconnected">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="155">The hwdep device associated to the instance is disconnected.</doc>
+             line="165">The hwdep device associated to the instance is disconnected.</doc>
       </member>
       <member name="used"
               value="1"
@@ -3848,7 +3968,7 @@ signal is generated.</doc>
               glib:nick="used">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="156">The hedep device is already in use.</doc>
+             line="166">The hedep device is already in use.</doc>
       </member>
       <member name="opened"
               value="2"
@@ -3856,7 +3976,7 @@ signal is generated.</doc>
               glib:nick="opened">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="157">The instance is already associated to unit by opening hwdep
+             line="167">The instance is already associated to unit by opening hwdep
 				character device.</doc>
       </member>
       <member name="not_opened"
@@ -3865,7 +3985,7 @@ signal is generated.</doc>
               glib:nick="not-opened">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="159">The instance is not associated to unit yet by opening hwdep
+             line="169">The instance is not associated to unit yet by opening hwdep
 				character device.</doc>
       </member>
       <member name="locked"
@@ -3874,7 +3994,7 @@ signal is generated.</doc>
               glib:nick="locked">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="161">The hwdep device is already locked for kernel packet streaming.</doc>
+             line="171">The hwdep device is already locked for kernel packet streaming.</doc>
       </member>
       <member name="unlocked"
               value="5"
@@ -3882,7 +4002,7 @@ signal is generated.</doc>
               glib:nick="unlocked">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="162">The hwdep device is not locked for kernel packet streaming yet.</doc>
+             line="172">The hwdep device is not locked for kernel packet streaming yet.</doc>
       </member>
       <member name="wrong_class"
               value="6"
@@ -3890,7 +4010,7 @@ signal is generated.</doc>
               glib:nick="wrong-class">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="163">The hwdep device is not for the unit expected by the class.</doc>
+             line="173">The hwdep device is not for the unit expected by the class.</doc>
       </member>
       <member name="failed"
               value="7"
@@ -3898,16 +4018,18 @@ signal is generated.</doc>
               glib:nick="failed">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="164">The system call fails.</doc>
+             line="174">The system call fails.</doc>
       </member>
-      <function name="quark" c:identifier="hinawa_snd_unit_error_quark">
+      <function name="quark"
+                c:identifier="hinawa_snd_unit_error_quark"
+                version="2.1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
              line="26">Return the GQuark for error domain of GError which has code in #HinawaSndUnitError.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve"
                filename="../src/snd_unit.c"
-               line="31">A #GQuark.</doc>
+               line="33">A #GQuark.</doc>
           <type name="GLib.Quark" c:type="GQuark"/>
         </return-value>
       </function>
@@ -3916,19 +4038,20 @@ signal is generated.</doc>
       <source-position filename="../src/snd_unit.h" line="40"/>
     </record>
     <enumeration name="SndUnitType"
+                 version="1.0"
                  glib:type-name="HinawaSndUnitType"
                  glib:get-type="hinawa_snd_unit_type_get_type"
                  c:type="HinawaSndUnitType">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="85">A representation of type for sound unit defined by Linux sound subsystem.</doc>
+           line="87">A representation of type for sound unit defined by Linux sound subsystem.</doc>
       <member name="dice"
               value="1"
               c:identifier="HINAWA_SND_UNIT_TYPE_DICE"
               glib:nick="dice">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="87">The type of DICE ASIC.</doc>
+             line="89">The type of DICE ASIC.</doc>
       </member>
       <member name="fireworks"
               value="2"
@@ -3936,7 +4059,7 @@ signal is generated.</doc>
               glib:nick="fireworks">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="88">The type of Fireworks board module.</doc>
+             line="90">The type of Fireworks board module.</doc>
       </member>
       <member name="bebob"
               value="3"
@@ -3944,7 +4067,7 @@ signal is generated.</doc>
               glib:nick="bebob">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="89">The type of BeBoB ASIC.</doc>
+             line="91">The type of BeBoB ASIC.</doc>
       </member>
       <member name="oxfw"
               value="4"
@@ -3952,7 +4075,7 @@ signal is generated.</doc>
               glib:nick="oxfw">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="90">The type of OXFW ASIC</doc>
+             line="92">The type of OXFW ASIC</doc>
       </member>
       <member name="digi00x"
               value="5"
@@ -3960,7 +4083,7 @@ signal is generated.</doc>
               glib:nick="digi00x">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="91">The type of Digi00x series.</doc>
+             line="93">The type of Digi00x series.</doc>
       </member>
       <member name="tascam"
               value="6"
@@ -3968,7 +4091,7 @@ signal is generated.</doc>
               glib:nick="tascam">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="92">The type of Tascam FireWire series.</doc>
+             line="94">The type of Tascam FireWire series.</doc>
       </member>
       <member name="motu"
               value="7"
@@ -3976,7 +4099,7 @@ signal is generated.</doc>
               glib:nick="motu">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="93">The type of MOTU FireWire series.</doc>
+             line="95">The type of MOTU FireWire series.</doc>
       </member>
       <member name="fireface"
               value="8"
@@ -3984,45 +4107,84 @@ signal is generated.</doc>
               glib:nick="fireface">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="94">The type of RME Fireface series.</doc>
+             line="96">The type of RME Fireface series.</doc>
       </member>
     </enumeration>
+    <docsection name="fw_fcp">
+      <doc xml:space="preserve"
+           filename="../src/fw_fcp.c"
+           line="9">A HinawaFwFcp supports Function Control Protocol (FCP) in IEC 61883-1, in which no way is defined
+to match response against command by the contents of frames. In 'AV/C Digital Interface Command
+Set General Specification Version 4.2' (Sep 1 2004, 1394TA), a pair of command and response is
+loosely matched by the contents of frames. For convenience, HinawaFwFcp supports synchronous API
+of command and response for AV/C specification.
+
+Any of transaction frames should be aligned to 8bit (byte).
+This class is an application of #HinawaFwReq / #HinawaFwResp.</doc>
+    </docsection>
     <function name="fw_fcp_error_quark"
               c:identifier="hinawa_fw_fcp_error_quark"
-              moved-to="FwFcpError.quark">
+              moved-to="FwFcpError.quark"
+              version="2.1">
       <doc xml:space="preserve"
            filename="../src/fw_fcp.c"
            line="25">Return the GQuark for error domain of GError which has code in #HinawaFwFcpError.</doc>
       <return-value transfer-ownership="none">
         <doc xml:space="preserve"
              filename="../src/fw_fcp.c"
-             line="30">A #GQuark.</doc>
+             line="32">A #GQuark.</doc>
         <type name="GLib.Quark" c:type="GQuark"/>
       </return-value>
     </function>
+    <docsection name="fw_node">
+      <doc xml:space="preserve"
+           filename="../src/fw_node.c"
+           line="13">A #HinawaFwNode is an event listener for a specified node on IEEE 1394 bus.
+This class is an application of Linux FireWire subsystem.
+All of operations utilize ioctl(2) with subsystem specific request commands.</doc>
+    </docsection>
     <function name="fw_node_error_quark"
               c:identifier="hinawa_fw_node_error_quark"
-              moved-to="FwNodeError.quark">
+              moved-to="FwNodeError.quark"
+              version="2.1">
       <doc xml:space="preserve"
            filename="../src/fw_node.c"
            line="46">Return the GQuark for error domain of GError which has code in #HinawaFwNodeError.</doc>
       <return-value transfer-ownership="none">
         <doc xml:space="preserve"
              filename="../src/fw_node.c"
-             line="51">A #GQuark.</doc>
+             line="53">A #GQuark.</doc>
         <type name="GLib.Quark" c:type="GQuark"/>
       </return-value>
     </function>
+    <docsection name="fw_req">
+      <doc xml:space="preserve"
+           filename="../src/fw_req.c"
+           line="9">A HinawaFwReq supports some types of transactions in IEEE 1212. Mainly for
+read, write and lock operations.
+
+This class is an application of Linux FireWire subsystem. All of operations
+utilize ioctl(2) with subsystem specific request commands.</doc>
+    </docsection>
+    <docsection name="fw_resp">
+      <doc xml:space="preserve"
+           filename="../src/fw_resp.c"
+           line="10">A HinawaFwResp responds requests from any units.
+
+This class is an application of Linux FireWire subsystem. All of operations
+utilize ioctl(2) with subsystem specific request commands.</doc>
+    </docsection>
     <function name="fw_resp_error_quark"
               c:identifier="hinawa_fw_resp_error_quark"
-              moved-to="FwRespError.quark">
+              moved-to="FwRespError.quark"
+              version="2.2">
       <doc xml:space="preserve"
            filename="../src/fw_resp.c"
            line="22">Return the GQuark for error domain of GError which has code in #HinawaFwRespError.</doc>
       <return-value transfer-ownership="none">
         <doc xml:space="preserve"
              filename="../src/fw_resp.c"
-             line="27">A #GQuark.</doc>
+             line="29">A #GQuark.</doc>
         <type name="GLib.Quark" c:type="GQuark"/>
       </return-value>
     </function>
@@ -4224,29 +4386,67 @@ signal is generated.</doc>
         </parameter>
       </parameters>
     </function>
+    <docsection name="snd_dg00x">
+      <doc xml:space="preserve"
+           filename="../src/snd_dg00x.c"
+           line="7">A #HinawaSndDg00x listen to Dg00x notification and generates signal when
+received. This inherits #HinawaSndUnit.</doc>
+    </docsection>
+    <docsection name="snd_dice">
+      <doc xml:space="preserve"
+           filename="../src/snd_dice.c"
+           line="7">A #HinawaSndDice listen to Dice notification and generates signal when
+received. This inherits #HinawaSndUnit.</doc>
+    </docsection>
     <function name="snd_dice_error_quark"
               c:identifier="hinawa_snd_dice_error_quark"
-              moved-to="SndDiceError.quark">
+              moved-to="SndDiceError.quark"
+              version="2.1">
       <doc xml:space="preserve"
            filename="../src/snd_dice.c"
            line="17">Return the GQuark for error domain of GError which has code in #HinawaSndDiceError.</doc>
       <return-value transfer-ownership="none">
         <doc xml:space="preserve"
              filename="../src/snd_dice.c"
-             line="22">A #GQuark.</doc>
+             line="24">A #GQuark.</doc>
         <type name="GLib.Quark" c:type="GQuark"/>
       </return-value>
     </function>
+    <docsection name="snd_efw">
+      <doc xml:space="preserve"
+           filename="../src/snd_efw.c"
+           line="8">A #HinawaSndEfw is an application of Echo Fireworks Transaction (EFT).
+This inherits #HinawaSndUnit.</doc>
+    </docsection>
+    <docsection name="snd_motu">
+      <doc xml:space="preserve"
+           filename="../src/snd_motu.c"
+           line="7">A #HinawaSndMotu is an application of asynchronous notification defined by
+Mark of the Unicorn (MOTU). This inherits #HinawaSndUnit.</doc>
+    </docsection>
+    <docsection name="snd_tscm">
+      <doc xml:space="preserve"
+           filename="../src/snd_tscm.c"
+           line="9">A #HinawaSndTscm is an application of protocol defined by TASCAM. This
+inherits #HinawaSndUnit.</doc>
+    </docsection>
+    <docsection name="snd_unit">
+      <doc xml:space="preserve"
+           filename="../src/snd_unit.c"
+           line="16">This class is an application of ALSA FireWire stack. Any functionality which
+ALSA drivers in the stack can be available.</doc>
+    </docsection>
     <function name="snd_unit_error_quark"
               c:identifier="hinawa_snd_unit_error_quark"
-              moved-to="SndUnitError.quark">
+              moved-to="SndUnitError.quark"
+              version="2.1">
       <doc xml:space="preserve"
            filename="../src/snd_unit.c"
            line="26">Return the GQuark for error domain of GError which has code in #HinawaSndUnitError.</doc>
       <return-value transfer-ownership="none">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="31">A #GQuark.</doc>
+             line="33">A #GQuark.</doc>
         <type name="GLib.Quark" c:type="GQuark"/>
       </return-value>
     </function>
