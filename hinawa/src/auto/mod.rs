@@ -42,6 +42,9 @@ mod snd_unit;
 pub use self::snd_unit::{SndUnit, SndUnitClass, NONE_SND_UNIT};
 pub use self::snd_unit::SndUnitExt;
 
+mod snd_motu_register_dsp_parameter;
+pub use self::snd_motu_register_dsp_parameter::SndMotuRegisterDspParameter;
+
 mod enums;
 pub use self::enums::FwFcpError;
 pub use self::enums::FwNodeError;

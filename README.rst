@@ -2,15 +2,15 @@
 hinawa Rust bindings
 ====================
 
-2020/08/24
+2021/11/17
 Takashi Sakamoto
 
 Introduction
 ============
 
-* This repository includes FFI and API bindings for ``libhinawa 2`` which produces ``Hinawa-3.0.gir``.
+* This repository includes FFI and API bindings for ``libhinawa 2`` which provides ``Hinawa-3.0.gir``.
 
-  * https://github.com/takaswie/libhinawa
+  * https://github.com/alsa-project/libhinawa
 
 * Unfortunately, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or ``Hinawa-1.0.gir``).
 

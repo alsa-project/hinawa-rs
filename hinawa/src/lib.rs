@@ -33,3 +33,9 @@ pub use snd_tscm::*;
 
 mod enums;
 pub use enums::*;
+
+mod snd_motu;
+pub use snd_motu::*;
+
+mod snd_motu_register_dsp_parameter;
+pub use snd_motu_register_dsp_parameter::*;
