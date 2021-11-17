@@ -262,6 +262,7 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
     ("HinawaSndEfwStatus", Layout {size: size_of::<HinawaSndEfwStatus>(), alignment: align_of::<HinawaSndEfwStatus>()}),
     ("HinawaSndMotu", Layout {size: size_of::<HinawaSndMotu>(), alignment: align_of::<HinawaSndMotu>()}),
     ("HinawaSndMotuClass", Layout {size: size_of::<HinawaSndMotuClass>(), alignment: align_of::<HinawaSndMotuClass>()}),
+    ("HinawaSndMotuRegisterDspParameter", Layout {size: size_of::<HinawaSndMotuRegisterDspParameter>(), alignment: align_of::<HinawaSndMotuRegisterDspParameter>()}),
     ("HinawaSndTscm", Layout {size: size_of::<HinawaSndTscm>(), alignment: align_of::<HinawaSndTscm>()}),
     ("HinawaSndTscmClass", Layout {size: size_of::<HinawaSndTscmClass>(), alignment: align_of::<HinawaSndTscmClass>()}),
     ("HinawaSndUnit", Layout {size: size_of::<HinawaSndUnit>(), alignment: align_of::<HinawaSndUnit>()}),

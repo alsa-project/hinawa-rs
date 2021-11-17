@@ -260,6 +260,7 @@ pub type HinawaSndEfwPrivate = *mut _HinawaSndEfwPrivate;
 pub struct HinawaSndMotuClass {
     pub parent_class: HinawaSndUnitClass,
     pub notified: Option<unsafe extern "C" fn(*mut HinawaSndMotu, c_uint)>,
+    pub register_dsp_changed: Option<unsafe extern "C" fn(*mut HinawaSndMotu, *const u32, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaSndMotuClass {
@@ -267,6 +268,7 @@ impl ::std::fmt::Debug for HinawaSndMotuClass {
         f.debug_struct(&format!("HinawaSndMotuClass @ {:?}", self as *const _))
          .field("parent_class", &self.parent_class)
          .field("notified", &self.notified)
+         .field("register_dsp_changed", &self.register_dsp_changed)
          .finish()
     }
 }
@@ -275,6 +277,19 @@ impl ::std::fmt::Debug for HinawaSndMotuClass {
 pub struct _HinawaSndMotuPrivate(c_void);
 
 pub type HinawaSndMotuPrivate = *mut _HinawaSndMotuPrivate;
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct HinawaSndMotuRegisterDspParameter {
+    pub parameter: [u8; 512],
+}
+
+impl ::std::fmt::Debug for HinawaSndMotuRegisterDspParameter {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HinawaSndMotuRegisterDspParameter @ {:?}", self as *const _))
+         .finish()
+    }
+}
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -532,6 +547,26 @@ extern "C" {
     pub fn hinawa_snd_unit_type_get_type() -> GType;
 
     //=========================================================================
+    // HinawaSndMotuRegisterDspParameter
+    //=========================================================================
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_type() -> GType;
+    pub fn hinawa_snd_motu_register_dsp_parameter_new() -> *mut HinawaSndMotuRegisterDspParameter;
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_assignment(self_: *const HinawaSndMotuRegisterDspParameter, assignment: *mut u8);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_volume(self_: *const HinawaSndMotuRegisterDspParameter, volume: *mut u8);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_input_flag(self_: *const HinawaSndMotuRegisterDspParameter, flag: *mut *const [u8; 10]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_input_gain_and_invert(self_: *const HinawaSndMotuRegisterDspParameter, gain_and_invert: *mut *const [u8; 10]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_line_input_boost_flag(self_: *const HinawaSndMotuRegisterDspParameter, boost_flag: *mut u8);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_line_input_nominal_level_flag(self_: *const HinawaSndMotuRegisterDspParameter, nominal_level_flag: *mut u8);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_main_output_paired_volume(self_: *const HinawaSndMotuRegisterDspParameter, volume: *mut u8);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_flag(self_: *const HinawaSndMotuRegisterDspParameter, flag: *mut *const [u8; 4]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_volume(self_: *const HinawaSndMotuRegisterDspParameter, volume: *mut *const [u8; 4]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_flag(self_: *const HinawaSndMotuRegisterDspParameter, mixer: size_t, flag: *mut *const [u8; 20]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_gain(self_: *const HinawaSndMotuRegisterDspParameter, mixer: size_t, gain: *mut *const [u8; 20]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_balance(self_: *const HinawaSndMotuRegisterDspParameter, mixer: size_t, balance: *mut *const [u8; 20]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_width(self_: *const HinawaSndMotuRegisterDspParameter, mixer: size_t, width: *mut *const [u8; 20]);
+    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_pan(self_: *const HinawaSndMotuRegisterDspParameter, mixer: size_t, pan: *mut *const [u8; 20]);
+
+    //=========================================================================
     // HinawaFwFcp
     //=========================================================================
     pub fn hinawa_fw_fcp_get_type() -> GType;
@@ -604,6 +639,9 @@ extern "C" {
     pub fn hinawa_snd_motu_get_type() -> GType;
     pub fn hinawa_snd_motu_new() -> *mut HinawaSndMotu;
     pub fn hinawa_snd_motu_open(self_: *mut HinawaSndMotu, path: *mut c_char, error: *mut *mut glib::GError);
+    pub fn hinawa_snd_motu_read_command_dsp_meter(self_: *mut HinawaSndMotu, meter: *const *mut [c_float; 400], error: *mut *mut glib::GError);
+    pub fn hinawa_snd_motu_read_register_dsp_meter(self_: *mut HinawaSndMotu, meter: *const *mut [u8; 48], error: *mut *mut glib::GError);
+    pub fn hinawa_snd_motu_read_register_dsp_parameter(self_: *mut HinawaSndMotu, param: *const *mut HinawaSndMotuRegisterDspParameter, error: *mut *mut glib::GError);
 
     //=========================================================================
     // HinawaSndTscm

@@ -2188,7 +2188,7 @@ specification.</doc>
     <function-macro name="IS_SND_MOTU"
                     c:identifier="HINAWA_IS_SND_MOTU"
                     introspectable="0">
-      <source-position filename="../src/snd_motu.h" line="18"/>
+      <source-position filename="../src/snd_motu.h" line="19"/>
       <parameters>
         <parameter name="obj">
         </parameter>
@@ -2197,7 +2197,7 @@ specification.</doc>
     <function-macro name="IS_SND_MOTU_CLASS"
                     c:identifier="HINAWA_IS_SND_MOTU_CLASS"
                     introspectable="0">
-      <source-position filename="../src/snd_motu.h" line="26"/>
+      <source-position filename="../src/snd_motu.h" line="27"/>
       <parameters>
         <parameter name="klass">
         </parameter>
@@ -2323,7 +2323,7 @@ specification.</doc>
     <function-macro name="SND_MOTU"
                     c:identifier="HINAWA_SND_MOTU"
                     introspectable="0">
-      <source-position filename="../src/snd_motu.h" line="14"/>
+      <source-position filename="../src/snd_motu.h" line="15"/>
       <parameters>
         <parameter name="obj">
         </parameter>
@@ -2332,7 +2332,7 @@ specification.</doc>
     <function-macro name="SND_MOTU_CLASS"
                     c:identifier="HINAWA_SND_MOTU_CLASS"
                     introspectable="0">
-      <source-position filename="../src/snd_motu.h" line="22"/>
+      <source-position filename="../src/snd_motu.h" line="23"/>
       <parameters>
         <parameter name="klass">
         </parameter>
@@ -2341,7 +2341,7 @@ specification.</doc>
     <function-macro name="SND_MOTU_GET_CLASS"
                     c:identifier="HINAWA_SND_MOTU_GET_CLASS"
                     introspectable="0">
-      <source-position filename="../src/snd_motu.h" line="29"/>
+      <source-position filename="../src/snd_motu.h" line="30"/>
       <parameters>
         <parameter name="obj">
         </parameter>
@@ -3348,27 +3348,27 @@ of the response.</doc>
            glib:type-name="HinawaSndMotu"
            glib:get-type="hinawa_snd_motu_get_type"
            glib:type-struct="SndMotuClass">
-      <source-position filename="../src/snd_motu.h" line="58"/>
+      <source-position filename="../src/snd_motu.h" line="77"/>
       <constructor name="new"
                    c:identifier="hinawa_snd_motu_new"
                    version="1.3.">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
-             line="56">Instantiate #HinawaSndMotu object and return the instance.</doc>
-        <source-position filename="../src/snd_motu.h" line="62"/>
+             line="84">Instantiate #HinawaSndMotu object and return the instance.</doc>
+        <source-position filename="../src/snd_motu.h" line="81"/>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve"
                filename="../src/snd_motu.c"
-               line="61">an instance of #HinawaSndMotu.</doc>
+               line="89">an instance of #HinawaSndMotu.</doc>
           <type name="SndMotu" c:type="HinawaSndMotu*"/>
         </return-value>
       </constructor>
       <virtual-method name="notified" version="1.2">
         <doc xml:space="preserve"
              filename="../src/snd_motu.h"
-             line="47">When Motu models transfer notification, the #HinawaSndMotuClass::notified handler is
+             line="48">When Motu models transfer notification, the #HinawaSndMotuClass::notified handler is
 called.</doc>
-        <source-position filename="../src/snd_motu.h" line="57"/>
+        <source-position filename="../src/snd_motu.h" line="58"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3376,13 +3376,50 @@ called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.h"
-                 line="49">A #HinawaSndMotu</doc>
+                 line="50">A #HinawaSndMotu</doc>
             <type name="SndMotu" c:type="HinawaSndMotu*"/>
           </instance-parameter>
           <parameter name="message" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.h"
-                 line="50">A notification message</doc>
+                 line="51">A notification message</doc>
+            <type name="guint" c:type="guint"/>
+          </parameter>
+        </parameters>
+      </virtual-method>
+      <virtual-method name="register_dsp_changed" version="2.4">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu.h"
+             line="60">When MOTU register DSP models transfer events by messages in the sequence of isochronous
+packet, the #HinawaSndMotuClass::register_dsp_changed handle is called.
+The event consists of encoded data. The most significant byte is the type of message. The
+next two bytes are identifier 0 and 1. The least significant byte is value. The meaning
+of identifier 0, 1 and value is decided depending on the type. For detail, see
+`sound/firewire/motu/motu-register-dsp-message-parser.c` in Linux kernel.</doc>
+        <source-position filename="../src/snd_motu.h" line="76"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.h"
+                 line="62">A #HinawaSndMotu</doc>
+            <type name="SndMotu" c:type="HinawaSndMotu*"/>
+          </instance-parameter>
+          <parameter name="events" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.h"
+                 line="63">The array with element for
+    unsigned 32 bit encoded data.</doc>
+            <array length="1" zero-terminated="0" c:type="const guint32*">
+              <type name="guint32"/>
+            </array>
+          </parameter>
+          <parameter name="length" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.h"
+                 line="65">The length of events.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -3393,8 +3430,8 @@ called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
-             line="69">Open ALSA hwdep character device and check it for Motu devices.</doc>
-        <source-position filename="../src/snd_motu.h" line="64"/>
+             line="97">Open ALSA hwdep character device and check it for Motu devices.</doc>
+        <source-position filename="../src/snd_motu.h" line="83"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -3402,14 +3439,109 @@ called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.c"
-                 line="71">A #HinawaSndUnit</doc>
+                 line="99">A #HinawaSndUnit</doc>
             <type name="SndMotu" c:type="HinawaSndMotu*"/>
           </instance-parameter>
           <parameter name="path" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.c"
-                 line="72">A full path of a special file for ALSA hwdep character device</doc>
+                 line="100">A full path of a special file for ALSA hwdep character device</doc>
             <type name="utf8" c:type="gchar*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="read_command_dsp_meter"
+              c:identifier="hinawa_snd_motu_read_command_dsp_meter"
+              version="2.4"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu.c"
+             line="172">Read data of meter information for command DSP models.</doc>
+        <source-position filename="../src/snd_motu.h" line="92"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="174">A #HinawaSndMotu</doc>
+            <type name="SndMotu" c:type="HinawaSndMotu*"/>
+          </instance-parameter>
+          <parameter name="meter"
+                     direction="inout"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="175">The data for meter.</doc>
+            <array zero-terminated="0"
+                   c:type="gfloat* const*"
+                   fixed-size="400">
+              <type name="gfloat" c:type="gfloat"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="read_register_dsp_meter"
+              c:identifier="hinawa_snd_motu_read_register_dsp_meter"
+              version="2.4"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu.c"
+             line="145">Read data of meter information for register DSP models.</doc>
+        <source-position filename="../src/snd_motu.h" line="89"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="147">A #HinawaSndMotu</doc>
+            <type name="SndMotu" c:type="HinawaSndMotu*"/>
+          </instance-parameter>
+          <parameter name="meter"
+                     direction="inout"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="148">The data of meter. Index 0 to 23 for inputs and index 24
+   to 47 for outputs.</doc>
+            <array zero-terminated="0" c:type="guint8* const*" fixed-size="48">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="read_register_dsp_parameter"
+              c:identifier="hinawa_snd_motu_read_register_dsp_parameter"
+              version="2.4"
+              throws="1">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu.c"
+             line="117">Read parameter for register DSP models.</doc>
+        <source-position filename="../src/snd_motu.h" line="85"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="119">A #HinawaSndMotu.</doc>
+            <type name="SndMotu" c:type="HinawaSndMotu*"/>
+          </instance-parameter>
+          <parameter name="param"
+                     direction="inout"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="120">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="HinawaSndMotuRegisterDspParameter* const*"/>
           </parameter>
         </parameters>
       </method>
@@ -3422,7 +3554,7 @@ called.</doc>
       <glib:signal name="notified" when="last" version="0.8">
         <doc xml:space="preserve"
              filename="../src/snd_motu.c"
-             line="31">When Motu models transfer notification, the #HinawaSndMotu::notified signal is
+             line="33">When Motu models transfer notification, the #HinawaSndMotu::notified signal is
 generated.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3431,7 +3563,37 @@ generated.</doc>
           <parameter name="message" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_motu.c"
-                 line="34">A notification message</doc>
+                 line="36">A notification message</doc>
+            <type name="guint" c:type="guint"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="register-dsp-changed" when="last" version="2.4">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu.c"
+             line="52">When MOTU register DSP models transfer events by messages in the sequence of isochronous
+packet, the #HinawaSndMotu::register-dsp-changed signal is emit.
+The event consists of encoded data. The most significant byte is the type of message. The
+next two bytes are identifier 0 and 1. The least significant byte is value. The meaning
+of identifier 0, 1 and value is decided depending on the type. For detail, see
+`sound/firewire/motu/motu-register-dsp-message-parser.c` in Linux kernel.</doc>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="events" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="55">The array with element for
+    unsigned 32 bit encoded data.</doc>
+            <array length="1" zero-terminated="0" c:type="gpointer">
+              <type name="guint32"/>
+            </array>
+          </parameter>
+          <parameter name="length" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu.c"
+                 line="57">The length of events.</doc>
             <type name="guint" c:type="guint"/>
           </parameter>
         </parameters>
@@ -3440,13 +3602,13 @@ generated.</doc>
     <record name="SndMotuClass"
             c:type="HinawaSndMotuClass"
             glib:is-gtype-struct-for="SndMotu">
-      <source-position filename="../src/snd_motu.h" line="58"/>
+      <source-position filename="../src/snd_motu.h" line="77"/>
       <field name="parent_class">
         <type name="SndUnitClass" c:type="HinawaSndUnitClass"/>
       </field>
       <field name="notified">
         <callback name="notified">
-          <source-position filename="../src/snd_motu.h" line="57"/>
+          <source-position filename="../src/snd_motu.h" line="58"/>
           <return-value transfer-ownership="none">
             <type name="none" c:type="void"/>
           </return-value>
@@ -3454,13 +3616,44 @@ generated.</doc>
             <parameter name="self" transfer-ownership="none">
               <doc xml:space="preserve"
                    filename="../src/snd_motu.h"
-                   line="49">A #HinawaSndMotu</doc>
+                   line="50">A #HinawaSndMotu</doc>
               <type name="SndMotu" c:type="HinawaSndMotu*"/>
             </parameter>
             <parameter name="message" transfer-ownership="none">
               <doc xml:space="preserve"
                    filename="../src/snd_motu.h"
-                   line="50">A notification message</doc>
+                   line="51">A notification message</doc>
+              <type name="guint" c:type="guint"/>
+            </parameter>
+          </parameters>
+        </callback>
+      </field>
+      <field name="register_dsp_changed">
+        <callback name="register_dsp_changed">
+          <source-position filename="../src/snd_motu.h" line="76"/>
+          <return-value transfer-ownership="none">
+            <type name="none" c:type="void"/>
+          </return-value>
+          <parameters>
+            <parameter name="self" transfer-ownership="none">
+              <doc xml:space="preserve"
+                   filename="../src/snd_motu.h"
+                   line="62">A #HinawaSndMotu</doc>
+              <type name="SndMotu" c:type="HinawaSndMotu*"/>
+            </parameter>
+            <parameter name="events" transfer-ownership="none">
+              <doc xml:space="preserve"
+                   filename="../src/snd_motu.h"
+                   line="63">The array with element for
+    unsigned 32 bit encoded data.</doc>
+              <array length="2" zero-terminated="0" c:type="const guint32*">
+                <type name="guint32"/>
+              </array>
+            </parameter>
+            <parameter name="length" transfer-ownership="none">
+              <doc xml:space="preserve"
+                   filename="../src/snd_motu.h"
+                   line="65">The length of events.</doc>
               <type name="guint" c:type="guint"/>
             </parameter>
           </parameters>
@@ -3468,7 +3661,531 @@ generated.</doc>
       </field>
     </record>
     <record name="SndMotuPrivate" c:type="HinawaSndMotuPrivate" disguised="1">
-      <source-position filename="../src/snd_motu.h" line="36"/>
+      <source-position filename="../src/snd_motu.h" line="37"/>
+    </record>
+    <record name="SndMotuRegisterDspParameter"
+            c:type="HinawaSndMotuRegisterDspParameter"
+            glib:type-name="HinawaSndMotuRegisterDspParameter"
+            glib:get-type="hinawa_snd_motu_register_dsp_parameter_get_type"
+            c:symbol-prefix="snd_motu_register_dsp_parameter">
+      <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                       line="19"/>
+      <field name="parameter" readable="0" private="1">
+        <array zero-terminated="0" fixed-size="512">
+          <type name="guint8" c:type="guint8"/>
+        </array>
+      </field>
+      <constructor name="new"
+                   c:identifier="hinawa_snd_motu_register_dsp_parameter_new"
+                   version="2.4">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="28">Instantiate #HinawaSndMotuRegisterDspParameter object and return the instance.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="23"/>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve"
+               filename="../src/snd_motu_register_dsp_parameter.c"
+               line="33">an instance of #HinawaSndMotuRegisterDspParameter.</doc>
+          <type name="SndMotuRegisterDspParameter"
+                c:type="HinawaSndMotuRegisterDspParameter*"/>
+        </return-value>
+      </constructor>
+      <method name="get_headphone_output_paired_assignment"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_assignment">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="244">Get the array with elements for the data of paired headphone output source. The data has index
+value of source.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="52"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="246">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="assignment"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="247">The value of paired headphone assignment.</doc>
+            <type name="guint8" c:type="guint8*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_headphone_output_paired_volume"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_volume">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="224">Get the array with elements for the data of paired headphone output volume. The data has volume
+value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="49"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="226">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="volume"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="227">The value of paired headphone output.</doc>
+            <type name="guint8" c:type="guint8*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_input_flag"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_input_flag">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="333">Get the array with elements for the data of input flags. The data consists of bit flags below:
+
+- 0x01: whether to make paired input
+- 0x02: whether to enable phantom powering
+- 0x04: whether to enable attenuation pad
+- 0x08: whether to detect plug insert to jack</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="64"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="335">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="flag"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="336">The array with elements for the data of input
+  flags.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="10">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_input_gain_and_invert"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_input_gain_and_invert">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="305">Get the array with elements for input gain and invert flags. The interpretation of data is
+different in below two groups:
+
+- Ultralite
+    - 0x1f: the gain.
+    - 0x20: whether to invert phase of the input
+- Audio Express and 4 pre
+    - 0x3f: the gain
+    - 0x40: whether to invert phase of the input</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="61"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="307">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="gain_and_invert"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="308">The array with elements for the data
+	     of input gain and invert flags.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="10">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_line_input_boost_flag"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_line_input_boost_flag">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="264">Get the data for flags of line input boost. The data consists of bit flags for corresponding line
+input channel. When the flag stands, the input is boosted.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="55"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="266">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="boost_flag"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="267">The flag of boost for line input.</doc>
+            <type name="guint8" c:type="guint8*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_line_input_nominal_level_flag"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_line_input_nominal_level_flag">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="284">Get the data for flags of line input nominal level. The data consists of bit flags for
+corresponding line input channel. When the flag stands, the nominal level of input is +4 dBu,
+else -10 dBV.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="58"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="286">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="nominal_level_flag"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="287">The flag of boost for line input.</doc>
+            <type name="guint8" c:type="guint8*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_main_output_paired_volume"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_main_output_paired_volume">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="204">Get the array with elements for the data of paired main output volume. The data has volume value
+between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="46"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="206">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="volume"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="full">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="207">The value of paired main output.</doc>
+            <type name="guint8" c:type="guint8*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_output_paired_flag"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_flag">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="180">Get the array with elements for the data of paired output flags in indicated mixer. The data
+consists of bit flags and masks below:
+
+ - 0x0f: the mask for destination of paired output
+ - 0x10: whether to enable mute for paired output</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="43"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="182">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="flag"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="183">The array with elements for the data of paired
+  output flag.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="4">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_output_paired_volume"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_volume">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="159">Get the array with elements for the data of paired output volume in indicated mixer. The data
+has gain value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="40"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="161">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="volume"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="162">The array with elements for the data of
+    paired output volume.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="4">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_source_flag"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_source_flag">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="87">Get the array with elements for the data of source flags in indicated mixer. The data consists of
+bit flags below:
+
+ - 0x01: whether to enable mute function for the source.
+ - 0x02: whether to enable solo function for the source.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="31"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="89">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="mixer" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="90">the numeric index of mixer, up to 4.</doc>
+            <type name="gsize" c:type="gsize"/>
+          </parameter>
+          <parameter name="flag"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="91">The array with elements for the data of source
+  flag.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="20">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_source_gain"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_source_gain">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="41">Get the array with elements for the data of source gains in indicated mixer. The data has gain
+value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="25"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="43">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="mixer" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="44">the numeric index of mixer, up to 4.</doc>
+            <type name="gsize" c:type="gsize"/>
+          </parameter>
+          <parameter name="gain"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="45">The array with elements for the data of source
+  gains.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="20">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_source_paired_balance"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_balance">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="113">Get the array with elements for the data of paired source L/R balance in indicated mixer. The
+data has L/R balance value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="34"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="115">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="mixer" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="116">the numeric index of mixer, up to 4.</doc>
+            <type name="gsize" c:type="gsize"/>
+          </parameter>
+          <parameter name="balance"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="117">The array with elements for the data of
+     paired source L/R balance.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="20">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_source_paired_width"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_width">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="136">Get the array with elements for the data of paired source width in indicated mixer. The data
+has width value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="37"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="138">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="mixer" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="139">the numeric index of mixer, up to 4.</doc>
+            <type name="gsize" c:type="gsize"/>
+          </parameter>
+          <parameter name="width"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="140">The array with elements for the data of
+   paired source width.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="20">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="get_mixer_source_pan"
+              c:identifier="hinawa_snd_motu_register_dsp_parameter_get_mixer_source_pan">
+        <doc xml:space="preserve"
+             filename="../src/snd_motu_register_dsp_parameter.c"
+             line="64">Get the array with elements for the data of source pans in indicated mixer. The data has pan
+value between 0x00 and 0x80.</doc>
+        <source-position filename="../src/snd_motu_register_dsp_parameter.h"
+                         line="28"/>
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <instance-parameter name="self" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="66">A #HinawaSndMotuRegisterDspParameter.</doc>
+            <type name="SndMotuRegisterDspParameter"
+                  c:type="const HinawaSndMotuRegisterDspParameter*"/>
+          </instance-parameter>
+          <parameter name="mixer" transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="67">the numeric index of mixer, up to 4.</doc>
+            <type name="gsize" c:type="gsize"/>
+          </parameter>
+          <parameter name="pan"
+                     direction="out"
+                     caller-allocates="0"
+                     transfer-ownership="none">
+            <doc xml:space="preserve"
+                 filename="../src/snd_motu_register_dsp_parameter.c"
+                 line="68">The array with elements for the data of source
+ pan.</doc>
+            <array zero-terminated="0" c:type="const guint8**" fixed-size="20">
+              <type name="guint8" c:type="guint8"/>
+            </array>
+          </parameter>
+        </parameters>
+      </method>
     </record>
     <class name="SndTscm"
            c:symbol-prefix="snd_tscm"
@@ -3732,7 +4449,7 @@ handler is called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="603">Create Gsource for GMainContext to dispatch events for the sound device.</doc>
+             line="595">Create Gsource for GMainContext to dispatch events for the sound device.</doc>
         <source-position filename="../src/snd_unit.h" line="88"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3741,7 +4458,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="605">A #HinawaSndUnit.</doc>
+                 line="597">A #HinawaSndUnit.</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
           <parameter name="gsrc"
@@ -3750,7 +4467,7 @@ handler is called.</doc>
                      transfer-ownership="full">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="606">A #GSource.</doc>
+                 line="598">A #GSource.</doc>
             <type name="GLib.Source" c:type="GSource**"/>
           </parameter>
         </parameters>
@@ -3760,7 +4477,7 @@ handler is called.</doc>
               version="2.0.">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="355">Retrieve an instance of #HinawaFwNode associated to the given unit.</doc>
+             line="345">Retrieve an instance of #HinawaFwNode associated to the given unit.</doc>
         <source-position filename="../src/snd_unit.h" line="83"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3769,7 +4486,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="357">A #HinawaSndUnit.</doc>
+                 line="347">A #HinawaSndUnit.</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
           <parameter name="node"
@@ -3778,7 +4495,7 @@ handler is called.</doc>
                      transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="358">A #HinawaFwNode.</doc>
+                 line="348">A #HinawaFwNode.</doc>
             <type name="FwNode" c:type="HinawaFwNode**"/>
           </parameter>
         </parameters>
@@ -3789,7 +4506,7 @@ handler is called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="376">Disallow ALSA to start kernel-streaming.</doc>
+             line="366">Disallow ALSA to start kernel-streaming.</doc>
         <source-position filename="../src/snd_unit.h" line="85"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3798,7 +4515,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="378">A #HinawaSndUnit</doc>
+                 line="368">A #HinawaSndUnit</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
         </parameters>
@@ -3835,7 +4552,7 @@ handler is called.</doc>
               throws="1">
         <doc xml:space="preserve"
              filename="../src/snd_unit.c"
-             line="408">Allow ALSA to start kernel-streaming.</doc>
+             line="398">Allow ALSA to start kernel-streaming.</doc>
         <source-position filename="../src/snd_unit.h" line="86"/>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
@@ -3844,7 +4561,7 @@ handler is called.</doc>
           <instance-parameter name="self" transfer-ownership="none">
             <doc xml:space="preserve"
                  filename="../src/snd_unit.c"
-                 line="410">A #HinawaSndUnit</doc>
+                 line="400">A #HinawaSndUnit</doc>
             <type name="SndUnit" c:type="HinawaSndUnit*"/>
           </instance-parameter>
         </parameters>
@@ -4421,8 +5138,14 @@ This inherits #HinawaSndUnit.</doc>
     <docsection name="snd_motu">
       <doc xml:space="preserve"
            filename="../src/snd_motu.c"
-           line="7">A #HinawaSndMotu is an application of asynchronous notification defined by
+           line="8">A #HinawaSndMotu is an application of asynchronous notification defined by
 Mark of the Unicorn (MOTU). This inherits #HinawaSndUnit.</doc>
+    </docsection>
+    <docsection name="snd_motu_register_dsp_parameter">
+      <doc xml:space="preserve"
+           filename="../src/snd_motu_register_dsp_parameter.c"
+           line="4">A #HinawaSndMotuRegisterDspParameter is a boxed object for container of parameter in register
+DSP model.</doc>
     </docsection>
     <docsection name="snd_tscm">
       <doc xml:space="preserve"
