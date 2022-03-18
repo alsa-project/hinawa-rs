@@ -2,15 +2,15 @@
 hinawa Rust bindings
 ====================
 
-2021/11/17
+2022/03/17
 Takashi Sakamoto
 
 Introduction
 ============
 
-* This repository includes FFI and API bindings for ``libhinawa 2`` which provides ``Hinawa-3.0.gir``.
+* This repository includes FFI and API bindings for ``libhinawa2`` which provides ``Hinawa-3.0.gir``.
 
-  * https://github.com/alsa-project/libhinawa
+  * `<https://github.com/alsa-project/libhinawa>`_
 
 * Unfortunately, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or ``Hinawa-1.0.gir``).
 
@@ -18,6 +18,12 @@ License
 =======
 
 MIT License
+
+Dependencies
+============
+
+* Rust version 1.57 or later (edition 2021)
+* `libhinawa <https://github.com/alsa-project/libhinawa>`_
 
 Sample code
 ===========
@@ -57,3 +63,12 @@ Read 1 quadlet from address ``0xfffff0000404`` on the node represented as ``/dev
         cntr.quit();
         th.join().unwrap();
     }
+
+How to generate FFI and API crates
+==================================
+
+::
+
+    $ ./generator.py
+
+end
