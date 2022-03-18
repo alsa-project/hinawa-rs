@@ -1,7 +1,9 @@
 [options]
+girs_directories = ["../gir-files", ".."]
 work_mode = "normal"
 library = "Hinawa"
 version = "3.0"
+use_gi_docgen = true
 min_cfg_version = "3.0"
 single_version_file = true
 

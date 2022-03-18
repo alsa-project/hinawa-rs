@@ -1,32 +1,40 @@
 // SPDX-License-Identifier: MIT
-use glib::object::IsA;
-use glib::translate::*;
-use glib::object::Cast;
-use glib::signal::connect_raw;
-use glib::signal::SignalHandlerId;
-
-use SndEfw;
-use SndEfwStatus;
+use crate::*;
 
 pub trait SndEfwExtManual {
-    fn transaction(&self, category: u32, command: u32, args: &[u32],
-                   params: &mut [u32]) -> Result<usize, glib::Error>;
-    fn transaction_sync(&self, category: u32, command: u32, args: Option<&[u32]>,
-                        params: Option<&mut [u32]>, timeout_ms: u32)
-       -> Result<usize, glib::Error>;
+    fn transaction(
+        &self,
+        category: u32,
+        command: u32,
+        args: &[u32],
+        params: &mut [u32],
+    ) -> Result<usize, glib::Error>;
+    fn transaction_sync(
+        &self,
+        category: u32,
+        command: u32,
+        args: Option<&[u32]>,
+        params: Option<&mut [u32]>,
+        timeout_ms: u32,
+    ) -> Result<usize, glib::Error>;
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
-        where F: Fn(&Self, SndEfwStatus, u32, u32, u32, &[u32]) + 'static;
+    where
+        F: Fn(&Self, SndEfwStatus, u32, u32, u32, &[u32]) + 'static;
 }
 
 impl<O: IsA<SndEfw>> SndEfwExtManual for O {
-    fn transaction(&self, category: u32, command: u32, args: &[u32],
-                   params: &mut [u32])
-       -> Result<usize, glib::Error> {
+    fn transaction(
+        &self,
+        category: u32,
+        command: u32,
+        args: &[u32],
+        params: &mut [u32],
+    ) -> Result<usize, glib::Error> {
         unsafe {
             let mut param_count = params.len();
             let mut error = std::ptr::null_mut();
 
-            hinawa_sys::hinawa_snd_efw_transaction(
+            ffi::hinawa_snd_efw_transaction(
                 self.as_ref().to_glib_none().0,
                 category,
                 command,
@@ -34,7 +42,8 @@ impl<O: IsA<SndEfw>> SndEfwExtManual for O {
                 args.len() as usize,
                 &mut params.as_mut_ptr(),
                 &mut param_count,
-                &mut error);
+                &mut error,
+            );
 
             if error.is_null() {
                 Ok(param_count)
@@ -44,9 +53,14 @@ impl<O: IsA<SndEfw>> SndEfwExtManual for O {
         }
     }
 
-    fn transaction_sync(&self, category: u32, command: u32, args: Option<&[u32]>,
-                        params: Option<&mut [u32]>, timeout_ms: u32)
-       -> Result<usize, glib::Error> {
+    fn transaction_sync(
+        &self,
+        category: u32,
+        command: u32,
+        args: Option<&[u32]>,
+        params: Option<&mut [u32]>,
+        timeout_ms: u32,
+    ) -> Result<usize, glib::Error> {
         unsafe {
             let (arg_ptr, arg_count) = match args {
                 Some(a) => (a.as_ptr(), a.len()),
@@ -58,7 +72,7 @@ impl<O: IsA<SndEfw>> SndEfwExtManual for O {
             };
             let mut error = std::ptr::null_mut();
 
-            hinawa_sys::hinawa_snd_efw_transaction_sync(
+            ffi::hinawa_snd_efw_transaction_sync(
                 self.as_ref().to_glib_none().0,
                 category,
                 command,
@@ -67,7 +81,8 @@ impl<O: IsA<SndEfw>> SndEfwExtManual for O {
                 &mut param_ptr,
                 &mut param_count,
                 timeout_ms,
-                &mut error);
+                &mut error,
+            );
 
             if error.is_null() {
                 Ok(param_count)
@@ -78,17 +93,18 @@ impl<O: IsA<SndEfw>> SndEfwExtManual for O {
     }
 
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
-        where F: Fn(&Self, SndEfwStatus, u32, u32, u32, &[u32]) + 'static
+    where
+        F: Fn(&Self, SndEfwStatus, u32, u32, u32, &[u32]) + 'static,
     {
         unsafe extern "C" fn responded_trampoline<P, F>(
-            this: *mut hinawa_sys::HinawaSndEfw,
-            status: hinawa_sys::HinawaSndEfwStatus,
+            this: *mut ffi::HinawaSndEfw,
+            status: ffi::HinawaSndEfwStatus,
             seqnum: u32,
             command: u32,
             category: u32,
             frame: *const u32,
             length: libc::c_uint,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SndEfw>,
             F: Fn(&P, SndEfwStatus, u32, u32, u32, &[u32]) + 'static,
