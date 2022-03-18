@@ -1,35 +1,37 @@
 [package]
-name = "hinawa-sys"
-version = "0.5.0"
-description = "FFI bindings for libhinawa2 library"
 authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
-links = "hinawa"
 build = "build.rs"
+description = "FFI bindings for libhinawa2 library"
+edition = "2021"
 license = "MIT"
+links = "hinawa"
+name = "hinawa-sys"
 repository = "https://github.com/alsa-project/hinawa-rs/"
+rust-version = "1.57"
+version = "0.5.0"
 [package.metadata.docs.rs]
 features = ["dox"]
 [package.metadata.system-deps.hinawa]
 name = "hinawa"
 version = "2.4"
 
-[package.metadata.system-deps.hinawa.feature-versions]
-v2_1 = "2.1"
-v2_2 = "2.2"
-v2_3 = "2.3"
-v2_4 = "2.4"
-
 [lib]
 name = "hinawa_sys"
 
-[dependencies]
-libc = "0.2"
-glib-sys = "0.10"
-gobject-sys = "0.10"
-
 [build-dependencies]
 pkg-config = "0.3.7"
-system-deps = "1.3"
+system-deps = "6"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.glib]
+package = "glib-sys"
+version = "0.15"
+
+[dependencies.gobject]
+package = "gobject-sys"
+version = "0.15"
 
 [dev-dependencies]
 shell-words = "1.0.0"
