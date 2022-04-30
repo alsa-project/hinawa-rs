@@ -2,7 +2,7 @@
 hinawa Rust bindings
 ====================
 
-2021/11/17
+2022/05/02
 Takashi Sakamoto
 
 Introduction
@@ -22,7 +22,7 @@ MIT License
 Sample code
 ===========
 
-Read 1 quadlet from address ``0xfffff0000404`` on the node represented as ``/dev/fw0`` ::
+Read 1 quadlet from address ``0xfffff0000404`` on the node expressed as ``/dev/fw0`` ::
 
     extern crate hinawa;
     extern crate glib;

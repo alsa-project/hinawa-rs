@@ -39,3 +39,5 @@ pub use snd_motu::*;
 
 mod snd_motu_register_dsp_parameter;
 pub use snd_motu_register_dsp_parameter::*;
+
+pub mod subclass;
