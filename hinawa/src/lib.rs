@@ -10,6 +10,8 @@ mod snd_motu_register_dsp_parameter;
 mod snd_tscm;
 mod snd_unit;
 
+pub mod subclass;
+
 pub use crate::{
     auto::*, fw_node::*, fw_req::*, fw_resp::*, snd_efw::*, snd_motu::*,
     snd_motu_register_dsp_parameter::*, snd_tscm::*, snd_unit::*,
