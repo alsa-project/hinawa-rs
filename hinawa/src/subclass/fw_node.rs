@@ -45,7 +45,7 @@ impl<T: FwNodeImpl> FwNodeImplExt for T {
 
 unsafe impl<T: FwNodeImpl> IsSubclassable<T> for FwNodeClass {
     fn override_vfuncs(&mut self) {
-        <glib::ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
+        <ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
         unsafe {
             let klass = &mut *(self as *mut Self as *mut hinawa_sys::HinawaFwNodeClass);
             klass.bus_update = Some(fw_node_bus_update::<T>);

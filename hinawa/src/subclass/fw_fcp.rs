@@ -28,7 +28,7 @@ impl<T: FwFcpImpl> FwFcpImplExt for T {
 
 unsafe impl<T: FwFcpImpl> IsSubclassable<T> for FwFcpClass {
     fn override_vfuncs(&mut self) {
-        <glib::ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
+        <ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
         unsafe {
             let klass = &mut *(self as *mut Self as *mut hinawa_sys::HinawaFwFcpClass);
             klass.responded = Some(fw_fcp_responded::<T>);

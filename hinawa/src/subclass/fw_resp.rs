@@ -85,7 +85,7 @@ impl<T: FwRespImpl> FwRespImplExt for T {
 
 unsafe impl<T: FwRespImpl> IsSubclassable<T> for FwRespClass {
     fn override_vfuncs(&mut self) {
-        <glib::ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
+        <ObjectClass as IsSubclassable<T>>::override_vfuncs(self);
         unsafe {
             let klass = &mut *(self as *mut Self as *mut hinawa_sys::HinawaFwRespClass);
             klass.requested = Some(fw_resp_requested::<T>);
