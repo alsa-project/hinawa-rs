@@ -1,6 +1,6 @@
 [package]
 name = "hinawa"
-version = "0.5.1"
+version = "0.5.2"
 description = "API bindings for libhinawa2 library"
 authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
 license = "MIT"

@@ -2,7 +2,7 @@
 hinawa Rust bindings
 ====================
 
-2022/05/02
+2022/05/06
 Takashi Sakamoto
 
 Introduction
