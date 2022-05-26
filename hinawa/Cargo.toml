@@ -6,7 +6,7 @@ license = "MIT"
 name = "hinawa"
 repository = "https://github.com/alsa-project/hinawa-rs/"
 rust-version = "1.57"
-version = "0.5.0"
+version = "0.6.0"
 
 [lib]
 name = "hinawa"
@@ -14,7 +14,7 @@ name = "hinawa"
 [dependencies]
 libc = "0.2"
 glib = "0.15"
-ffi = {package = "hinawa-sys", path = "../hinawa-sys", version = "0.5"}
+ffi = {package = "hinawa-sys", path = "../hinawa-sys", version = "0.6"}
 
 [dev-dependencies]
 gir-format-check = "^0.1"
