@@ -111,6 +111,7 @@ impl Results {
 }
 
 #[test]
+#[cfg(target_os = "linux")]
 fn cross_validate_constants_with_c() {
     let mut c_constants: Vec<(String, String)> = Vec::new();
 
@@ -151,6 +152,7 @@ fn cross_validate_constants_with_c() {
 }
 
 #[test]
+#[cfg(target_os = "linux")]
 fn cross_validate_layout_with_c() {
     let mut c_layouts = Vec::new();
 
@@ -272,6 +274,13 @@ const RUST_LAYOUTS: &[(&str, Layout)] = &[
         Layout {
             size: size_of::<HinawaFwReqClass>(),
             alignment: align_of::<HinawaFwReqClass>(),
+        },
+    ),
+    (
+        "HinawaFwReqError",
+        Layout {
+            size: size_of::<HinawaFwReqError>(),
+            alignment: align_of::<HinawaFwReqError>(),
         },
     ),
     (
@@ -441,6 +450,16 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("(gint) HINAWA_FW_RCODE_NO_ACK", "20"),
     ("(gint) HINAWA_FW_RCODE_SEND_ERROR", "16"),
     ("(gint) HINAWA_FW_RCODE_TYPE_ERROR", "6"),
+    ("(gint) HINAWA_FW_REQ_ERROR_ADDRESS_ERROR", "7"),
+    ("(gint) HINAWA_FW_REQ_ERROR_BUSY", "18"),
+    ("(gint) HINAWA_FW_REQ_ERROR_CANCELLED", "17"),
+    ("(gint) HINAWA_FW_REQ_ERROR_CONFLICT_ERROR", "4"),
+    ("(gint) HINAWA_FW_REQ_ERROR_DATA_ERROR", "5"),
+    ("(gint) HINAWA_FW_REQ_ERROR_GENERATION", "19"),
+    ("(gint) HINAWA_FW_REQ_ERROR_INVALID", "21"),
+    ("(gint) HINAWA_FW_REQ_ERROR_NO_ACK", "20"),
+    ("(gint) HINAWA_FW_REQ_ERROR_SEND_ERROR", "16"),
+    ("(gint) HINAWA_FW_REQ_ERROR_TYPE_ERROR", "6"),
     ("(gint) HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED", "2"),
     ("(gint) HINAWA_FW_RESP_ERROR_FAILED", "0"),
     ("(gint) HINAWA_FW_RESP_ERROR_RESERVED", "1"),

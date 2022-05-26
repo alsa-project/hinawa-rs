@@ -4,8 +4,6 @@
 // DO NOT EDIT
 
 use crate::FwNode;
-use crate::FwRcode;
-use crate::FwTcode;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -65,13 +63,6 @@ pub trait FwRespExt: 'static {
     fn offset(&self) -> u64;
 
     fn width(&self) -> u32;
-
-    #[deprecated = "Since 2.2"]
-    #[doc(alias = "requested")]
-    fn connect_requested<F: Fn(&Self, FwTcode) -> FwRcode + 'static>(
-        &self,
-        f: F,
-    ) -> SignalHandlerId;
 
     #[doc(alias = "is-reserved")]
     fn connect_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -154,38 +145,6 @@ impl<O: IsA<FwResp>> FwRespExt for O {
 
     fn width(&self) -> u32 {
         glib::ObjectExt::property(self.as_ref(), "width")
-    }
-
-    fn connect_requested<F: Fn(&Self, FwTcode) -> FwRcode + 'static>(
-        &self,
-        f: F,
-    ) -> SignalHandlerId {
-        unsafe extern "C" fn requested_trampoline<
-            P: IsA<FwResp>,
-            F: Fn(&P, FwTcode) -> FwRcode + 'static,
-        >(
-            this: *mut ffi::HinawaFwResp,
-            tcode: ffi::HinawaFwTcode,
-            f: glib::ffi::gpointer,
-        ) -> ffi::HinawaFwRcode {
-            let f: &F = &*(f as *const F);
-            f(
-                FwResp::from_glib_borrow(this).unsafe_cast_ref(),
-                from_glib(tcode),
-            )
-            .into_glib()
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"requested\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    requested_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
     }
 
     fn connect_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {

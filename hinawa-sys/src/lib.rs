@@ -45,6 +45,18 @@ pub const HINAWA_FW_RCODE_GENERATION: HinawaFwRcode = 19;
 pub const HINAWA_FW_RCODE_NO_ACK: HinawaFwRcode = 20;
 pub const HINAWA_FW_RCODE_INVALID: HinawaFwRcode = 21;
 
+pub type HinawaFwReqError = c_int;
+pub const HINAWA_FW_REQ_ERROR_CONFLICT_ERROR: HinawaFwReqError = 4;
+pub const HINAWA_FW_REQ_ERROR_DATA_ERROR: HinawaFwReqError = 5;
+pub const HINAWA_FW_REQ_ERROR_TYPE_ERROR: HinawaFwReqError = 6;
+pub const HINAWA_FW_REQ_ERROR_ADDRESS_ERROR: HinawaFwReqError = 7;
+pub const HINAWA_FW_REQ_ERROR_SEND_ERROR: HinawaFwReqError = 16;
+pub const HINAWA_FW_REQ_ERROR_CANCELLED: HinawaFwReqError = 17;
+pub const HINAWA_FW_REQ_ERROR_BUSY: HinawaFwReqError = 18;
+pub const HINAWA_FW_REQ_ERROR_GENERATION: HinawaFwReqError = 19;
+pub const HINAWA_FW_REQ_ERROR_NO_ACK: HinawaFwReqError = 20;
+pub const HINAWA_FW_REQ_ERROR_INVALID: HinawaFwReqError = 21;
+
 pub type HinawaFwRespError = c_int;
 pub const HINAWA_FW_RESP_ERROR_FAILED: HinawaFwRespError = 0;
 pub const HINAWA_FW_RESP_ERROR_RESERVED: HinawaFwRespError = 1;
@@ -129,14 +141,6 @@ impl ::std::fmt::Debug for HinawaFwFcpClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaFwFcpPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaFwFcpPrivate = *mut _HinawaFwFcpPrivate;
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaFwNodeClass {
@@ -155,14 +159,6 @@ impl ::std::fmt::Debug for HinawaFwNodeClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaFwNodePrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaFwNodePrivate = *mut _HinawaFwNodePrivate;
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaFwReqClass {
@@ -178,14 +174,6 @@ impl ::std::fmt::Debug for HinawaFwReqClass {
             .finish()
     }
 }
-
-#[repr(C)]
-pub struct _HinawaFwReqPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaFwReqPrivate = *mut _HinawaFwReqPrivate;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -216,14 +204,6 @@ impl ::std::fmt::Debug for HinawaFwRespClass {
             .finish()
     }
 }
-
-#[repr(C)]
-pub struct _HinawaFwRespPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaFwRespPrivate = *mut _HinawaFwRespPrivate;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -257,14 +237,6 @@ impl ::std::fmt::Debug for HinawaSndDiceClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaSndDicePrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaSndDicePrivate = *mut _HinawaSndDicePrivate;
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaSndEfwClass {
@@ -291,14 +263,6 @@ impl ::std::fmt::Debug for HinawaSndEfwClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaSndEfwPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaSndEfwPrivate = *mut _HinawaSndEfwPrivate;
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaSndMotuClass {
@@ -316,14 +280,6 @@ impl ::std::fmt::Debug for HinawaSndMotuClass {
             .finish()
     }
 }
-
-#[repr(C)]
-pub struct _HinawaSndMotuPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaSndMotuPrivate = *mut _HinawaSndMotuPrivate;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -354,14 +310,6 @@ impl ::std::fmt::Debug for HinawaSndTscmClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaSndTscmPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaSndTscmPrivate = *mut _HinawaSndTscmPrivate;
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaSndUnitClass {
@@ -380,27 +328,17 @@ impl ::std::fmt::Debug for HinawaSndUnitClass {
     }
 }
 
-#[repr(C)]
-pub struct _HinawaSndUnitPrivate {
-    _data: [u8; 0],
-    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
-}
-
-pub type HinawaSndUnitPrivate = *mut _HinawaSndUnitPrivate;
-
 // Classes
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaFwFcp {
     pub parent_instance: HinawaFwResp,
-    pub priv_: *mut HinawaFwFcpPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaFwFcp {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwFcp @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -409,14 +347,12 @@ impl ::std::fmt::Debug for HinawaFwFcp {
 #[repr(C)]
 pub struct HinawaFwNode {
     pub parent_instance: gobject::GObject,
-    pub priv_: *mut HinawaFwNodePrivate,
 }
 
 impl ::std::fmt::Debug for HinawaFwNode {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwNode @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -425,14 +361,12 @@ impl ::std::fmt::Debug for HinawaFwNode {
 #[repr(C)]
 pub struct HinawaFwReq {
     pub parent_instance: gobject::GObject,
-    pub priv_: *mut HinawaFwReqPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaFwReq {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwReq @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -441,14 +375,12 @@ impl ::std::fmt::Debug for HinawaFwReq {
 #[repr(C)]
 pub struct HinawaFwResp {
     pub parent_instance: gobject::GObject,
-    pub priv_: *mut HinawaFwRespPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaFwResp {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaFwResp @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -471,14 +403,12 @@ impl ::std::fmt::Debug for HinawaSndDg00x {
 #[repr(C)]
 pub struct HinawaSndDice {
     pub parent_instance: HinawaSndUnit,
-    pub priv_: *mut HinawaSndDicePrivate,
 }
 
 impl ::std::fmt::Debug for HinawaSndDice {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndDice @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -487,14 +417,12 @@ impl ::std::fmt::Debug for HinawaSndDice {
 #[repr(C)]
 pub struct HinawaSndEfw {
     pub parent_instance: HinawaSndUnit,
-    pub priv_: *mut HinawaSndEfwPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaSndEfw {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndEfw @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -503,14 +431,12 @@ impl ::std::fmt::Debug for HinawaSndEfw {
 #[repr(C)]
 pub struct HinawaSndMotu {
     pub parent_instance: HinawaSndUnit,
-    pub priv_: *mut HinawaSndMotuPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaSndMotu {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndMotu @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -519,14 +445,12 @@ impl ::std::fmt::Debug for HinawaSndMotu {
 #[repr(C)]
 pub struct HinawaSndTscm {
     pub parent_instance: HinawaSndUnit,
-    pub priv_: *mut HinawaSndTscmPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaSndTscm {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndTscm @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -535,14 +459,12 @@ impl ::std::fmt::Debug for HinawaSndTscm {
 #[repr(C)]
 pub struct HinawaSndUnit {
     pub parent_instance: gobject::GObject,
-    pub priv_: *mut HinawaSndUnitPrivate,
 }
 
 impl ::std::fmt::Debug for HinawaSndUnit {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("HinawaSndUnit @ {:p}", self))
             .field("parent_instance", &self.parent_instance)
-            .field("priv_", &self.priv_)
             .finish()
     }
 }
@@ -566,6 +488,12 @@ extern "C" {
     // HinawaFwRcode
     //=========================================================================
     pub fn hinawa_fw_rcode_get_type() -> GType;
+
+    //=========================================================================
+    // HinawaFwReqError
+    //=========================================================================
+    pub fn hinawa_fw_req_error_get_type() -> GType;
+    pub fn hinawa_fw_req_error_quark() -> glib::GQuark;
 
     //=========================================================================
     // HinawaFwRespError
@@ -730,7 +658,6 @@ extern "C" {
     //=========================================================================
     pub fn hinawa_fw_req_get_type() -> GType;
     pub fn hinawa_fw_req_new() -> *mut HinawaFwReq;
-    pub fn hinawa_fw_req_error_quark() -> glib::GQuark;
     pub fn hinawa_fw_req_transaction(
         self_: *mut HinawaFwReq,
         node: *mut HinawaFwNode,

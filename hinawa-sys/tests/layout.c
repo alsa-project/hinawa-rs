@@ -17,6 +17,7 @@ int main() {
     printf("%s;%zu;%zu\n", "HinawaFwRcode", sizeof(HinawaFwRcode), alignof(HinawaFwRcode));
     printf("%s;%zu;%zu\n", "HinawaFwReq", sizeof(HinawaFwReq), alignof(HinawaFwReq));
     printf("%s;%zu;%zu\n", "HinawaFwReqClass", sizeof(HinawaFwReqClass), alignof(HinawaFwReqClass));
+    printf("%s;%zu;%zu\n", "HinawaFwReqError", sizeof(HinawaFwReqError), alignof(HinawaFwReqError));
     printf("%s;%zu;%zu\n", "HinawaFwResp", sizeof(HinawaFwResp), alignof(HinawaFwResp));
     printf("%s;%zu;%zu\n", "HinawaFwRespClass", sizeof(HinawaFwRespClass), alignof(HinawaFwRespClass));
     printf("%s;%zu;%zu\n", "HinawaFwRespError", sizeof(HinawaFwRespError), alignof(HinawaFwRespError));

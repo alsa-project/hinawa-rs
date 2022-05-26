@@ -3,14 +3,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use glib::object::Cast;
-use glib::object::IsA;
-use glib::signal::connect_raw;
-use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use std::boxed::Box as Box_;
 use std::fmt;
-use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "HinawaFwReq")]
@@ -33,50 +27,6 @@ impl FwReq {
 impl Default for FwReq {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-pub trait FwReqExt: 'static {
-    #[cfg_attr(feature = "v2_1", deprecated = "Since 2.1")]
-    fn timeout(&self) -> u32;
-
-    #[cfg_attr(feature = "v2_1", deprecated = "Since 2.1")]
-    fn set_timeout(&self, timeout: u32);
-
-    #[deprecated = "Since 2.1"]
-    #[doc(alias = "timeout")]
-    fn connect_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<FwReq>> FwReqExt for O {
-    fn timeout(&self) -> u32 {
-        glib::ObjectExt::property(self.as_ref(), "timeout")
-    }
-
-    fn set_timeout(&self, timeout: u32) {
-        glib::ObjectExt::set_property(self.as_ref(), "timeout", &timeout)
-    }
-
-    fn connect_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_timeout_trampoline<P: IsA<FwReq>, F: Fn(&P) + 'static>(
-            this: *mut ffi::HinawaFwReq,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) {
-            let f: &F = &*(f as *const F);
-            f(FwReq::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::timeout\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_timeout_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
     }
 }
 

@@ -15,48 +15,17 @@ pub use self::fw_req::FwReq;
 mod fw_resp;
 pub use self::fw_resp::FwResp;
 
-mod snd_dg00x;
-pub use self::snd_dg00x::SndDg00x;
-
-mod snd_dice;
-pub use self::snd_dice::SndDice;
-
-mod snd_efw;
-pub use self::snd_efw::SndEfw;
-
-mod snd_motu;
-pub use self::snd_motu::SndMotu;
-
-mod snd_tscm;
-pub use self::snd_tscm::SndTscm;
-
-mod snd_unit;
-pub use self::snd_unit::SndUnit;
-
-mod snd_motu_register_dsp_parameter;
-pub use self::snd_motu_register_dsp_parameter::SndMotuRegisterDspParameter;
-
 mod enums;
 pub use self::enums::FwFcpError;
 pub use self::enums::FwNodeError;
 pub use self::enums::FwRcode;
+pub use self::enums::FwReqError;
 pub use self::enums::FwRespError;
 pub use self::enums::FwTcode;
-pub use self::enums::SndDiceError;
-pub use self::enums::SndEfwStatus;
-pub use self::enums::SndUnitError;
-pub use self::enums::SndUnitType;
 
 #[doc(hidden)]
 pub mod traits {
     pub use super::fw_fcp::FwFcpExt;
     pub use super::fw_node::FwNodeExt;
-    pub use super::fw_req::FwReqExt;
     pub use super::fw_resp::FwRespExt;
-    pub use super::snd_dg00x::SndDg00xExt;
-    pub use super::snd_dice::SndDiceExt;
-    pub use super::snd_efw::SndEfwExt;
-    pub use super::snd_motu::SndMotuExt;
-    pub use super::snd_tscm::SndTscmExt;
-    pub use super::snd_unit::SndUnitExt;
 }

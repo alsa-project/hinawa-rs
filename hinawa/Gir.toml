@@ -4,21 +4,17 @@ work_mode = "normal"
 library = "Hinawa"
 version = "3.0"
 use_gi_docgen = true
-min_cfg_version = "3.0"
+min_cfg_version = "2.5"
+deprecate_by_min_version = true
 single_version_file = true
 
 generate = [
     "Hinawa.FwRcode",
     "Hinawa.FwTcode",
-    "Hinawa.SndUnitType",
     "Hinawa.FwNodeError",
+    "Hinawa.FwReqError",
     "Hinawa.FwRespError",
     "Hinawa.FwFcpError",
-    "Hinawa.SndUnitError",
-    "Hinawa.SndDiceError",
-    "Hinawa.SndEfwStatus",
-    "Hinawa.SndDice",
-    "Hinawa.SndDg00x",
 ]
 
 manual = [
@@ -88,102 +84,3 @@ manual_traits = ["FwFcpExtManual"]
     pattern = "responded"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
-
-[[object]]
-name = "Hinawa.SndUnit"
-status = "generate"
-manual_traits = ["SndUnitExtManual"]
-    [[object.function]]
-    pattern = "open"
-    ignore = true
-    doc_trait_name = "SndUnitExtManual"
-
-[[object]]
-name = "Hinawa.SndEfw"
-status = "generate"
-manual_traits = ["SndEfwExtManual"]
-    [[object.function]]
-    pattern = "transaction_sync"
-    ignore = true
-    doc_trait_name = "SndEfwExtManual"
-    [[object.function]]
-    pattern = "transaction"
-    ignore = true
-    doc_trait_name = "SndEfwExtManual"
-    [[object.signal]]
-    pattern = "responded"
-    ignore = true
-    doc_trait_name = "SndEfwExtManual"
-    [[object.function]]
-    pattern = "error_quark"
-    ignore = true
-
-[[object]]
-name = "Hinawa.SndTscm"
-status = "generate"
-manual_traits = ["SndTscmExtManual"]
-    [[object.function]]
-    pattern = "get_state"
-    ignore = true
-    doc_trait_name = "SndTscmExtManual"
-
-[[object]]
-name = "Hinawa.SndMotu"
-status = "generate"
-manual_traits = ["SndMotuExtManual"]
-    [[object.signal]]
-    pattern = "register-dsp-changed"
-    ignore = true
-    [[object.function]]
-    pattern = "read_register_dsp_parameter"
-    ignore = true
-    doc_trait_name = "SndMotuExtManual"
-    [[object.function]]
-    pattern = "read_register_dsp_meter"
-    ignore = true
-    doc_trait_name = "SndMotuExtManual"
-    [[object.function]]
-    pattern = "read_command_dsp_meter"
-    ignore = true
-    doc_trait_name = "SndMotuExtManual"
-
-[[object]]
-name = "Hinawa.SndMotuRegisterDspParameter"
-status = "generate"
-manual_traits = ["SndMotuRegisterDspParameterExtManual"]
-    [[object.function]]
-    pattern = "get_input_flag"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_input_gain_and_invert"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_output_paired_flag"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_output_paired_volume"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_source_flag"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_source_gain"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_source_paired_balance"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_source_paired_width"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"
-    [[object.function]]
-    pattern = "get_mixer_source_pan"
-    ignore = true
-    doc_trait_name = "SndMotuRegisterDspParameterExtManual"

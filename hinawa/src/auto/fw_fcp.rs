@@ -52,18 +52,8 @@ pub trait FwFcpExt: 'static {
     #[doc(alias = "is-bound")]
     fn is_bound(&self) -> bool;
 
-    #[cfg_attr(feature = "v2_1", deprecated = "Since 2.1")]
-    fn timeout(&self) -> u32;
-
-    #[cfg_attr(feature = "v2_1", deprecated = "Since 2.1")]
-    fn set_timeout(&self, timeout: u32);
-
     #[doc(alias = "is-bound")]
     fn connect_is_bound_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[deprecated = "Since 2.1"]
-    #[doc(alias = "timeout")]
-    fn connect_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<FwFcp>> FwFcpExt for O {
@@ -112,14 +102,6 @@ impl<O: IsA<FwFcp>> FwFcpExt for O {
         glib::ObjectExt::property(self.as_ref(), "is-bound")
     }
 
-    fn timeout(&self) -> u32 {
-        glib::ObjectExt::property(self.as_ref(), "timeout")
-    }
-
-    fn set_timeout(&self, timeout: u32) {
-        glib::ObjectExt::set_property(self.as_ref(), "timeout", &timeout)
-    }
-
     fn connect_is_bound_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_is_bound_trampoline<P: IsA<FwFcp>, F: Fn(&P) + 'static>(
             this: *mut ffi::HinawaFwFcp,
@@ -136,28 +118,6 @@ impl<O: IsA<FwFcp>> FwFcpExt for O {
                 b"notify::is-bound\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
                     notify_is_bound_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_timeout_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_timeout_trampoline<P: IsA<FwFcp>, F: Fn(&P) + 'static>(
-            this: *mut ffi::HinawaFwFcp,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) {
-            let f: &F = &*(f as *const F);
-            f(FwFcp::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::timeout\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_timeout_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
             )
