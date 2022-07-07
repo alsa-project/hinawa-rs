@@ -11,3 +11,11 @@ exclude = [
 default-members = [
     "hinawa",
 ]
+
+# For my convenience to generate README.md for each crates by my tool.
+[workspace.metadata.library.hinawa]
+repository = "https://github.com/alsa-project/libhinawa"
+purpose = """
+operate Linux FireWire character device for asynchronous packet and topology generation
+in IEEE 1394 bus
+"""
