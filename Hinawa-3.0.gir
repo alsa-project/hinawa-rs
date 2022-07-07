@@ -391,7 +391,7 @@ successfully read the content of packet.</doc>
                  glib:error-domain="hinawa-fw-fcp-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="177">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwFcpError.</doc>
+           line="179">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwFcpError.</doc>
       <member name="timeout"
               value="0"
               c:identifier="HINAWA_FW_FCP_ERROR_TIMEOUT"
@@ -399,7 +399,7 @@ successfully read the content of packet.</doc>
               glib:name="HINAWA_FW_FCP_ERROR_TIMEOUT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="179">The transaction is canceled due to response timeout.</doc>
+             line="181">The transaction is canceled due to response timeout.</doc>
       </member>
       <member name="large_resp"
               value="1"
@@ -408,7 +408,7 @@ successfully read the content of packet.</doc>
               glib:name="HINAWA_FW_FCP_ERROR_LARGE_RESP">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="180">The size of response is larger than expected.</doc>
+             line="182">The size of response is larger than expected.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_fw_fcp_error_quark"
@@ -694,7 +694,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
                  glib:error-domain="hinawa-fw-node-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="141">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwNodeError.</doc>
+           line="143">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwNodeError.</doc>
       <member name="disconnected"
               value="0"
               c:identifier="HINAWA_FW_NODE_ERROR_DISCONNECTED"
@@ -702,7 +702,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_NODE_ERROR_DISCONNECTED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="143">The node associated to the instance is disconnected.</doc>
+             line="145">The node associated to the instance is disconnected.</doc>
       </member>
       <member name="opened"
               value="1"
@@ -711,7 +711,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_NODE_ERROR_OPENED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="144">The instance is already associated to node by opening
+             line="146">The instance is already associated to node by opening
 				firewire character device.</doc>
       </member>
       <member name="not_opened"
@@ -721,7 +721,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_NODE_ERROR_NOT_OPENED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="146">The instance is not associated to node by opening
+             line="148">The instance is not associated to node by opening
 				firewire character device.</doc>
       </member>
       <member name="failed"
@@ -731,7 +731,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_NODE_ERROR_FAILED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="148">The system call fails.</doc>
+             line="150">The system call fails.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_fw_node_error_quark"
@@ -754,7 +754,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
                  c:type="HinawaFwRcode">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="51">A representation for rcode of asynchronous transaction on IEEE 1394 bus.</doc>
+           line="53">A representation for rcode of asynchronous transaction on IEEE 1394 bus.</doc>
       <member name="complete"
               value="0"
               c:identifier="HINAWA_FW_RCODE_COMPLETE"
@@ -762,7 +762,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_COMPLETE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="53">For completion.</doc>
+             line="55">For completion.</doc>
       </member>
       <member name="conflict_error"
               value="4"
@@ -771,7 +771,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_CONFLICT_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="54">For error of conflicting.</doc>
+             line="56">For error of conflicting.</doc>
       </member>
       <member name="data_error"
               value="5"
@@ -780,7 +780,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_DATA_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="55">For error of data.</doc>
+             line="57">For error of data.</doc>
       </member>
       <member name="type_error"
               value="6"
@@ -789,7 +789,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_TYPE_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="56">For error of type.</doc>
+             line="58">For error of type.</doc>
       </member>
       <member name="address_error"
               value="7"
@@ -798,7 +798,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_ADDRESS_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="57">For error of address.</doc>
+             line="59">For error of address.</doc>
       </member>
       <member name="send_error"
               value="16"
@@ -807,7 +807,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_SEND_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="58">For error of sending.</doc>
+             line="60">For error of sending.</doc>
       </member>
       <member name="cancelled"
               value="17"
@@ -816,7 +816,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_CANCELLED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="59">For cancellation.</doc>
+             line="61">For cancellation.</doc>
       </member>
       <member name="busy"
               value="18"
@@ -825,7 +825,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_BUSY">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="60">For busyness.</doc>
+             line="62">For busyness.</doc>
       </member>
       <member name="generation"
               value="19"
@@ -834,7 +834,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_GENERATION">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="61">For generation.</doc>
+             line="63">For generation.</doc>
       </member>
       <member name="no_ack"
               value="20"
@@ -843,7 +843,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_NO_ACK">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="62">For no acknowledge.</doc>
+             line="64">For no acknowledge.</doc>
       </member>
       <member name="invalid"
               value="21"
@@ -852,7 +852,7 @@ preferable to call [method@GObject.Object.unref] immediately to release file des
               glib:name="HINAWA_FW_RCODE_INVALID">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="63">For rcode out of specification.</doc>
+             line="65">For rcode out of specification.</doc>
       </member>
     </enumeration>
     <class name="FwReq"
@@ -1243,7 +1243,7 @@ subsystem.</doc>
                  glib:error-domain="hinawa-fw-req-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="83">A set of error code for [class@Hinawa.FwReq]. Each of them has the same value as the
+           line="85">A set of error code for [class@Hinawa.FwReq]. Each of them has the same value as the
 corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
       <member name="conflict_error"
               value="4"
@@ -1252,7 +1252,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_CONFLICT_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="85">For error of conflicting.</doc>
+             line="87">For error of conflicting.</doc>
       </member>
       <member name="data_error"
               value="5"
@@ -1261,7 +1261,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_DATA_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="86">For error of data.</doc>
+             line="88">For error of data.</doc>
       </member>
       <member name="type_error"
               value="6"
@@ -1270,7 +1270,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_TYPE_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="87">For error of type.</doc>
+             line="89">For error of type.</doc>
       </member>
       <member name="address_error"
               value="7"
@@ -1279,7 +1279,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_ADDRESS_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="88">For error of address.</doc>
+             line="90">For error of address.</doc>
       </member>
       <member name="send_error"
               value="16"
@@ -1288,7 +1288,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_SEND_ERROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="89">For error of sending.</doc>
+             line="91">For error of sending.</doc>
       </member>
       <member name="cancelled"
               value="17"
@@ -1297,7 +1297,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_CANCELLED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="90">For cancellation.</doc>
+             line="92">For cancellation.</doc>
       </member>
       <member name="busy"
               value="18"
@@ -1306,7 +1306,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_BUSY">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="91">For busyness.</doc>
+             line="93">For busyness.</doc>
       </member>
       <member name="generation"
               value="19"
@@ -1315,7 +1315,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_GENERATION">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="92">For generation.</doc>
+             line="94">For generation.</doc>
       </member>
       <member name="no_ack"
               value="20"
@@ -1324,7 +1324,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_NO_ACK">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="93">For no acknowledge.</doc>
+             line="95">For no acknowledge.</doc>
       </member>
       <member name="invalid"
               value="21"
@@ -1333,7 +1333,7 @@ corresponding enumeration in [enum@Hinawa.FwRcode].</doc>
               glib:name="HINAWA_FW_REQ_ERROR_INVALID">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="94">For rcode out of specification.</doc>
+             line="96">For rcode out of specification.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_fw_req_error_quark"
@@ -1891,7 +1891,7 @@ with frame and return [enum@FwRcode] for response subaction.</doc>
                  glib:error-domain="hinawa-fw-resp-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="161">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwRespError.</doc>
+           line="163">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.FwRespError.</doc>
       <member name="failed"
               value="0"
               c:identifier="HINAWA_FW_RESP_ERROR_FAILED"
@@ -1899,7 +1899,7 @@ with frame and return [enum@FwRcode] for response subaction.</doc>
               glib:name="HINAWA_FW_RESP_ERROR_FAILED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="163">The generic system call error.</doc>
+             line="165">The generic system call error.</doc>
       </member>
       <member name="reserved"
               value="1"
@@ -1908,7 +1908,7 @@ with frame and return [enum@FwRcode] for response subaction.</doc>
               glib:name="HINAWA_FW_RESP_ERROR_RESERVED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="164">The instance is already associated to reserved address range.</doc>
+             line="166">The instance is already associated to reserved address range.</doc>
       </member>
       <member name="addr_space_used"
               value="2"
@@ -1917,7 +1917,7 @@ with frame and return [enum@FwRcode] for response subaction.</doc>
               glib:name="HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="165">The address space is used exclusively.</doc>
+             line="167">The address space is used exclusively.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_fw_resp_error_quark"
@@ -1941,7 +1941,7 @@ Hinawa.FwRespError.</doc>
                  c:type="HinawaFwTcode">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="5">A representation for tcode of asynchronous transaction on IEEE 1394 bus.</doc>
+           line="7">A representation for tcode of asynchronous transaction on IEEE 1394 bus.</doc>
       <member name="write_quadlet_request"
               value="0"
               c:identifier="HINAWA_FW_TCODE_WRITE_QUADLET_REQUEST"
@@ -1949,7 +1949,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_WRITE_QUADLET_REQUEST">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="7">For request to write quadlet.</doc>
+             line="9">For request to write quadlet.</doc>
       </member>
       <member name="write_block_request"
               value="1"
@@ -1958,7 +1958,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_WRITE_BLOCK_REQUEST">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="8">For request to write block.</doc>
+             line="10">For request to write block.</doc>
       </member>
       <member name="write_response"
               value="2"
@@ -1967,7 +1967,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_WRITE_RESPONSE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="9">For response to write.</doc>
+             line="11">For response to write.</doc>
       </member>
       <member name="read_quadlet_request"
               value="4"
@@ -1976,7 +1976,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_READ_QUADLET_REQUEST">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="10">For response to read quadlet.</doc>
+             line="12">For response to read quadlet.</doc>
       </member>
       <member name="read_block_request"
               value="5"
@@ -1985,7 +1985,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_READ_BLOCK_REQUEST">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="11">For request to read block.</doc>
+             line="13">For request to read block.</doc>
       </member>
       <member name="read_quadlet_response"
               value="6"
@@ -1994,7 +1994,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_READ_QUADLET_RESPONSE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="12">For response to quadlet read.</doc>
+             line="14">For response to quadlet read.</doc>
       </member>
       <member name="read_block_response"
               value="7"
@@ -2003,7 +2003,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_READ_BLOCK_RESPONSE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="13">For response to block read.</doc>
+             line="15">For response to block read.</doc>
       </member>
       <member name="cycle_start"
               value="8"
@@ -2012,7 +2012,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_CYCLE_START">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="14">For cycle start.</doc>
+             line="16">For cycle start.</doc>
       </member>
       <member name="lock_request"
               value="9"
@@ -2021,7 +2021,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_REQUEST">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="15">For request to lock.</doc>
+             line="17">For request to lock.</doc>
       </member>
       <member name="stream_data"
               value="10"
@@ -2030,7 +2030,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_STREAM_DATA">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="16">For stream data.</doc>
+             line="18">For stream data.</doc>
       </member>
       <member name="lock_response"
               value="11"
@@ -2039,7 +2039,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_RESPONSE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="17">For response to lock.</doc>
+             line="19">For response to lock.</doc>
       </member>
       <member name="lock_mask_swap"
               value="17"
@@ -2048,7 +2048,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_MASK_SWAP">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="18">For lock request for mask-swap.</doc>
+             line="20">For lock request for mask-swap.</doc>
       </member>
       <member name="lock_compare_swap"
               value="18"
@@ -2057,7 +2057,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_COMPARE_SWAP">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="19">For lock request for compare-swap.</doc>
+             line="21">For lock request for compare-swap.</doc>
       </member>
       <member name="lock_fetch_add"
               value="19"
@@ -2066,7 +2066,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_FETCH_ADD">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="20">For lock request for fetch-add.</doc>
+             line="22">For lock request for fetch-add.</doc>
       </member>
       <member name="lock_little_add"
               value="20"
@@ -2075,7 +2075,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_LITTLE_ADD">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="21">For lock request for little-add.</doc>
+             line="23">For lock request for little-add.</doc>
       </member>
       <member name="lock_bounded_add"
               value="21"
@@ -2084,7 +2084,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_BOUNDED_ADD">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="22">For lock request for bounded-add.</doc>
+             line="24">For lock request for bounded-add.</doc>
       </member>
       <member name="lock_wrap_add"
               value="22"
@@ -2093,7 +2093,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_WRAP_ADD">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="23">For lock request for wrap-add.</doc>
+             line="25">For lock request for wrap-add.</doc>
       </member>
       <member name="lock_vendor_dependent"
               value="23"
@@ -2102,7 +2102,7 @@ Hinawa.FwRespError.</doc>
               glib:name="HINAWA_FW_TCODE_LOCK_VENDOR_DEPENDENT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="24">For lock request for vendor-dependent.</doc>
+             line="26">For lock request for vendor-dependent.</doc>
       </member>
     </enumeration>
     <class name="SndDg00x"
@@ -2458,7 +2458,7 @@ A [class@SndDice] listen to Dice notification and generates signal when received
                  glib:error-domain="hinawa-snd-dice-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="220">A set of error code for [structGLib.Error] with domain which equals to Hinawa.SndDiceError.</doc>
+           line="222">A set of error code for [structGLib.Error] with domain which equals to Hinawa.SndDiceError.</doc>
       <doc-deprecated xml:space="preserve">Use Hitaki.AlsaFirewireError in libhitaki library instead.</doc-deprecated>
       <member name="timeout"
               value="0"
@@ -2467,7 +2467,7 @@ A [class@SndDice] listen to Dice notification and generates signal when received
               glib:name="HINAWA_SND_DICE_ERROR_TIMEOUT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="222">The transaction is canceled due to response timeout.</doc>
+             line="224">The transaction is canceled due to response timeout.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_snd_dice_error_quark"
@@ -2991,7 +2991,7 @@ response.</doc>
                  c:type="HinawaSndEfwStatus">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="233">A set of status code for Echo Audio Fireworks Transaction.</doc>
+           line="235">A set of status code for Echo Audio Fireworks Transaction.</doc>
       <doc-deprecated xml:space="preserve">Use Hitaki.EfwProtocolError in libhitaki library instead.</doc-deprecated>
       <member name="ok"
               value="0"
@@ -3000,7 +3000,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_OK">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="235">The transaction finishes successfully.</doc>
+             line="237">The transaction finishes successfully.</doc>
       </member>
       <member name="bad"
               value="1"
@@ -3009,7 +3009,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="236">The request or response includes invalid header.</doc>
+             line="238">The request or response includes invalid header.</doc>
       </member>
       <member name="bad_command"
               value="2"
@@ -3018,7 +3018,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_COMMAND">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="237">The request includes invalid category or command.</doc>
+             line="239">The request includes invalid category or command.</doc>
       </member>
       <member name="comm_err"
               value="3"
@@ -3027,7 +3027,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_COMM_ERR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="238">The transaction fails due to communication error.</doc>
+             line="240">The transaction fails due to communication error.</doc>
       </member>
       <member name="bad_quad_count"
               value="4"
@@ -3036,7 +3036,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_QUAD_COUNT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="239">The number of quadlets in transaction is invalid.</doc>
+             line="241">The number of quadlets in transaction is invalid.</doc>
       </member>
       <member name="unsupported"
               value="5"
@@ -3045,7 +3045,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_UNSUPPORTED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="240">The request is not supported.</doc>
+             line="242">The request is not supported.</doc>
       </member>
       <member name="timeout"
               value="6"
@@ -3054,7 +3054,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_TIMEOUT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="241">The transaction is canceled due to response timeout.</doc>
+             line="243">The transaction is canceled due to response timeout.</doc>
       </member>
       <member name="dsp_timeout"
               value="7"
@@ -3063,7 +3063,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_DSP_TIMEOUT">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="242">The operation for DSP did not finish within timeout.</doc>
+             line="244">The operation for DSP did not finish within timeout.</doc>
       </member>
       <member name="bad_rate"
               value="8"
@@ -3072,7 +3072,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_RATE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="243">The request includes invalid value for sampling frequency.</doc>
+             line="245">The request includes invalid value for sampling frequency.</doc>
       </member>
       <member name="bad_clock"
               value="9"
@@ -3081,7 +3081,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_CLOCK">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="244">The request includes invalid value for source of clock.</doc>
+             line="246">The request includes invalid value for source of clock.</doc>
       </member>
       <member name="bad_channel"
               value="10"
@@ -3090,7 +3090,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_CHANNEL">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="245">The request includes invalid value for the number of channel.</doc>
+             line="247">The request includes invalid value for the number of channel.</doc>
       </member>
       <member name="bad_pan"
               value="11"
@@ -3099,7 +3099,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_PAN">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="246">The request includes invalid value for panning.</doc>
+             line="248">The request includes invalid value for panning.</doc>
       </member>
       <member name="flash_busy"
               value="12"
@@ -3108,7 +3108,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_FLASH_BUSY">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="247">The on-board flash is busy and not operable.</doc>
+             line="249">The on-board flash is busy and not operable.</doc>
       </member>
       <member name="bad_mirror"
               value="13"
@@ -3117,7 +3117,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_MIRROR">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="248">The request includes invalid value for mirroring channel.</doc>
+             line="250">The request includes invalid value for mirroring channel.</doc>
       </member>
       <member name="bad_led"
               value="14"
@@ -3126,7 +3126,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_LED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="249">The request includes invalid value for LED.</doc>
+             line="251">The request includes invalid value for LED.</doc>
       </member>
       <member name="bad_parameter"
               value="15"
@@ -3135,7 +3135,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_BAD_PARAMETER">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="250">The request includes invalid value of parameter.</doc>
+             line="252">The request includes invalid value of parameter.</doc>
       </member>
       <member name="large_resp"
               value="16"
@@ -3144,7 +3144,7 @@ response.</doc>
               glib:name="HINAWA_SND_EFW_STATUS_LARGE_RESP">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="251">The size of response is larger than expected.</doc>
+             line="253">The size of response is larger than expected.</doc>
       </member>
     </enumeration>
     <class name="SndMotu"
@@ -4674,7 +4674,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
                  glib:error-domain="hinawa-snd-unit-error-quark">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="191">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.SndUnitError.</doc>
+           line="193">A set of error code for [struct@GLib.Error] with domain which equals to Hinawa.SndUnitError.</doc>
       <doc-deprecated xml:space="preserve">Use Hitaki.AlsaFirewireError in libhitaki library instead.</doc-deprecated>
       <member name="disconnected"
               value="0"
@@ -4683,7 +4683,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_DISCONNECTED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="193">The hwdep device associated to the instance is disconnected.</doc>
+             line="195">The hwdep device associated to the instance is disconnected.</doc>
       </member>
       <member name="used"
               value="1"
@@ -4692,7 +4692,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_USED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="194">The hedep device is already in use.</doc>
+             line="196">The hedep device is already in use.</doc>
       </member>
       <member name="opened"
               value="2"
@@ -4701,7 +4701,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_OPENED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="195">The instance is already associated to unit by opening hwdep
+             line="197">The instance is already associated to unit by opening hwdep
 				character device.</doc>
       </member>
       <member name="not_opened"
@@ -4711,7 +4711,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_NOT_OPENED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="197">The instance is not associated to unit yet by opening hwdep
+             line="199">The instance is not associated to unit yet by opening hwdep
 				character device.</doc>
       </member>
       <member name="locked"
@@ -4721,7 +4721,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_LOCKED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="199">The hwdep device is already locked for kernel packet streaming.</doc>
+             line="201">The hwdep device is already locked for kernel packet streaming.</doc>
       </member>
       <member name="unlocked"
               value="5"
@@ -4730,7 +4730,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_UNLOCKED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="200">The hwdep device is not locked for kernel packet streaming yet.</doc>
+             line="202">The hwdep device is not locked for kernel packet streaming yet.</doc>
       </member>
       <member name="wrong_class"
               value="6"
@@ -4739,7 +4739,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_WRONG_CLASS">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="201">The hwdep device is not for the unit expected by the class.</doc>
+             line="203">The hwdep device is not for the unit expected by the class.</doc>
       </member>
       <member name="failed"
               value="7"
@@ -4748,7 +4748,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_ERROR_FAILED">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="202">The system call fails.</doc>
+             line="204">The system call fails.</doc>
       </member>
       <function name="quark"
                 c:identifier="hinawa_snd_unit_error_quark"
@@ -4776,7 +4776,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
                  c:type="HinawaSndUnitType">
       <doc xml:space="preserve"
            filename="../src/hinawa_enum_types.h"
-           line="114">A representation of type for sound unit defined by Linux sound subsystem.</doc>
+           line="116">A representation of type for sound unit defined by Linux sound subsystem.</doc>
       <doc-deprecated xml:space="preserve">Use [enum@Hitaki.AlsaFirewireType] in libhitaki library instead.</doc-deprecated>
       <member name="dice"
               value="1"
@@ -4785,7 +4785,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_DICE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="116">The type of DICE ASIC.</doc>
+             line="118">The type of DICE ASIC.</doc>
       </member>
       <member name="fireworks"
               value="2"
@@ -4794,7 +4794,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_FIREWORKS">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="117">The type of Fireworks board module.</doc>
+             line="119">The type of Fireworks board module.</doc>
       </member>
       <member name="bebob"
               value="3"
@@ -4803,7 +4803,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_BEBOB">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="118">The type of BeBoB ASIC.</doc>
+             line="120">The type of BeBoB ASIC.</doc>
       </member>
       <member name="oxfw"
               value="4"
@@ -4812,7 +4812,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_OXFW">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="119">The type of OXFW ASIC</doc>
+             line="121">The type of OXFW ASIC</doc>
       </member>
       <member name="digi00x"
               value="5"
@@ -4821,7 +4821,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_DIGI00X">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="120">The type of Digi00x series.</doc>
+             line="122">The type of Digi00x series.</doc>
       </member>
       <member name="tascam"
               value="6"
@@ -4830,7 +4830,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_TASCAM">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="121">The type of Tascam FireWire series.</doc>
+             line="123">The type of Tascam FireWire series.</doc>
       </member>
       <member name="motu"
               value="7"
@@ -4839,7 +4839,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_MOTU">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="122">The type of MOTU FireWire series.</doc>
+             line="124">The type of MOTU FireWire series.</doc>
       </member>
       <member name="fireface"
               value="8"
@@ -4848,7 +4848,7 @@ packet streaming requested by ALSA PCM/Rawmidi applications.</doc>
               glib:name="HINAWA_SND_UNIT_TYPE_FIREFACE">
         <doc xml:space="preserve"
              filename="../src/hinawa_enum_types.h"
-             line="123">The type of RME Fireface series.</doc>
+             line="125">The type of RME Fireface series.</doc>
       </member>
     </enumeration>
     <function name="fw_fcp_error_quark"
