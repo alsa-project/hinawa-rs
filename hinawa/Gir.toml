@@ -28,7 +28,7 @@ status = "generate"
 manual_traits = ["FwNodeExtManual"]
     [[object.function]]
     name = "get_config_rom"
-    ignore = true
+    manual = true
     doc_trait_name = "FwNodeExtManual"
 
 [[object]]
@@ -37,23 +37,23 @@ status = "generate"
 manual_traits = ["FwReqExtManual"]
     [[object.signal]]
     name = "responded"
-    ignore = true
+    manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction_async"
-    ignore = true
+    manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction_sync"
-    ignore = true
+    manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction"
-    ignore = true
+    manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "error_quark"
-    ignore = true
+    manual = true
 
 [[object]]
 name = "Hinawa.FwResp"
@@ -61,11 +61,11 @@ status = "generate"
 manual_traits = ["FwRespExtManual"]
     [[object.function]]
     name = "get_req_frame"
-    ignore = true
+    manual = true
     doc_trait_name = "FwRespExtManual"
     [[object.signal]]
     name = "requested2"
-    ignore = true
+    manual = true
     doc_trait_name = "FwRespExtManual"
 
 [[object]]
@@ -74,13 +74,13 @@ status = "generate"
 manual_traits = ["FwFcpExtManual"]
     [[object.function]]
     name = "avc_transaction"
-    ignore = true
+    manual = true
     doc_trait_name = "FwFcpExtManual"
     [[object.function]]
     name = "transaction"
-    ignore = true
+    manual = true
     doc_trait_name = "FwFcpExtManual"
     [[object.signal]]
     name = "responded"
-    ignore = true
+    manual = true
     doc_trait_name = "FwFcpExtManual"
