@@ -15,6 +15,16 @@ use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
+    /// A transaction responder for request initiated by node in IEEE 1394 bus.
+    ///
+    /// The [`FwResp`][crate::FwResp] responds transaction initiated by node in IEEE 1394 bus.
+    ///
+    /// This class is an application of Linux FireWire subsystem. All of operations utilize ioctl(2)
+    /// with subsystem specific request commands.
+    ///
+    /// # Implements
+    ///
+    /// [`FwRespExt`][trait@crate::prelude::FwRespExt], [`FwRespExtManual`][trait@crate::prelude::FwRespExtManual]
     #[doc(alias = "HinawaFwResp")]
     pub struct FwResp(Object<ffi::HinawaFwResp, ffi::HinawaFwRespClass>);
 
@@ -26,6 +36,11 @@ glib::wrapper! {
 impl FwResp {
     pub const NONE: Option<&'static FwResp> = None;
 
+    /// Instantiate [`FwResp`][crate::FwResp] object and return the instance.
+    ///
+    /// # Returns
+    ///
+    /// a new instance of [`FwResp`][crate::FwResp].
     #[doc(alias = "hinawa_fw_resp_new")]
     pub fn new() -> FwResp {
         unsafe { from_glib_full(ffi::hinawa_fw_resp_new()) }
@@ -38,13 +53,39 @@ impl Default for FwResp {
     }
 }
 
+/// Trait containing the part of [`struct@FwResp`] methods.
+///
+/// # Implementors
+///
+/// [`FwFcp`][struct@crate::FwFcp], [`FwResp`][struct@crate::FwResp]
 pub trait FwRespExt: 'static {
+    /// stop to listen to a range of address in local node (e.g. OHCI 1394 controller).
     #[doc(alias = "hinawa_fw_resp_release")]
     fn release(&self);
 
+    /// Start to listen to a range of address in host controller which connects to the node. The function
+    /// is a variant of [`reserve_within_region()`][Self::reserve_within_region()] so that the exact range of address should
+    /// be reserved as given.
+    /// ## `node`
+    /// A [`FwNode`][crate::FwNode].
+    /// ## `addr`
+    /// A start address to listen to in host controller.
+    /// ## `width`
+    /// The byte width of address to listen to host controller.
     #[doc(alias = "hinawa_fw_resp_reserve")]
     fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error>;
 
+    /// Start to listen to range of address equals to #width in local node (e.g. 1394 OHCI host
+    /// controller), which is used to communicate to the node given as parameter. The range of address
+    /// is looked up in region between region_start and region_end.
+    /// ## `node`
+    /// A [`FwNode`][crate::FwNode].
+    /// ## `region_start`
+    /// Start offset of address region in which range of address is looked up.
+    /// ## `region_end`
+    /// End offset of address region in which range of address is looked up.
+    /// ## `width`
+    /// The width for range of address to be looked up.
     #[doc(alias = "hinawa_fw_resp_reserve_within_region")]
     fn reserve_within_region(
         &self,
@@ -54,14 +95,20 @@ pub trait FwRespExt: 'static {
         width: u32,
     ) -> Result<(), glib::Error>;
 
+    /// Register byte frame as response.
+    /// ## `frame`
+    /// a 8bit array for response frame.
     #[doc(alias = "hinawa_fw_resp_set_resp_frame")]
     fn set_resp_frame(&self, frame: &[u8]);
 
+    /// Whether a range of address is reserved or not in host controller.
     #[doc(alias = "is-reserved")]
     fn is_reserved(&self) -> bool;
 
+    /// The start offset of reserved address range.
     fn offset(&self) -> u64;
 
+    /// The width of reserved address range.
     fn width(&self) -> u32;
 
     #[doc(alias = "is-reserved")]

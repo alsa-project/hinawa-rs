@@ -2,12 +2,14 @@
 
 use super::*;
 
+/// Trait which should be implemented by subclass of [`FwFcp`][crate::FwFcp].
 pub trait FwFcpImpl: ObjectImpl + FwRespImpl {
     fn responded(&self, fcp: &Self::Type, frame: &[u8]) {
         self.parent_responded(fcp, frame)
     }
 }
 
+/// Trait which is automatically implemented to implementator of [`FwFcpImpl`][self::FwFcpImpl].
 pub trait FwFcpImplExt: ObjectSubclass {
     fn parent_responded(&self, fcp: &Self::Type, frame: &[u8]);
 }

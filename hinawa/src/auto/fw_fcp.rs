@@ -16,6 +16,19 @@ use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
+    /// A FCP transaction executor to node in IEEE 1394 bus.
+    ///
+    /// A HinawaFwFcp supports Function Control Protocol (FCP) in IEC 61883-1, in which no way is defined
+    /// to match response against command by the contents of frames. In 'AV/C Digital Interface Command
+    /// Set General Specification Version 4.2' (Sep 1 2004, 1394TA), a pair of command and response is
+    /// loosely matched by the contents of frames.
+    ///
+    /// Any of transaction frames should be aligned to 8bit (byte). This class is an application of
+    /// [`FwReq`][crate::FwReq] / [`FwResp`][crate::FwResp].
+    ///
+    /// # Implements
+    ///
+    /// [`FwFcpExt`][trait@crate::prelude::FwFcpExt], [`FwRespExt`][trait@crate::prelude::FwRespExt], [`FwFcpExtManual`][trait@crate::prelude::FwFcpExtManual], [`FwRespExtManual`][trait@crate::prelude::FwRespExtManual]
     #[doc(alias = "HinawaFwFcp")]
     pub struct FwFcp(Object<ffi::HinawaFwFcp, ffi::HinawaFwFcpClass>) @extends FwResp;
 
@@ -27,6 +40,11 @@ glib::wrapper! {
 impl FwFcp {
     pub const NONE: Option<&'static FwFcp> = None;
 
+    /// Instantiate [`FwFcp`][crate::FwFcp] object and return the instance.
+    ///
+    /// # Returns
+    ///
+    /// an instance of [`FwFcp`][crate::FwFcp].
     #[doc(alias = "hinawa_fw_fcp_new")]
     pub fn new() -> FwFcp {
         unsafe { from_glib_full(ffi::hinawa_fw_fcp_new()) }
@@ -39,16 +57,33 @@ impl Default for FwFcp {
     }
 }
 
+/// Trait containing the part of [`struct@FwFcp`] methods.
+///
+/// # Implementors
+///
+/// [`FwFcp`][struct@crate::FwFcp]
 pub trait FwFcpExt: 'static {
+    /// Start to listen to FCP responses.
+    /// ## `node`
+    /// A [`FwNode`][crate::FwNode].
     #[doc(alias = "hinawa_fw_fcp_bind")]
     fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error>;
 
+    /// Transfer command frame for FCP. When receiving response frame for FCP, `signal::FwFcp::responded`
+    /// signal is emitted.
+    /// ## `cmd`
+    /// An array with elements for request byte data. The value of this
+    ///  argument should point to the array and immutable.
+    /// ## `timeout_ms`
+    /// The timeout to wait for response subaction of transaction for command frame.
     #[doc(alias = "hinawa_fw_fcp_command")]
     fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error>;
 
+    /// Stop to listen to FCP responses.
     #[doc(alias = "hinawa_fw_fcp_unbind")]
     fn unbind(&self);
 
+    /// Whether this protocol is bound to any instance of HinawaFwNode.
     #[doc(alias = "is-bound")]
     fn is_bound(&self) -> bool;
 

@@ -14,6 +14,15 @@ use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
+    /// An event listener for FireWire node
+    ///
+    /// A [`FwNode`][crate::FwNode] is an event listener for a specified node on IEEE 1394 bus. This class is an
+    /// application of Linux FireWire subsystem. All of operations utilize ioctl(2) with subsystem
+    /// specific request commands.
+    ///
+    /// # Implements
+    ///
+    /// [`FwNodeExt`][trait@crate::prelude::FwNodeExt], [`FwNodeExtManual`][trait@crate::prelude::FwNodeExtManual]
     #[doc(alias = "HinawaFwNode")]
     pub struct FwNode(Object<ffi::HinawaFwNode, ffi::HinawaFwNodeClass>);
 
@@ -25,6 +34,11 @@ glib::wrapper! {
 impl FwNode {
     pub const NONE: Option<&'static FwNode> = None;
 
+    /// Instantiate [`FwNode`][crate::FwNode] object and return the instance.
+    ///
+    /// # Returns
+    ///
+    /// an instance of [`FwNode`][crate::FwNode].
     #[doc(alias = "hinawa_fw_node_new")]
     pub fn new() -> FwNode {
         unsafe { from_glib_full(ffi::hinawa_fw_node_new()) }
@@ -37,33 +51,59 @@ impl Default for FwNode {
     }
 }
 
+/// Trait containing the part of [`struct@FwNode`] methods.
+///
+/// # Implementors
+///
+/// [`FwNode`][struct@crate::FwNode]
 pub trait FwNodeExt: 'static {
+    /// Create [`glib::Source`][crate::glib::Source] for `GLib::MainContext` to dispatch events for the node on
+    /// IEEE 1394 bus.
+    ///
+    /// # Returns
+    /// A [`glib::Source`][crate::glib::Source].
     #[doc(alias = "hinawa_fw_node_create_source")]
     fn create_source(&self) -> Result<glib::Source, glib::Error>;
 
+    /// Open Linux FireWire character device to operate node on IEEE 1394 bus.
+    /// ## `path`
+    /// A path to Linux FireWire character device
     #[doc(alias = "hinawa_fw_node_open")]
     fn open(&self, path: &str) -> Result<(), glib::Error>;
 
+    /// Node ID of node which plays role of bus manager at current generation of bus topology.
     #[doc(alias = "bus-manager-node-id")]
     fn bus_manager_node_id(&self) -> u32;
 
+    /// Current generation of bus topology.
     fn generation(&self) -> u32;
 
+    /// Node ID of node which plays role of isochronous resource manager at current generation
+    /// of bus topology.
     #[doc(alias = "ir-manager-node-id")]
     fn ir_manager_node_id(&self) -> u32;
 
+    /// Node ID of node which application uses to communicate to node associated to instance of
+    /// object at current generation of bus topology. In general, it is for 1394 OHCI controller.
     #[doc(alias = "local-node-id")]
     fn local_node_id(&self) -> u32;
 
+    /// Node ID of node associated to instance of object at current generation of bus topology.
+    /// This parameter is effective after the association.
     #[doc(alias = "node-id")]
     fn node_id(&self) -> u32;
 
+    /// Node ID of root node in bus topology at current generation of the bus topology.
     #[doc(alias = "root-node-id")]
     fn root_node_id(&self) -> u32;
 
+    /// Emitted when IEEE 1394 bus is updated. Handlers can read current generation in the bus
+    /// via `property::FwNode::generation` property.
     #[doc(alias = "bus-update")]
     fn connect_bus_update<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
+    /// Emitted when the node is not available anymore due to removal from IEEE 1394 bus. It's
+    /// preferable to call `GObject::Object::unref()` immediately to release file descriptor.
     #[doc(alias = "disconnected")]
     fn connect_disconnected<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 

@@ -7,6 +7,17 @@ use glib::translate::*;
 use std::fmt;
 
 glib::wrapper! {
+    /// A transaction executor to a FireWire unit.
+    ///
+    /// A HinawaFwReq supports some types of transactions in IEEE 1212. Mainly for read, write and lock
+    /// operations.
+    ///
+    /// This class is an application of Linux FireWire subsystem. All of operations utilize ioctl(2)
+    /// with subsystem specific request commands.
+    ///
+    /// # Implements
+    ///
+    /// [`FwReqExtManual`][trait@crate::prelude::FwReqExtManual]
     #[doc(alias = "HinawaFwReq")]
     pub struct FwReq(Object<ffi::HinawaFwReq, ffi::HinawaFwReqClass>);
 
@@ -18,6 +29,11 @@ glib::wrapper! {
 impl FwReq {
     pub const NONE: Option<&'static FwReq> = None;
 
+    /// Instantiate [`FwReq`][crate::FwReq] object and return the instance.
+    ///
+    /// # Returns
+    ///
+    /// an instance of [`FwReq`][crate::FwReq].
     #[doc(alias = "hinawa_fw_req_new")]
     pub fn new() -> FwReq {
         unsafe { from_glib_full(ffi::hinawa_fw_req_new()) }

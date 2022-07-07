@@ -1,7 +1,36 @@
 // SPDX-License-Identifier: MIT
 use crate::*;
 
+/// Trait containing the rest of [`struct@FwResp`] methods.
+///
+/// # Implementors
+///
+/// [`FwResp`][struct@crate::FwResp]
 pub trait FwRespExtManual {
+    /// Emitted when any node transfers request subaction to the range of address to which this
+    /// object listening, the `signal::FwResp::requested` signal handler is called with arrived
+    /// frame for the subaction. The handler is expected to call [`FwRespExt::set_resp_frame()`][crate::prelude::FwRespExt::set_resp_frame()]
+    /// with frame and return [`FwRcode`][crate::FwRcode] for response subaction.
+    /// ## `tcode`
+    /// One of [`FwTcode`][crate::FwTcode] enumerations
+    /// ## `offset`
+    /// The address offset at which the transaction arrives.
+    /// ## `src`
+    /// The node ID of source for the transaction.
+    /// ## `dst`
+    /// The node ID of destination for the transaction.
+    /// ## `card`
+    /// The index of card corresponding to 1394 OHCI controller.
+    /// ## `generation`
+    /// The generation of bus when the transaction is transferred.
+    /// ## `frame`
+    /// The array with elements for byte
+    ///    data.
+    ///
+    /// # Returns
+    ///
+    /// One of [`FwRcode`][crate::FwRcode] enumerations corresponding to rcodes defined in IEEE 1394
+    ///     specification.
     #[doc(alias = "requested")]
     fn connect_requested2<F>(&self, f: F) -> SignalHandlerId
     where

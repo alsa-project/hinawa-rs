@@ -1,7 +1,29 @@
 // SPDX-License-Identifier: MIT
 use crate::*;
 
+/// Trait containing all [`struct@FwReq`] methods.
+///
+/// # Implementors
+///
+/// [`FwReq`][struct@crate::FwReq]
 pub trait FwReqExtManual {
+    /// Execute request subaction of transactions to the given node according to given code. When the
+    /// response subaction arrives and read the contents, `signal::FwReq::responded` signal handler is called
+    /// as long as event dispatcher runs.
+    /// ## `node`
+    /// A [`FwNode`][crate::FwNode].
+    /// ## `tcode`
+    /// A transaction code of [`FwTcode`][crate::FwTcode].
+    /// ## `addr`
+    /// A destination address of target device
+    /// ## `length`
+    /// The range of address in byte unit.
+    /// ## `frame`
+    /// An array with elements for byte data. Callers should
+    ///    give it for buffer with enough space against the request since this library performs no
+    ///    reallocation. Due to the reason, the value of this argument should point to the pointer
+    ///    to the array and immutable. The content of array is mutable for read and lock
+    ///    transaction.
     #[doc(alias = "hinawa_fw_req_transaction_async")]
     fn transaction_async<P: IsA<FwNode>>(
         &self,
@@ -11,6 +33,26 @@ pub trait FwReqExtManual {
         length: usize,
         frame: &mut [u8],
     ) -> Result<(), glib::Error>;
+    /// Execute request subaction of transaction to the given node according to given code, then wait
+    /// for response subaction within the given timeout. The `property::FwReq::timeout` property of
+    /// instance is ignored.
+    /// ## `node`
+    /// A [`FwNode`][crate::FwNode].
+    /// ## `tcode`
+    /// A transaction code of [`FwTcode`][crate::FwTcode].
+    /// ## `addr`
+    /// A destination address of target device
+    /// ## `length`
+    /// The range of address in byte unit.
+    /// ## `frame`
+    /// An array with elements for byte data. Callers should
+    ///    give it for buffer with enough space against the request since this library performs no
+    ///    reallocation. Due to the reason, the value of this argument should point to the pointer
+    ///    to the array and immutable. The content of array is mutable for read and lock
+    ///    transaction.
+    /// ## `timeout_ms`
+    /// The timeout to wait for response subaction of the transaction since request
+    ///     subaction is initiated, in milliseconds.
     #[doc(alias = "hinawa_fw_req_transaction_sync")]
     fn transaction_sync<P: IsA<FwNode>>(
         &self,
@@ -21,6 +63,14 @@ pub trait FwReqExtManual {
         frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<(), glib::Error>;
+    /// Emitted when the unit transfers asynchronous packet as response subaction for the
+    /// transaction and the process successfully reads the content of packet from Linux firewire
+    /// subsystem.
+    /// ## `rcode`
+    /// One of [`FwRcode`][crate::FwRcode].
+    /// ## `frame`
+    /// The array with elements for
+    ///    byte data of response subaction for transaction.
     #[doc(alias = "responded")]
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where

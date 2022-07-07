@@ -1,7 +1,27 @@
 // SPDX-License-Identifier: MIT
 use crate::*;
 
+/// Trait containing the rest of [`struct@FwFcp`] methods.
+///
+/// # Implementors
+///
+/// [`FwFcp`][struct@crate::FwFcp]
 pub trait FwFcpExtManual {
+    /// Finish the pair of asynchronous transaction for AV/C command and response transactions. The
+    /// timeout_ms parameter is used to wait for response transaction since the command transaction is
+    /// initiated, ignoring `property::FwFcp::timeout` property of instance. The timeout is not expanded in
+    /// the case that AV/C INTERIM status is arrived, thus the caller should expand the timeout in
+    /// advance for the case.
+    /// ## `cmd`
+    /// An array with elements for request byte data. The value of
+    ///  this argument should point to the array and immutable.
+    /// ## `resp`
+    /// An array with elements for response byte data. Callers
+    ///   should give it for buffer with enough space against the request since this library
+    ///   performs no reallocation. Due to the reason, the value of this argument should point to
+    ///   the pointer to the array and immutable. The content of array is mutable.
+    /// ## `timeout_ms`
+    /// The timeout to wait for response transaction since command transactions finishes.
     #[doc(alias = "hinawa_fw_fcp_avc_transaction")]
     fn avc_transaction(
         &self,
@@ -9,6 +29,11 @@ pub trait FwFcpExtManual {
         resp_frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<usize, glib::Error>;
+    /// Emitted when the node transfers asynchronous packet as response for FCP and the process
+    /// successfully read the content of packet.
+    /// ## `frame`
+    /// The array with elements for byte
+    ///         data of response for FCP.
     #[doc(alias = "responded")]
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where

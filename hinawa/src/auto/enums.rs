@@ -12,12 +12,15 @@ use glib::StaticType;
 use glib::Type;
 use std::fmt;
 
+/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwFcpError.
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwFcpError")]
 pub enum FwFcpError {
+    /// The transaction is canceled due to response timeout.
     #[doc(alias = "HINAWA_FW_FCP_ERROR_TIMEOUT")]
     Timeout,
+    /// The size of response is larger than expected.
     #[doc(alias = "HINAWA_FW_FCP_ERROR_LARGE_RESP")]
     LargeResp,
     #[doc(hidden)]
@@ -112,16 +115,21 @@ impl ToValue for FwFcpError {
     }
 }
 
+/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwNodeError.
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwNodeError")]
 pub enum FwNodeError {
+    /// The node associated to the instance is disconnected.
     #[doc(alias = "HINAWA_FW_NODE_ERROR_DISCONNECTED")]
     Disconnected,
+    /// The instance is already associated to node by opening firewire character device.
     #[doc(alias = "HINAWA_FW_NODE_ERROR_OPENED")]
     Opened,
+    /// The instance is not associated to node by opening firewire character device.
     #[doc(alias = "HINAWA_FW_NODE_ERROR_NOT_OPENED")]
     NotOpened,
+    /// The system call fails.
     #[doc(alias = "HINAWA_FW_NODE_ERROR_FAILED")]
     Failed,
     #[doc(hidden)]
@@ -224,30 +232,42 @@ impl ToValue for FwNodeError {
     }
 }
 
+/// A representation for rcode of asynchronous transaction on IEEE 1394 bus.
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwRcode")]
 pub enum FwRcode {
+    /// For completion.
     #[doc(alias = "HINAWA_FW_RCODE_COMPLETE")]
     Complete,
+    /// For error of conflicting.
     #[doc(alias = "HINAWA_FW_RCODE_CONFLICT_ERROR")]
     ConflictError,
+    /// For error of data.
     #[doc(alias = "HINAWA_FW_RCODE_DATA_ERROR")]
     DataError,
+    /// For error of type.
     #[doc(alias = "HINAWA_FW_RCODE_TYPE_ERROR")]
     TypeError,
+    /// For error of address.
     #[doc(alias = "HINAWA_FW_RCODE_ADDRESS_ERROR")]
     AddressError,
+    /// For error of sending.
     #[doc(alias = "HINAWA_FW_RCODE_SEND_ERROR")]
     SendError,
+    /// For cancellation.
     #[doc(alias = "HINAWA_FW_RCODE_CANCELLED")]
     Cancelled,
+    // For busyness.
     #[doc(alias = "HINAWA_FW_RCODE_BUSY")]
     Busy,
+    /// For generation.
     #[doc(alias = "HINAWA_FW_RCODE_GENERATION")]
     Generation,
+    /// For no acknowledge.
     #[doc(alias = "HINAWA_FW_RCODE_NO_ACK")]
     NoAck,
+    /// For rcode out of specification.
     #[doc(alias = "HINAWA_FW_RCODE_INVALID")]
     Invalid,
     #[doc(hidden)]
@@ -351,28 +371,40 @@ impl ToValue for FwRcode {
     }
 }
 
+/// A set of error code for [`FwReq`][crate::FwReq]. Each of them has the same value as the
+/// corresponding enumeration in [`FwRcode`][crate::FwRcode].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwReqError")]
 pub enum FwReqError {
+    /// For error of conflicting.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_CONFLICT_ERROR")]
     ConflictError,
+    /// For error of data.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_DATA_ERROR")]
     DataError,
+    /// For error of type.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_TYPE_ERROR")]
     TypeError,
+    /// For error of address.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_ADDRESS_ERROR")]
     AddressError,
+    /// For error of sending.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_SEND_ERROR")]
     SendError,
+    /// For cancellation.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_CANCELLED")]
     Cancelled,
+    /// For busyness.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_BUSY")]
     Busy,
+    /// For generation.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_GENERATION")]
     Generation,
+    /// For no acknowledge.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_NO_ACK")]
     NoAck,
+    /// For rcode out of specification.
     #[doc(alias = "HINAWA_FW_REQ_ERROR_INVALID")]
     Invalid,
     #[doc(hidden)]
@@ -499,14 +531,18 @@ impl ToValue for FwReqError {
     }
 }
 
+/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwRespError.
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwRespError")]
 pub enum FwRespError {
+    /// The generic system call error.
     #[doc(alias = "HINAWA_FW_RESP_ERROR_FAILED")]
     Failed,
+    /// The instance is already associated to reserved address range.
     #[doc(alias = "HINAWA_FW_RESP_ERROR_RESERVED")]
     Reserved,
+    /// The address space is used exclusively.
     #[doc(alias = "HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED")]
     AddrSpaceUsed,
     #[doc(hidden)]
@@ -605,44 +641,63 @@ impl ToValue for FwRespError {
     }
 }
 
+/// A representation for tcode of asynchronous transaction on IEEE 1394 bus.
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwTcode")]
 pub enum FwTcode {
+    /// For request to write quadlet.
     #[doc(alias = "HINAWA_FW_TCODE_WRITE_QUADLET_REQUEST")]
     WriteQuadletRequest,
+    /// For request to write block.
     #[doc(alias = "HINAWA_FW_TCODE_WRITE_BLOCK_REQUEST")]
     WriteBlockRequest,
+    /// For response to write.
     #[doc(alias = "HINAWA_FW_TCODE_WRITE_RESPONSE")]
     WriteResponse,
+    /// For response to read quadlet.
     #[doc(alias = "HINAWA_FW_TCODE_READ_QUADLET_REQUEST")]
     ReadQuadletRequest,
+    /// For request to read block.
     #[doc(alias = "HINAWA_FW_TCODE_READ_BLOCK_REQUEST")]
     ReadBlockRequest,
+    /// For response to quadlet read.
     #[doc(alias = "HINAWA_FW_TCODE_READ_QUADLET_RESPONSE")]
     ReadQuadletResponse,
+    /// For response to block read.
     #[doc(alias = "HINAWA_FW_TCODE_READ_BLOCK_RESPONSE")]
     ReadBlockResponse,
+    /// For cycle start.
     #[doc(alias = "HINAWA_FW_TCODE_CYCLE_START")]
     CycleStart,
+    /// For request to lock.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_REQUEST")]
     LockRequest,
+    /// For stream data.
     #[doc(alias = "HINAWA_FW_TCODE_STREAM_DATA")]
     StreamData,
+    /// For response to lock.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_RESPONSE")]
     LockResponse,
+    /// For lock request for mask-swap.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_MASK_SWAP")]
     LockMaskSwap,
+    /// For lock request for compare-swap.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_COMPARE_SWAP")]
     LockCompareSwap,
+    /// For lock request for fetch-add.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_FETCH_ADD")]
     LockFetchAdd,
+    /// For lock request for little-add.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_LITTLE_ADD")]
     LockLittleAdd,
+    /// For lock request for bounded-add.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_BOUNDED_ADD")]
     LockBoundedAdd,
+    /// For lock request for wrap-add.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_WRAP_ADD")]
     LockWrapAdd,
+    /// For lock request for vendor-dependent.
     #[doc(alias = "HINAWA_FW_TCODE_LOCK_VENDOR_DEPENDENT")]
     LockVendorDependent,
     #[doc(hidden)]

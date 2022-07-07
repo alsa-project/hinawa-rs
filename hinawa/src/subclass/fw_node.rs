@@ -2,6 +2,7 @@
 
 use super::*;
 
+/// Trait which should be implemented by subclass of [`FwNode`][crate::FwNode].
 pub trait FwNodeImpl: ObjectImpl {
     fn bus_update(&self, node: &Self::Type) {
         self.parent_bus_update(node)
@@ -12,6 +13,7 @@ pub trait FwNodeImpl: ObjectImpl {
     }
 }
 
+/// Trait which is automatically implemented to implementator of [`FwNodeImpl`][self::FwNodeImpl].
 pub trait FwNodeImplExt: ObjectSubclass {
     fn parent_bus_update(&self, node: &Self::Type);
     fn parent_disconnected(&self, node: &Self::Type);

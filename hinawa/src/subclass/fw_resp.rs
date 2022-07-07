@@ -2,6 +2,7 @@
 
 use super::*;
 
+/// Trait which should be implemented by subclass of [`FwResp`][crate::FwResp].
 pub trait FwRespImpl: ObjectImpl {
     fn requested2(
         &self,
@@ -18,6 +19,7 @@ pub trait FwRespImpl: ObjectImpl {
     }
 }
 
+/// Trait which is automatically implemented to implementator of [`FwRespImpl`][self::FwRespImpl].
 pub trait FwRespImplExt: ObjectSubclass {
     fn parent_requested2(
         &self,

@@ -2,12 +2,14 @@
 
 use super::*;
 
+/// Trait which should be implemented by subclass of [`FwReq`][crate::FwReq].
 pub trait FwReqImpl: ObjectImpl {
     fn responded(&self, req: &Self::Type, rcode: FwRcode, frame: &[u8]) {
         self.parent_responded(req, rcode, frame)
     }
 }
 
+/// Trait which is automatically implemented to implementator of [`FwReqImpl`][self::FwReqImpl].
 pub trait FwReqImplExt: ObjectSubclass {
     fn parent_responded(&self, req: &Self::Type, rcode: FwRcode, frame: &[u8]);
 }
