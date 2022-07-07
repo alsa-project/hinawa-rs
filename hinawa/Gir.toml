@@ -27,7 +27,7 @@ name = "Hinawa.FwNode"
 status = "generate"
 manual_traits = ["FwNodeExtManual"]
     [[object.function]]
-    pattern = "get_config_rom"
+    name = "get_config_rom"
     ignore = true
     doc_trait_name = "FwNodeExtManual"
 
@@ -36,23 +36,23 @@ name = "Hinawa.FwReq"
 status = "generate"
 manual_traits = ["FwReqExtManual"]
     [[object.signal]]
-    pattern = "responded"
+    name = "responded"
     ignore = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
-    pattern = "transaction_async"
+    name = "transaction_async"
     ignore = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
-    pattern = "transaction_sync"
+    name = "transaction_sync"
     ignore = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
-    pattern = "transaction"
+    name = "transaction"
     ignore = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
-    pattern = "error_quark"
+    name = "error_quark"
     ignore = true
 
 [[object]]
@@ -60,11 +60,11 @@ name = "Hinawa.FwResp"
 status = "generate"
 manual_traits = ["FwRespExtManual"]
     [[object.function]]
-    pattern = "get_req_frame"
+    name = "get_req_frame"
     ignore = true
     doc_trait_name = "FwRespExtManual"
     [[object.signal]]
-    pattern = "requested2"
+    name = "requested2"
     ignore = true
     doc_trait_name = "FwRespExtManual"
 
@@ -73,14 +73,14 @@ name = "Hinawa.FwFcp"
 status = "generate"
 manual_traits = ["FwFcpExtManual"]
     [[object.function]]
-    pattern = "avc_transaction"
+    name = "avc_transaction"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
     [[object.function]]
-    pattern = "transaction"
+    name = "transaction"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
     [[object.signal]]
-    pattern = "responded"
+    name = "responded"
     ignore = true
     doc_trait_name = "FwFcpExtManual"
