@@ -1,11 +1,12 @@
 [package]
+edition = "2018"
+name = "hinawa"
+version = "0.6.0"
+# For publishing.
 authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
 description = "API bindings for libhinawa2 library"
-edition = "2018"
 license = "MIT"
-name = "hinawa"
 repository = "https://github.com/alsa-project/hinawa-rs/"
-version = "0.6.0"
 
 [lib]
 name = "hinawa"
