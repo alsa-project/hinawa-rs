@@ -2,11 +2,11 @@
 use crate::*;
 
 pub trait FwNodeExtManual {
-    fn get_config_rom(&self) -> Result<&[u8], glib::Error>;
+    fn config_rom(&self) -> Result<&[u8], glib::Error>;
 }
 
 impl<O: IsA<FwNode>> FwNodeExtManual for O {
-    fn get_config_rom(&self) -> Result<&[u8], glib::Error> {
+    fn config_rom(&self) -> Result<&[u8], glib::Error> {
         unsafe {
             let mut ptr = std::ptr::null_mut() as *const u8;
             let mut len = 0 as usize;
