@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub trait FwFcpImpl: ObjectImpl + FwRespImpl + FwFcpImplExt {
+pub trait FwFcpImpl: ObjectImpl + FwRespImpl {
     fn responded(&self, fcp: &Self::Type, frame: &[u8]) {
         self.parent_responded(fcp, frame)
     }

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub trait FwRespImpl: ObjectImpl + FwRespImplExt {
+pub trait FwRespImpl: ObjectImpl {
     fn requested2(
         &self,
         resp: &Self::Type,

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub trait FwNodeImpl: ObjectImpl + FwNodeImplExt {
+pub trait FwNodeImpl: ObjectImpl {
     fn bus_update(&self, node: &Self::Type) {
         self.parent_bus_update(node)
     }

@@ -2,7 +2,7 @@
 
 use super::*;
 
-pub trait FwReqImpl: ObjectImpl + FwReqImplExt {
+pub trait FwReqImpl: ObjectImpl {
     fn responded(&self, req: &Self::Type, rcode: FwRcode, frame: &[u8]) {
         self.parent_responded(req, rcode, frame)
     }

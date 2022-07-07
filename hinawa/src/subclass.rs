@@ -6,7 +6,7 @@ mod fw_req;
 mod fw_resp;
 
 pub mod prelude {
-    pub use {super::fw_fcp::*, super::fw_node::*, super::fw_req::*, super::fw_resp::*};
+    pub use super::{fw_fcp::*, fw_node::*, fw_req::*, fw_resp::*};
 }
 
 use {
