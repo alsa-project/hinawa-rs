@@ -76,8 +76,7 @@ manual_traits = ["FwFcpExtManual"]
     doc_trait_name = "FwFcpExtManual"
     [[object.function]]
     name = "transaction"
-    manual = true
-    doc_trait_name = "FwFcpExtManual"
+    ignore = true
     [[object.signal]]
     name = "responded"
     manual = true

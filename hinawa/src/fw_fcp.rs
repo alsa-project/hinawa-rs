@@ -8,7 +8,6 @@ pub trait FwFcpExtManual {
         resp_frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<usize, glib::Error>;
-    fn transaction(&self, req_frame: &[u8], resp_frame: &mut [u8]) -> Result<usize, glib::Error>;
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where
         F: Fn(&Self, &[u8]) + 'static;
@@ -32,28 +31,6 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
                 &mut resp_frame.as_mut_ptr(),
                 &mut resp_frame_size,
                 timeout_ms,
-                &mut error,
-            );
-
-            if error.is_null() {
-                Ok(resp_frame_size)
-            } else {
-                Err(from_glib_full(error))
-            }
-        }
-    }
-
-    fn transaction(&self, req_frame: &[u8], resp_frame: &mut [u8]) -> Result<usize, glib::Error> {
-        unsafe {
-            let mut resp_frame_size = resp_frame.len();
-            let mut error = std::ptr::null_mut();
-
-            ffi::hinawa_fw_fcp_transaction(
-                self.as_ref().to_glib_none().0,
-                req_frame.as_ptr(),
-                req_frame.len(),
-                &mut resp_frame.as_mut_ptr(),
-                &mut resp_frame_size,
                 &mut error,
             );
 
