@@ -2,12 +2,14 @@
 use crate::*;
 
 pub trait FwFcpExtManual {
+    #[doc(alias = "hinawa_fw_fcp_avc_transaction")]
     fn avc_transaction(
         &self,
         req_frame: &[u8],
         resp_frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<usize, glib::Error>;
+    #[doc(alias = "responded")]
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where
         F: Fn(&Self, &[u8]) + 'static;

@@ -2,6 +2,8 @@
 use crate::*;
 
 pub trait FwNodeExtManual {
+    #[doc(alias = "hinawa_fw_node_get_config_rom")]
+    #[doc(alias = "get_config_rom")]
     fn config_rom(&self) -> Result<&[u8], glib::Error>;
 }
 

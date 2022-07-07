@@ -2,6 +2,7 @@
 use crate::*;
 
 pub trait FwRespExtManual {
+    #[doc(alias = "requested")]
     fn connect_requested2<F>(&self, f: F) -> SignalHandlerId
     where
         F: Fn(&Self, FwTcode, u64, u32, u32, u32, u32, &[u8]) -> FwRcode + 'static;

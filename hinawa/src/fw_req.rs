@@ -2,6 +2,7 @@
 use crate::*;
 
 pub trait FwReqExtManual {
+    #[doc(alias = "hinawa_fw_req_transaction_async")]
     fn transaction_async<P: IsA<FwNode>>(
         &self,
         node: &P,
@@ -10,6 +11,7 @@ pub trait FwReqExtManual {
         length: usize,
         frame: &mut [u8],
     ) -> Result<(), glib::Error>;
+    #[doc(alias = "hinawa_fw_req_transaction_sync")]
     fn transaction_sync<P: IsA<FwNode>>(
         &self,
         node: &P,
@@ -19,6 +21,7 @@ pub trait FwReqExtManual {
         frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<(), glib::Error>;
+    #[doc(alias = "responded")]
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where
         F: Fn(&Self, FwRcode, &[u8]) + 'static;
