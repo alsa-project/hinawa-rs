@@ -3,40 +3,40 @@
 use super::*;
 
 pub trait FwNodeImpl: ObjectImpl + FwNodeImplExt {
-    fn bus_update(&self, node: &FwNode) {
+    fn bus_update(&self, node: &Self::Type) {
         self.parent_bus_update(node)
     }
 
-    fn disconnected(&self, node: &FwNode) {
+    fn disconnected(&self, node: &Self::Type) {
         self.parent_disconnected(node)
     }
 }
 
 pub trait FwNodeImplExt: ObjectSubclass {
-    fn parent_bus_update(&self, node: &FwNode);
-    fn parent_disconnected(&self, node: &FwNode);
+    fn parent_bus_update(&self, node: &Self::Type);
+    fn parent_disconnected(&self, node: &Self::Type);
 }
 
 impl<T: FwNodeImpl> FwNodeImplExt for T {
-    fn parent_bus_update(&self, node: &FwNode) {
+    fn parent_bus_update(&self, node: &Self::Type) {
         unsafe {
             let data = T::type_data();
             let parent_class = data.as_ref().parent_class() as *mut ffi::HinawaFwNodeClass;
             let f = (*parent_class)
                 .bus_update
                 .expect("No parent class implementation for \"bus_update\"");
-            f(node.to_glib_none().0)
+            f(node.unsafe_cast_ref::<FwNode>().to_glib_none().0)
         }
     }
 
-    fn parent_disconnected(&self, node: &FwNode) {
+    fn parent_disconnected(&self, node: &Self::Type) {
         unsafe {
             let data = T::type_data();
             let parent_class = data.as_ref().parent_class() as *mut ffi::HinawaFwNodeClass;
             let f = (*parent_class)
                 .disconnected
                 .expect("No parent class implementation for \"disconnected\"");
-            f(node.to_glib_none().0);
+            f(node.unsafe_cast_ref::<FwNode>().to_glib_none().0)
         }
     }
 }
@@ -56,7 +56,7 @@ unsafe extern "C" fn fw_node_bus_update<T: FwNodeImpl>(ptr: *mut ffi::HinawaFwNo
     let imp = instance.imp();
     let wrap: Borrowed<FwNode> = from_glib_borrow(ptr);
 
-    imp.bus_update(&wrap)
+    imp.bus_update(wrap.unsafe_cast_ref())
 }
 
 unsafe extern "C" fn fw_node_disconnected<T: FwNodeImpl>(ptr: *mut ffi::HinawaFwNode) {
@@ -64,5 +64,5 @@ unsafe extern "C" fn fw_node_disconnected<T: FwNodeImpl>(ptr: *mut ffi::HinawaFw
     let imp = instance.imp();
     let wrap: Borrowed<FwNode> = from_glib_borrow(ptr);
 
-    imp.disconnected(&wrap)
+    imp.disconnected(wrap.unsafe_cast_ref())
 }

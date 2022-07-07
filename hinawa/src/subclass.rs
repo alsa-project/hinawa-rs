@@ -6,17 +6,12 @@ mod fw_req;
 mod fw_resp;
 
 pub mod prelude {
-    pub use {
-        super::fw_fcp::{FwFcpImpl, FwFcpImplExt},
-        super::fw_node::{FwNodeImpl, FwNodeImplExt},
-        super::fw_req::{FwReqImpl, FwReqImplExt},
-        super::fw_resp::{FwRespImpl, FwRespImplExt},
-    };
+    pub use {super::fw_fcp::*, super::fw_node::*, super::fw_req::*, super::fw_resp::*};
 }
 
 use {
-    self::prelude::*,
     super::*,
     glib::{subclass::prelude::*, translate::*, Class},
     libc::*,
+    prelude::*,
 };

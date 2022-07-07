@@ -5,7 +5,7 @@ use super::*;
 pub trait FwRespImpl: ObjectImpl + FwRespImplExt {
     fn requested2(
         &self,
-        resp: &FwResp,
+        resp: &Self::Type,
         tcode: FwTcode,
         offset: u64,
         src: u32,
@@ -21,7 +21,7 @@ pub trait FwRespImpl: ObjectImpl + FwRespImplExt {
 pub trait FwRespImplExt: ObjectSubclass {
     fn parent_requested2(
         &self,
-        resp: &FwResp,
+        resp: &Self::Type,
         tcode: FwTcode,
         offset: u64,
         src: u32,
@@ -35,7 +35,7 @@ pub trait FwRespImplExt: ObjectSubclass {
 impl<T: FwRespImpl> FwRespImplExt for T {
     fn parent_requested2(
         &self,
-        resp: &FwResp,
+        resp: &Self::Type,
         tcode: FwTcode,
         offset: u64,
         src: u32,
@@ -51,7 +51,7 @@ impl<T: FwRespImpl> FwRespImplExt for T {
                 .requested2
                 .expect("No parent class implementation for \"requested2\"");
             from_glib(f(
-                resp.to_glib_none().0,
+                resp.unsafe_cast_ref::<FwResp>().to_glib_none().0,
                 tcode.into_glib(),
                 offset,
                 src,
@@ -90,7 +90,7 @@ unsafe extern "C" fn fw_resp_requested2<T: FwRespImpl>(
     let wrap: Borrowed<FwResp> = from_glib_borrow(ptr);
 
     imp.requested2(
-        &wrap,
+        wrap.unsafe_cast_ref(),
         from_glib(tcode),
         offset,
         src,
