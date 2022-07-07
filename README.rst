@@ -1,8 +1,8 @@
-====================
-hinawa Rust bindings
-====================
+================================
+Rust bindings for hinawa library
+================================
 
-2022/05/26
+2022/07/07
 Takashi Sakamoto
 
 Introduction
@@ -13,8 +13,12 @@ Introduction
 
   * `<https://github.com/alsa-project/libhinawa>`_
 
+* The crates are available in `crates.io <https://crates.io/>`_ as well.
+
 * Unfortunately, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or
   ``Hinawa-1.0.gir``) as well as sound unit support deprecated at libhinawa v2.5.0.
+
+* The latest release is version 0.0.90. This is pre-release to publish crates in crates.io.
 
 License
 =======
