@@ -2,12 +2,11 @@
 authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
 build = "build.rs"
 description = "FFI bindings for libhinawa2 library"
-edition = "2021"
+edition = "2018"
 license = "MIT"
 links = "hinawa"
 name = "hinawa-sys"
 repository = "https://github.com/alsa-project/hinawa-rs/"
-rust-version = "1.57"
 version = "0.6.0"
 [package.metadata.docs.rs]
 features = ["dox"]

@@ -24,7 +24,6 @@ MIT License
 Dependencies
 ============
 
-* Rust version 1.57 or later (edition 2021)
 * `libhinawa 2.5.0 or later <https://github.com/alsa-project/libhinawa>`_
 * FFI crate (``hinawa-sys``)
 

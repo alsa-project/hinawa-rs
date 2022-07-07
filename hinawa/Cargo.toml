@@ -1,11 +1,10 @@
 [package]
 authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
 description = "API bindings for libhinawa2 library"
-edition = "2021"
+edition = "2018"
 license = "MIT"
 name = "hinawa"
 repository = "https://github.com/alsa-project/hinawa-rs/"
-rust-version = "1.57"
 version = "0.6.0"
 
 [lib]
