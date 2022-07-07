@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 use glib::*;
-use hinawa::{traits::*, *};
+use hinawa::{prelude::*, *};
 
 const PATH: &str = "/dev/fw1";
 const OFFSET: u64 = 0xfffff0000404;
