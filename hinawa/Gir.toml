@@ -61,8 +61,7 @@ status = "generate"
 manual_traits = ["FwRespExtManual"]
     [[object.function]]
     name = "get_req_frame"
-    manual = true
-    doc_trait_name = "FwRespExtManual"
+    ignore = true
     [[object.signal]]
     name = "requested2"
     manual = true
