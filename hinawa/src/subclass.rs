@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-pub mod fw_fcp;
-pub mod fw_node;
-pub mod fw_req;
-pub mod fw_resp;
+mod fw_fcp;
+mod fw_node;
+mod fw_req;
+mod fw_resp;
 
 pub mod prelude {
     pub use {
