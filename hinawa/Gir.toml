@@ -49,8 +49,7 @@ manual_traits = ["FwReqExtManual"]
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction"
-    manual = true
-    doc_trait_name = "FwReqExtManual"
+    ignore = true
     [[object.function]]
     name = "error_quark"
     manual = true

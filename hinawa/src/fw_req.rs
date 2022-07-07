@@ -19,14 +19,6 @@ pub trait FwReqExtManual {
         frame: &mut [u8],
         timeout_ms: u32,
     ) -> Result<(), glib::Error>;
-    fn transaction<P: IsA<FwNode>>(
-        &self,
-        node: &P,
-        tcode: FwTcode,
-        addr: u64,
-        length: usize,
-        frame: &mut [u8],
-    ) -> Result<(), glib::Error>;
     fn connect_responded<F>(&self, f: F) -> SignalHandlerId
     where
         F: Fn(&Self, FwRcode, &[u8]) + 'static;
@@ -86,37 +78,6 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
                 &mut frame.as_mut_ptr(),
                 &mut frame_size,
                 timeout_ms,
-                &mut error,
-            );
-
-            if error.is_null() {
-                Ok(())
-            } else {
-                Err(from_glib_full(error))
-            }
-        }
-    }
-
-    fn transaction<P: IsA<FwNode>>(
-        &self,
-        node: &P,
-        tcode: FwTcode,
-        addr: u64,
-        length: usize,
-        frame: &mut [u8],
-    ) -> Result<(), glib::Error> {
-        unsafe {
-            let mut frame_size = frame.len();
-            let mut error = std::ptr::null_mut();
-
-            ffi::hinawa_fw_req_transaction(
-                self.as_ref().to_glib_none().0,
-                node.as_ref().to_glib_none().0,
-                tcode.into_glib(),
-                addr,
-                length,
-                &mut frame.as_mut_ptr(),
-                &mut frame_size,
                 &mut error,
             );
 
