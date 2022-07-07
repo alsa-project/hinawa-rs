@@ -3,8 +3,13 @@ edition = "2018"
 name = "hinawa"
 version = "0.6.0"
 # For publishing.
-authors = ["Takashi Sakamoto <o-takashi@sakamocchi.jp>"]
-description = "API bindings for libhinawa2 library"
+authors = ["Takashi Sakamoto"]
+categories = ["api-bindings", "hardware-support", "os::linux-apis"]
+description = "API bindings for hinawa library"
+documentation = "https://docs.rs/hinawa/"
+exclude = ["Gir.toml"]
+homepage = "https://alsa-project.github.io/gobject-introspection-docs/"
+keywords = ["ieee1394", "firewire", "linux", "glib"]
 license = "MIT"
 repository = "https://github.com/alsa-project/hinawa-rs/"
 
