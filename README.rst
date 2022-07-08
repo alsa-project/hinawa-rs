@@ -2,7 +2,7 @@
 Rust bindings for hinawa library
 ================================
 
-2022/07/07
+2022/07/08
 Takashi Sakamoto
 
 Introduction
@@ -18,7 +18,7 @@ Introduction
 * Unfortunately, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or
   ``Hinawa-1.0.gir``) as well as sound unit support deprecated at libhinawa v2.5.0.
 
-* The latest release is version 0.0.90. This is pre-release to publish crates in crates.io.
+* The latest release is version 0.0.91. This is pre-release to publish crates in crates.io.
 
 License
 =======
@@ -45,12 +45,3 @@ Examples
 ========
 
 See ``hinawa/examples`` directory.
-
-How to generate FFI and API crates
-==================================
-
-::
-
-    $ ./generator.py
-
-end
