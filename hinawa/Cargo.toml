@@ -13,6 +13,8 @@ keywords = ["ieee1394", "firewire", "linux", "glib"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/alsa-project/hinawa-rs/"
+[package.metadata.docs.rs]
+features = ["dox"]
 
 [lib]
 name = "hinawa"
@@ -24,3 +26,7 @@ ffi = {package = "hinawa-sys", path = "../hinawa-sys", version = "0.0"}
 
 [dev-dependencies]
 gir-format-check = "^0.1"
+
+[features]
+# To suppress linking to C library when generating documentation.
+dox = ["ffi/dox", "glib/dox"]
