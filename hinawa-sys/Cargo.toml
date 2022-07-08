@@ -44,4 +44,5 @@ shell-words = "1.0.0"
 tempfile = "3"
 
 [features]
+# To suppress linking to C library when generating documentation.
 dox = []
