@@ -1,8 +1,8 @@
 # hinawa-sys crate
 
-Rust FFI bindings and wrappers for [hinawa library](https://github.com/alsa-project/libhinawa) to
-operate Linux FireWire character device for asynchronous packet and topology generation
-in IEEE 1394 bus.
+Rust FFI bindings and wrappers for
+[hinawa library](https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/) to operate OHCI 1394
+hardware via Linux FireWire character device for asynchronous communication in IEEE 1394 bus.
 
 The hinawa library version 2.5 is the minimum supported version for underlying library.
 
@@ -23,15 +23,15 @@ type/object system, event loop, and dispacher.
 
 * dox
 
-   * Suppress probing hinawa library. It's automatically enabled when generating documentation
-     in docs.rs.
+   * Suppress detection of installed hinawa library. It's automatically enabled when generating
+     documentation in docs.rs.
 
 ## Repository
 
-The hinawa-sys crate is the part of ALSA project and maintained by
-[ALSA gobject-introspection team](https://alsa-project.github.io/gobject-introspection-docs/).
-The remote repository is located in <https://github.com/alsa-project/hinawa-rs/>.
+The hinawa-sys crate is maintained by Takashi Sakamoto for upstream of Linux FireWire subsystem.
+The remote repository locates in <https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/>.
 
 ## Support
 
-If finding issue, please file it in <https://github.com/alsa-project/hinawa-rs/>.
+If finding issue, please file it in <https://github.com/alsa-project/hinawa-rs> which is the mirror
+of upstream for user support and continuous integration.
