@@ -126,11 +126,25 @@ pub const HINAWA_SND_UNIT_TYPE_MOTU: HinawaSndUnitType = 7;
 pub const HINAWA_SND_UNIT_TYPE_FIREFACE: HinawaSndUnitType = 8;
 
 // Records
+#[repr(C)]
+pub struct HinawaCycleTime {
+    _data: [u8; 0],
+    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+}
+
+impl ::std::fmt::Debug for HinawaCycleTime {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        f.debug_struct(&format!("HinawaCycleTime @ {:p}", self))
+            .finish()
+    }
+}
+
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct HinawaFwFcpClass {
     pub parent_class: HinawaFwRespClass,
     pub responded: Option<unsafe extern "C" fn(*mut HinawaFwFcp, *const u8, c_uint)>,
+    pub responded2: Option<unsafe extern "C" fn(*mut HinawaFwFcp, c_uint, *const u8, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaFwFcpClass {
@@ -138,6 +152,7 @@ impl ::std::fmt::Debug for HinawaFwFcpClass {
         f.debug_struct(&format!("HinawaFwFcpClass @ {:p}", self))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
+            .field("responded2", &self.responded2)
             .finish()
     }
 }
@@ -165,6 +180,9 @@ impl ::std::fmt::Debug for HinawaFwNodeClass {
 pub struct HinawaFwReqClass {
     pub parent_class: gobject::GObjectClass,
     pub responded: Option<unsafe extern "C" fn(*mut HinawaFwReq, HinawaFwRcode, *const u8, c_uint)>,
+    pub responded2: Option<
+        unsafe extern "C" fn(*mut HinawaFwReq, HinawaFwRcode, c_uint, c_uint, *const u8, c_uint),
+    >,
 }
 
 impl ::std::fmt::Debug for HinawaFwReqClass {
@@ -172,6 +190,7 @@ impl ::std::fmt::Debug for HinawaFwReqClass {
         f.debug_struct(&format!("HinawaFwReqClass @ {:p}", self))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
+            .field("responded2", &self.responded2)
             .finish()
     }
 }
@@ -194,6 +213,20 @@ pub struct HinawaFwRespClass {
             c_uint,
         ) -> HinawaFwRcode,
     >,
+    pub requested3: Option<
+        unsafe extern "C" fn(
+            *mut HinawaFwResp,
+            HinawaFwTcode,
+            u64,
+            c_uint,
+            c_uint,
+            c_uint,
+            c_uint,
+            c_uint,
+            *const u8,
+            c_uint,
+        ) -> HinawaFwRcode,
+    >,
 }
 
 impl ::std::fmt::Debug for HinawaFwRespClass {
@@ -202,6 +235,7 @@ impl ::std::fmt::Debug for HinawaFwRespClass {
             .field("parent_class", &self.parent_class)
             .field("requested", &self.requested)
             .field("requested2", &self.requested2)
+            .field("requested3", &self.requested3)
             .finish()
     }
 }
@@ -530,6 +564,26 @@ extern "C" {
     pub fn hinawa_snd_unit_type_get_type() -> GType;
 
     //=========================================================================
+    // HinawaCycleTime
+    //=========================================================================
+    pub fn hinawa_cycle_time_get_type() -> GType;
+    pub fn hinawa_cycle_time_new() -> *mut HinawaCycleTime;
+    pub fn hinawa_cycle_time_compute_tstamp(
+        self_: *const HinawaCycleTime,
+        tstamp: c_uint,
+        isoc_cycle: *mut [c_uint; 2],
+    );
+    pub fn hinawa_cycle_time_get_clock_id(self_: *const HinawaCycleTime, clock_id: *mut c_int);
+    pub fn hinawa_cycle_time_get_fields(self_: *const HinawaCycleTime, fields: *mut [u16; 3]);
+    pub fn hinawa_cycle_time_get_raw(self_: *const HinawaCycleTime, raw: *mut u32);
+    pub fn hinawa_cycle_time_get_system_time(
+        self_: *const HinawaCycleTime,
+        tv_sec: *mut i64,
+        tv_nsec: *mut i32,
+    );
+    pub fn hinawa_cycle_time_parse_tstamp(tstamp: c_uint, isoc_cycle: *mut [c_uint; 2]);
+
+    //=========================================================================
     // HinawaSndMotuRegisterDspParameter
     //=========================================================================
     pub fn hinawa_snd_motu_register_dsp_parameter_get_type() -> GType;
@@ -610,6 +664,16 @@ extern "C" {
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
     );
+    pub fn hinawa_fw_fcp_avc_transaction_with_tstamp(
+        self_: *mut HinawaFwFcp,
+        cmd: *const u8,
+        cmd_size: size_t,
+        resp: *mut *mut u8,
+        resp_size: *mut size_t,
+        tstamp: *mut [c_uint; 3],
+        timeout_ms: c_uint,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn hinawa_fw_fcp_bind(
         self_: *mut HinawaFwFcp,
         node: *mut HinawaFwNode,
@@ -622,6 +686,14 @@ extern "C" {
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
     );
+    pub fn hinawa_fw_fcp_command_with_tstamp(
+        self_: *mut HinawaFwFcp,
+        cmd: *const u8,
+        cmd_size: size_t,
+        tstamp: *mut [c_uint; 2],
+        timeout_ms: c_uint,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn hinawa_fw_fcp_transaction(
         self_: *mut HinawaFwFcp,
         req_frame: *const u8,
@@ -653,12 +725,28 @@ extern "C" {
         path: *const c_char,
         error: *mut *mut glib::GError,
     );
+    pub fn hinawa_fw_node_read_cycle_time(
+        self_: *mut HinawaFwNode,
+        clock_id: c_int,
+        cycle_time: *const *mut HinawaCycleTime,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
 
     //=========================================================================
     // HinawaFwReq
     //=========================================================================
     pub fn hinawa_fw_req_get_type() -> GType;
     pub fn hinawa_fw_req_new() -> *mut HinawaFwReq;
+    pub fn hinawa_fw_req_request(
+        self_: *mut HinawaFwReq,
+        node: *mut HinawaFwNode,
+        tcode: HinawaFwTcode,
+        addr: u64,
+        length: size_t,
+        frame: *const *mut u8,
+        frame_size: *mut size_t,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn hinawa_fw_req_transaction(
         self_: *mut HinawaFwReq,
         node: *mut HinawaFwNode,
@@ -690,6 +778,18 @@ extern "C" {
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
     );
+    pub fn hinawa_fw_req_transaction_with_tstamp(
+        self_: *mut HinawaFwReq,
+        node: *mut HinawaFwNode,
+        tcode: HinawaFwTcode,
+        addr: u64,
+        length: size_t,
+        frame: *mut *mut u8,
+        frame_size: *mut size_t,
+        tstamp: *mut [c_uint; 2],
+        timeout_ms: c_uint,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
 
     //=========================================================================
     // HinawaFwResp
