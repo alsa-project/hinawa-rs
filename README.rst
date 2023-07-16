@@ -2,13 +2,13 @@
 Rust bindings for hinawa library
 ================================
 
-2023/04/23
+2023/07/16
 Takashi Sakamoto
 
 Introduction
 ============
 
-* This repository includes FFI and API bindings for ``libhinawa2`` v2.5.0 or later which
+* This repository includes FFI and API bindings for ``libhinawa2`` v2.6.0 or later which
   provides ``Hinawa-3.0.gir``.
 
   * `<https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/>`_
@@ -18,7 +18,7 @@ Introduction
 * Inconveniently, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or
   ``Hinawa-1.0.gir``) as well as sound unit support deprecated at libhinawa v2.5.0.
 
-* The latest release is version 0.7.0.
+* The latest release is version 0.8.0.
 
 Crates
 ======
@@ -41,7 +41,7 @@ MIT License
 Dependencies
 ============
 
-* `libhinawa 2.5.0 or later <https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/>`_
+* `libhinawa 2.6.0 or later <https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/>`_
 * FFI crate (``hinawa-sys``)
 
   * ``libc`` >= 0.2
