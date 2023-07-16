@@ -4,7 +4,7 @@ work_mode = "normal"
 library = "Hinawa"
 version = "3.0"
 use_gi_docgen = true
-min_cfg_version = "2.5"
+min_cfg_version = "2.6"
 deprecate_by_min_version = true
 single_version_file = true
 
@@ -30,15 +30,15 @@ manual_traits = ["FwNodeExtManual"]
     name = "get_config_rom"
     manual = true
     doc_trait_name = "FwNodeExtManual"
+    [[object.function]]
+    name = "read_cycle_time"
+    manual = true
+    doc_trait_name = "FwNodeExtManual"
 
 [[object]]
 name = "Hinawa.FwReq"
 status = "generate"
 manual_traits = ["FwReqExtManual"]
-    [[object.signal]]
-    name = "responded"
-    manual = true
-    doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction_async"
     manual = true
@@ -48,11 +48,27 @@ manual_traits = ["FwReqExtManual"]
     manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
+    name = "request"
+    manual = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.function]]
+    name = "transaction_with_tstamp"
+    manual = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.function]]
     name = "transaction"
     ignore = true
     [[object.function]]
     name = "error_quark"
     manual = true
+    [[object.signal]]
+    name = "responded"
+    manual = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.signal]]
+    name = "responded2"
+    manual = true
+    doc_trait_name = "FwReqExtManual"
 
 [[object]]
 name = "Hinawa.FwResp"
@@ -65,13 +81,25 @@ manual_traits = ["FwRespExtManual"]
     name = "requested2"
     manual = true
     doc_trait_name = "FwRespExtManual"
+    [[object.signal]]
+    name = "requested3"
+    manual = true
+    doc_trait_name = "FwRespExtManual"
 
 [[object]]
 name = "Hinawa.FwFcp"
 status = "generate"
 manual_traits = ["FwFcpExtManual"]
     [[object.function]]
+    name = "command_with_tstamp"
+    manual = true
+    doc_trait_name = "FwFcpExtManual"
+    [[object.function]]
     name = "avc_transaction"
+    manual = true
+    doc_trait_name = "FwFcpExtManual"
+    [[object.function]]
+    name = "avc_transaction_with_tstamp"
     manual = true
     doc_trait_name = "FwFcpExtManual"
     [[object.function]]
@@ -81,3 +109,24 @@ manual_traits = ["FwFcpExtManual"]
     name = "responded"
     manual = true
     doc_trait_name = "FwFcpExtManual"
+    [[object.signal]]
+    name = "responded2"
+    manual = true
+    doc_trait_name = "FwFcpExtManual"
+
+[[object]]
+name = "Hinawa.CycleTime"
+status = "generate"
+manual_traits = ["CycleTimeExtManual"]
+    [[object.function]]
+    name = "compute_tstamp"
+    manual = true
+    doc_trait_name = "CycleTimeExtManual"
+    [[object.function]]
+    name = "get_fields"
+    manual = true
+    doc_trait_name = "CycleTimeExtManual"
+    [[object.function]]
+    name = "parse_tstamp"
+    manual = true
+    doc_trait_name = "CycleTimeExtManual"
