@@ -3,6 +3,7 @@
 #![doc = include_str!("../README.md")]
 
 mod auto;
+mod cycle_time;
 mod fw_fcp;
 mod fw_node;
 mod fw_req;

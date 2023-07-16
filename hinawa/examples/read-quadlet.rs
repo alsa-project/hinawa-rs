@@ -23,15 +23,16 @@ fn main() {
 
     let req = hinawa::FwReq::new();
     let mut frames = [0; 4];
-    req.transaction_sync(
-        &node,
-        FwTcode::ReadQuadletRequest,
-        OFFSET,
-        4,
-        &mut frames,
-        100,
-    )
-    .unwrap();
+    let _ = req
+        .transaction_with_tstamp(
+            &node,
+            FwTcode::ReadQuadletRequest,
+            OFFSET,
+            4,
+            &mut frames,
+            100,
+        )
+        .unwrap();
 
     assert_eq!(0x31333934, u32::from_be_bytes(frames));
 

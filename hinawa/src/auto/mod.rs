@@ -15,6 +15,9 @@ pub use self::fw_req::FwReq;
 mod fw_resp;
 pub use self::fw_resp::FwResp;
 
+mod cycle_time;
+pub use self::cycle_time::CycleTime;
+
 mod enums;
 pub use self::enums::FwFcpError;
 pub use self::enums::FwNodeError;
