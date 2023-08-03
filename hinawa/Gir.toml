@@ -2,9 +2,9 @@
 girs_directories = ["../gir-files", ".."]
 work_mode = "normal"
 library = "Hinawa"
-version = "3.0"
+version = "4.0"
 use_gi_docgen = true
-min_cfg_version = "2.6"
+min_cfg_version = "4.0"
 deprecate_by_min_version = true
 single_version_file = true
 
@@ -40,33 +40,23 @@ name = "Hinawa.FwReq"
 status = "generate"
 manual_traits = ["FwReqExtManual"]
     [[object.function]]
-    name = "transaction_async"
-    manual = true
-    doc_trait_name = "FwReqExtManual"
-    [[object.function]]
-    name = "transaction_sync"
-    manual = true
-    doc_trait_name = "FwReqExtManual"
-    [[object.function]]
     name = "request"
+    manual = true
+    doc_trait_name = "FwReqExtManual"
+    [[object.function]]
+    name = "transaction"
     manual = true
     doc_trait_name = "FwReqExtManual"
     [[object.function]]
     name = "transaction_with_tstamp"
     manual = true
     doc_trait_name = "FwReqExtManual"
-    [[object.function]]
-    name = "transaction"
-    ignore = true
-    [[object.function]]
-    name = "error_quark"
-    manual = true
     [[object.signal]]
     name = "responded"
     manual = true
     doc_trait_name = "FwReqExtManual"
-    [[object.signal]]
-    name = "responded2"
+    [[object.function]]
+    name = "error_quark"
     manual = true
     doc_trait_name = "FwReqExtManual"
 
@@ -74,15 +64,12 @@ manual_traits = ["FwReqExtManual"]
 name = "Hinawa.FwResp"
 status = "generate"
 manual_traits = ["FwRespExtManual"]
-    [[object.function]]
-    name = "get_req_frame"
-    ignore = true
     [[object.signal]]
     name = "requested2"
     manual = true
     doc_trait_name = "FwRespExtManual"
     [[object.signal]]
-    name = "requested3"
+    name = "requested"
     manual = true
     doc_trait_name = "FwRespExtManual"
 
@@ -102,15 +89,8 @@ manual_traits = ["FwFcpExtManual"]
     name = "avc_transaction_with_tstamp"
     manual = true
     doc_trait_name = "FwFcpExtManual"
-    [[object.function]]
-    name = "transaction"
-    ignore = true
     [[object.signal]]
     name = "responded"
-    manual = true
-    doc_trait_name = "FwFcpExtManual"
-    [[object.signal]]
-    name = "responded2"
     manual = true
     doc_trait_name = "FwFcpExtManual"
 
