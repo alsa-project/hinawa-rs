@@ -7,13 +7,8 @@ use glib::translate::*;
 use std::fmt;
 
 glib::wrapper! {
-    /// A transaction executor to a FireWire unit.
-    ///
-    /// A HinawaFwReq supports some types of transactions in IEEE 1212. Mainly for read, write and lock
-    /// operations.
-    ///
-    /// This class is an application of Linux FireWire subsystem. All of operations utilize ioctl(2)
-    /// with subsystem specific request commands.
+    /// A transaction executor to a node in IEEE 1394 bus.
+    /// [`FwReq`][crate::FwReq] supports all types of transactions defiend in IEEE 1212.
     ///
     /// # Implements
     ///

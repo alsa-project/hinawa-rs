@@ -15,12 +15,8 @@ use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
-    /// A transaction responder for request initiated by node in IEEE 1394 bus.
-    ///
-    /// The [`FwResp`][crate::FwResp] responds transaction initiated by node in IEEE 1394 bus.
-    ///
-    /// This class is an application of Linux FireWire subsystem. All of operations utilize ioctl(2)
-    /// with subsystem specific request commands.
+    /// A transaction responder for request subaction initiated by node in IEEE 1394 bus.
+    /// [`FwResp`][crate::FwResp] responds to request subaction initiated by node in IEEE 1394 bus.
     ///
     /// # Implements
     ///
@@ -59,25 +55,36 @@ impl Default for FwResp {
 ///
 /// [`FwFcp`][struct@crate::FwFcp], [`FwResp`][struct@crate::FwResp]
 pub trait FwRespExt: 'static {
-    /// stop to listen to a range of address in local node (e.g. OHCI 1394 controller).
+    /// Stop listening to the address range in Linux system for local nodes.
     #[doc(alias = "hinawa_fw_resp_release")]
     fn release(&self);
 
-    /// Start to listen to a range of address in host controller which connects to the node. The function
-    /// is a variant of [`reserve_within_region()`][Self::reserve_within_region()] so that the exact range of address should
-    /// be reserved as given.
+    /// Allocate an address range within Linux system for local nodes, each of which expresses 1394
+    /// OHCI hardware. Once successful, `signal::FwResp::requested` signal will be emitted whenever any
+    /// request subactions arrive at the 1394 OHCI hardware within the dedicated range.
+    ///
+    /// The range is precisely reserved at the address specified by @addr with the size indicated by
+    /// @width. In essence, this function is a variant of [`reserve_within_region()`][Self::reserve_within_region()] in
+    /// which the specified address range is reserved as provided.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
     /// ## `addr`
-    /// A start address to listen to in host controller.
+    /// A start address to listen to in 1394 OHCI hardware.
     /// ## `width`
-    /// The byte width of address to listen to host controller.
+    /// The byte width of address to listen to 1394 OHCI hardware.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_resp_reserve")]
     fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error>;
 
-    /// Start to listen to range of address equals to #width in local node (e.g. 1394 OHCI host
-    /// controller), which is used to communicate to the node given as parameter. The range of address
-    /// is looked up in region between region_start and region_end.
+    /// Allocate an address range within Linux system for local nodes, each of which expresses 1394
+    /// OHCI hardware. Once successful, `signal::FwResp::requested` signal will be emitted whenever any
+    /// request subactions arrive at the 1394 OHCI hardware within the dedicated range.
+    ///
+    /// The range is reserved between the values specified by @region_start and @region_end with the size
+    /// indicated by @width. The starting offset may vary every time.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
     /// ## `region_start`
@@ -86,6 +93,10 @@ pub trait FwRespExt: 'static {
     /// End offset of address region in which range of address is looked up.
     /// ## `width`
     /// The width for range of address to be looked up.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_resp_reserve_within_region")]
     fn reserve_within_region(
         &self,
@@ -95,13 +106,13 @@ pub trait FwRespExt: 'static {
         width: u32,
     ) -> Result<(), glib::Error>;
 
-    /// Register byte frame as response.
+    /// Register byte frame for the response subaction of transaction.
     /// ## `frame`
-    /// a 8bit array for response frame.
+    /// a 8 bit array for response frame.
     #[doc(alias = "hinawa_fw_resp_set_resp_frame")]
     fn set_resp_frame(&self, frame: &[u8]);
 
-    /// Whether a range of address is reserved or not in host controller.
+    /// Whether a range of address is reserved or not.
     #[doc(alias = "is-reserved")]
     fn is_reserved(&self) -> bool;
 

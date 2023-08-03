@@ -12,7 +12,7 @@ use glib::StaticType;
 use glib::Type;
 use std::fmt;
 
-/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwFcpError.
+/// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwFcp`][crate::FwFcp].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwFcpError")]
@@ -23,6 +23,8 @@ pub enum FwFcpError {
     /// The size of response is larger than expected.
     #[doc(alias = "HINAWA_FW_FCP_ERROR_LARGE_RESP")]
     LargeResp,
+    #[doc(alias = "HINAWA_FW_FCP_ERROR_ABORTED")]
+    Aborted,
     #[doc(hidden)]
     __Unknown(i32),
 }
@@ -35,6 +37,7 @@ impl fmt::Display for FwFcpError {
             match *self {
                 Self::Timeout => "Timeout",
                 Self::LargeResp => "LargeResp",
+                Self::Aborted => "Aborted",
                 _ => "Unknown",
             }
         )
@@ -49,6 +52,7 @@ impl IntoGlib for FwFcpError {
         match self {
             Self::Timeout => ffi::HINAWA_FW_FCP_ERROR_TIMEOUT,
             Self::LargeResp => ffi::HINAWA_FW_FCP_ERROR_LARGE_RESP,
+            Self::Aborted => ffi::HINAWA_FW_FCP_ERROR_ABORTED,
             Self::__Unknown(value) => value,
         }
     }
@@ -60,6 +64,7 @@ impl FromGlib<ffi::HinawaFwFcpError> for FwFcpError {
         match value {
             ffi::HINAWA_FW_FCP_ERROR_TIMEOUT => Self::Timeout,
             ffi::HINAWA_FW_FCP_ERROR_LARGE_RESP => Self::LargeResp,
+            ffi::HINAWA_FW_FCP_ERROR_ABORTED => Self::Aborted,
             value => Self::__Unknown(value),
         }
     }
@@ -78,6 +83,7 @@ impl ErrorDomain for FwFcpError {
         match code {
             ffi::HINAWA_FW_FCP_ERROR_TIMEOUT => Some(Self::Timeout),
             ffi::HINAWA_FW_FCP_ERROR_LARGE_RESP => Some(Self::LargeResp),
+            ffi::HINAWA_FW_FCP_ERROR_ABORTED => Some(Self::Aborted),
             value => Some(Self::__Unknown(value)),
         }
     }
@@ -115,7 +121,7 @@ impl ToValue for FwFcpError {
     }
 }
 
-/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwNodeError.
+/// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwNode`][crate::FwNode].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwNodeError")]
@@ -371,8 +377,8 @@ impl ToValue for FwRcode {
     }
 }
 
-/// A set of error code for [`FwReq`][crate::FwReq]. Each of them has the same value as the
-/// corresponding enumeration in [`FwRcode`][crate::FwRcode].
+/// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwReq`][crate::FwReq].
+/// The actual value is equivalent to [`FwRcode`][crate::FwRcode].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwReqError")]
@@ -531,7 +537,7 @@ impl ToValue for FwReqError {
     }
 }
 
-/// A set of error code for [`glib::Error`][crate::glib::Error] with domain which equals to Hinawa.FwRespError.
+/// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwResp`][crate::FwResp].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "HinawaFwRespError")]

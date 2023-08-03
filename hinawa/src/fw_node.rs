@@ -11,23 +11,19 @@ pub trait FwNodeExtManual {
     ///
     /// # Returns
     ///
-    ///
     /// ## `image`
     /// The content of configuration ROM.
     #[doc(alias = "hinawa_fw_node_get_config_rom")]
     #[doc(alias = "get_config_rom")]
     fn config_rom(&self) -> Result<&[u8], glib::Error>;
 
-    /// Read current value of CYCLE_TIME register in 1394 OHCI controller.
+    /// Read current value of CYCLE_TIME register in 1394 OHCI hardware dedicated to communicate with
+    /// the associated node in IEEE 1394 bus.
     /// ## `clock_id`
     /// The numeric ID of clock source for the reference timestamp. One of CLOCK_REALTIME(0),
     ///       CLOCK_MONOTONIC(1), and CLOCK_MONOTONIC_RAW(4) is available in UAPI of Linux kernel.
     /// ## `cycle_time`
     /// A [`CycleTime`][crate::CycleTime].
-    ///
-    /// # Returns
-    ///
-    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_node_read_cycle_time")]
     fn read_cycle_time(&self, clock_id: i32, cycle_time: &mut CycleTime)
         -> Result<(), glib::Error>;
@@ -66,7 +62,7 @@ impl<O: IsA<FwNode>> FwNodeExtManual for O {
             let _ = ffi::hinawa_fw_node_read_cycle_time(
                 self.as_ref().to_glib_none().0,
                 clock_id,
-                &cycle_time.to_glib_none_mut().0,
+                &mut cycle_time.to_glib_none_mut().0,
                 &mut error,
             );
 

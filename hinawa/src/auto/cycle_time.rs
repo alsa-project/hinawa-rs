@@ -51,7 +51,7 @@ impl CycleTime {
         }
     }
 
-    /// Get the value of cycle time in 1394 OHCI controller.
+    /// Get the value of cycle time in 1394 OHCI hardware.
     ///
     /// # Returns
     ///

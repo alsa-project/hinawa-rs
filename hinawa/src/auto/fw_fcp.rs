@@ -17,13 +17,13 @@ use std::ptr;
 
 glib::wrapper! {
     /// A FCP transaction executor to node in IEEE 1394 bus.
+    /// [`FwFcp`][crate::FwFcp] supports Function Control Protocol (FCP) in IEC 61883-1. FCP transaction consists
+    /// of a pair of asynchronous transactions for command and response, while the protocol has no
+    /// mechanism to match them. In AV/C Digital Interface Command Set General Specification Version 4.2
+    /// (Sep 1 2004, 1394TA), they are loosely matched by the content of their frames, and this class
+    /// employs the way.
     ///
-    /// A HinawaFwFcp supports Function Control Protocol (FCP) in IEC 61883-1, in which no way is defined
-    /// to match response against command by the contents of frames. In 'AV/C Digital Interface Command
-    /// Set General Specification Version 4.2' (Sep 1 2004, 1394TA), a pair of command and response is
-    /// loosely matched by the contents of frames.
-    ///
-    /// Any of transaction frames should be aligned to 8bit (byte). This class is an application of
+    /// Any of transaction frames should be aligned to 8 bit (1 byte). This class is an application of
     /// [`FwReq`][crate::FwReq] / [`FwResp`][crate::FwResp].
     ///
     /// # Implements
@@ -66,6 +66,10 @@ pub trait FwFcpExt: 'static {
     /// Start to listen to FCP responses.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_fcp_bind")]
     fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error>;
 
@@ -76,10 +80,14 @@ pub trait FwFcpExt: 'static {
     ///  argument should point to the array and immutable.
     /// ## `timeout_ms`
     /// The timeout to wait for response subaction of transaction for command frame.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_fcp_command")]
     fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error>;
 
-    /// Stop to listen to FCP responses.
+    /// Stop to listen to FCP responses. Any pending transactions are forced to be aborted.
     #[doc(alias = "hinawa_fw_fcp_unbind")]
     fn unbind(&self);
 

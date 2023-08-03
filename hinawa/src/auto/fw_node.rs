@@ -14,11 +14,9 @@ use std::mem::transmute;
 use std::ptr;
 
 glib::wrapper! {
-    /// An event listener for FireWire node
-    ///
-    /// A [`FwNode`][crate::FwNode] is an event listener for a specified node on IEEE 1394 bus. This class is an
-    /// application of Linux FireWire subsystem. All of operations utilize ioctl(2) with subsystem
-    /// specific request commands.
+    /// An event listener for node in IEEE 1394 bus.
+    /// [`FwNode`][crate::FwNode] listens to any events for an associated node in IEEE 1394 bus. Additionally,
+    /// it provides some methods to retrieve fundamental information about the bus.
     ///
     /// # Implements
     ///
@@ -61,19 +59,34 @@ pub trait FwNodeExt: 'static {
     /// IEEE 1394 bus.
     ///
     /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
+    ///
+    /// ## `gsrc`
     /// A [`glib::Source`][crate::glib::Source].
     #[doc(alias = "hinawa_fw_node_create_source")]
     fn create_source(&self) -> Result<glib::Source, glib::Error>;
 
-    /// Open Linux FireWire character device to operate node on IEEE 1394 bus.
+    /// Open Linux FireWire character device to operate node in IEEE 1394 bus.
     /// ## `path`
     /// A path to Linux FireWire character device
+    /// ## `open_flag`
+    /// The flag of `open(2)` system call. `O_RDONLY` is fulfilled internally.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_node_open")]
-    fn open(&self, path: &str) -> Result<(), glib::Error>;
+    fn open(&self, path: &str, open_flag: i32) -> Result<(), glib::Error>;
 
     /// Node ID of node which plays role of bus manager at current generation of bus topology.
     #[doc(alias = "bus-manager-node-id")]
     fn bus_manager_node_id(&self) -> u32;
+
+    /// The numeric index for 1394 OHCI hardware used for the communication with the node. The
+    /// value is stable against bus generation.
+    #[doc(alias = "card-id")]
+    fn card_id(&self) -> u32;
 
     /// Current generation of bus topology.
     fn generation(&self) -> u32;
@@ -84,7 +97,7 @@ pub trait FwNodeExt: 'static {
     fn ir_manager_node_id(&self) -> u32;
 
     /// Node ID of node which application uses to communicate to node associated to instance of
-    /// object at current generation of bus topology. In general, it is for 1394 OHCI controller.
+    /// object at current generation of bus topology. In general, it is for 1394 OHCI hardware.
     #[doc(alias = "local-node-id")]
     fn local_node_id(&self) -> u32;
 
@@ -93,7 +106,7 @@ pub trait FwNodeExt: 'static {
     #[doc(alias = "node-id")]
     fn node_id(&self) -> u32;
 
-    /// Node ID of root node in bus topology at current generation of the bus topology.
+    /// Node ID of root node in bus topology at current generation of bus topology.
     #[doc(alias = "root-node-id")]
     fn root_node_id(&self) -> u32;
 
@@ -102,13 +115,16 @@ pub trait FwNodeExt: 'static {
     #[doc(alias = "bus-update")]
     fn connect_bus_update<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    /// Emitted when the node is not available anymore due to removal from IEEE 1394 bus. It's
-    /// preferable to call `GObject::Object::unref()` immediately to release file descriptor.
+    /// Emitted when the node is not available anymore in Linux system. It's preferable to call
+    /// `GObject::Object::unref()` immediately to release file descriptor.
     #[doc(alias = "disconnected")]
     fn connect_disconnected<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[doc(alias = "bus-manager-node-id")]
     fn connect_bus_manager_node_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+
+    #[doc(alias = "card-id")]
+    fn connect_card_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[doc(alias = "generation")]
     fn connect_generation_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -144,12 +160,13 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
         }
     }
 
-    fn open(&self, path: &str) -> Result<(), glib::Error> {
+    fn open(&self, path: &str, open_flag: i32) -> Result<(), glib::Error> {
         unsafe {
             let mut error = ptr::null_mut();
             let _ = ffi::hinawa_fw_node_open(
                 self.as_ref().to_glib_none().0,
                 path.to_glib_none().0,
+                open_flag,
                 &mut error,
             );
             if error.is_null() {
@@ -162,6 +179,10 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
 
     fn bus_manager_node_id(&self) -> u32 {
         glib::ObjectExt::property(self.as_ref(), "bus-manager-node-id")
+    }
+
+    fn card_id(&self) -> u32 {
+        glib::ObjectExt::property(self.as_ref(), "card-id")
     }
 
     fn generation(&self) -> u32 {
@@ -245,6 +266,28 @@ impl<O: IsA<FwNode>> FwNodeExt for O {
                 b"notify::bus-manager-node-id\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
                     notify_bus_manager_node_id_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    fn connect_card_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_card_id_trampoline<P: IsA<FwNode>, F: Fn(&P) + 'static>(
+            this: *mut ffi::HinawaFwNode,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(FwNode::from_glib_borrow(this).unsafe_cast_ref())
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::card-id\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_card_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
             )

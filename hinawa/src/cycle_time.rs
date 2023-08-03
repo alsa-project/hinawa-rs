@@ -2,7 +2,7 @@
 use crate::*;
 
 impl CycleTime {
-    /// Get the value of cycle time in 1394 OHCI controller. The first element of array expresses the
+    /// Get the value of cycle time in 1394 OHCI hardware. The first element of array expresses the
     /// value of sec field, up to 127. The second element of array expresses the value of cycle field,
     /// up to 7999. The third element of array expresses the value of offset field, up to 3071.
     ///
@@ -11,7 +11,7 @@ impl CycleTime {
     ///
     /// ## `fields`
     /// The value of cycle time register of 1394
-    ///     OHCI, including three elements; second, cycle, and offset in its order.
+    ///     OHCI hardware, including three elements; second, cycle, and offset in its order.
     #[doc(alias = "hinawa_cycle_time_get_fields")]
     pub fn fields(&mut self) -> [u16; 3] {
         let mut fields = [0; 3];

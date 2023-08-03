@@ -7,7 +7,7 @@ const OFFSET: u64 = 0xfffff0000404;
 
 fn main() {
     let node = FwNode::new();
-    node.open(PATH).unwrap();
+    node.open(PATH, 0).unwrap();
 
     let ctx = MainContext::new();
     let src = node.create_source().unwrap();
