@@ -3,7 +3,6 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-#![doc = include_str!("../README.md")]
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
 #![allow(
     clippy::approx_constant,
@@ -26,6 +25,7 @@ use glib::{gboolean, gconstpointer, gpointer, GType};
 pub type HinawaFwFcpError = c_int;
 pub const HINAWA_FW_FCP_ERROR_TIMEOUT: HinawaFwFcpError = 0;
 pub const HINAWA_FW_FCP_ERROR_LARGE_RESP: HinawaFwFcpError = 1;
+pub const HINAWA_FW_FCP_ERROR_ABORTED: HinawaFwFcpError = 2;
 
 pub type HinawaFwNodeError = c_int;
 pub const HINAWA_FW_NODE_ERROR_DISCONNECTED: HinawaFwNodeError = 0;
@@ -83,48 +83,6 @@ pub const HINAWA_FW_TCODE_LOCK_BOUNDED_ADD: HinawaFwTcode = 21;
 pub const HINAWA_FW_TCODE_LOCK_WRAP_ADD: HinawaFwTcode = 22;
 pub const HINAWA_FW_TCODE_LOCK_VENDOR_DEPENDENT: HinawaFwTcode = 23;
 
-pub type HinawaSndDiceError = c_int;
-pub const HINAWA_SND_DICE_ERROR_TIMEOUT: HinawaSndDiceError = 0;
-
-pub type HinawaSndEfwStatus = c_int;
-pub const HINAWA_SND_EFW_STATUS_OK: HinawaSndEfwStatus = 0;
-pub const HINAWA_SND_EFW_STATUS_BAD: HinawaSndEfwStatus = 1;
-pub const HINAWA_SND_EFW_STATUS_BAD_COMMAND: HinawaSndEfwStatus = 2;
-pub const HINAWA_SND_EFW_STATUS_COMM_ERR: HinawaSndEfwStatus = 3;
-pub const HINAWA_SND_EFW_STATUS_BAD_QUAD_COUNT: HinawaSndEfwStatus = 4;
-pub const HINAWA_SND_EFW_STATUS_UNSUPPORTED: HinawaSndEfwStatus = 5;
-pub const HINAWA_SND_EFW_STATUS_TIMEOUT: HinawaSndEfwStatus = 6;
-pub const HINAWA_SND_EFW_STATUS_DSP_TIMEOUT: HinawaSndEfwStatus = 7;
-pub const HINAWA_SND_EFW_STATUS_BAD_RATE: HinawaSndEfwStatus = 8;
-pub const HINAWA_SND_EFW_STATUS_BAD_CLOCK: HinawaSndEfwStatus = 9;
-pub const HINAWA_SND_EFW_STATUS_BAD_CHANNEL: HinawaSndEfwStatus = 10;
-pub const HINAWA_SND_EFW_STATUS_BAD_PAN: HinawaSndEfwStatus = 11;
-pub const HINAWA_SND_EFW_STATUS_FLASH_BUSY: HinawaSndEfwStatus = 12;
-pub const HINAWA_SND_EFW_STATUS_BAD_MIRROR: HinawaSndEfwStatus = 13;
-pub const HINAWA_SND_EFW_STATUS_BAD_LED: HinawaSndEfwStatus = 14;
-pub const HINAWA_SND_EFW_STATUS_BAD_PARAMETER: HinawaSndEfwStatus = 15;
-pub const HINAWA_SND_EFW_STATUS_LARGE_RESP: HinawaSndEfwStatus = 16;
-
-pub type HinawaSndUnitError = c_int;
-pub const HINAWA_SND_UNIT_ERROR_DISCONNECTED: HinawaSndUnitError = 0;
-pub const HINAWA_SND_UNIT_ERROR_USED: HinawaSndUnitError = 1;
-pub const HINAWA_SND_UNIT_ERROR_OPENED: HinawaSndUnitError = 2;
-pub const HINAWA_SND_UNIT_ERROR_NOT_OPENED: HinawaSndUnitError = 3;
-pub const HINAWA_SND_UNIT_ERROR_LOCKED: HinawaSndUnitError = 4;
-pub const HINAWA_SND_UNIT_ERROR_UNLOCKED: HinawaSndUnitError = 5;
-pub const HINAWA_SND_UNIT_ERROR_WRONG_CLASS: HinawaSndUnitError = 6;
-pub const HINAWA_SND_UNIT_ERROR_FAILED: HinawaSndUnitError = 7;
-
-pub type HinawaSndUnitType = c_int;
-pub const HINAWA_SND_UNIT_TYPE_DICE: HinawaSndUnitType = 1;
-pub const HINAWA_SND_UNIT_TYPE_FIREWORKS: HinawaSndUnitType = 2;
-pub const HINAWA_SND_UNIT_TYPE_BEBOB: HinawaSndUnitType = 3;
-pub const HINAWA_SND_UNIT_TYPE_OXFW: HinawaSndUnitType = 4;
-pub const HINAWA_SND_UNIT_TYPE_DIGI00X: HinawaSndUnitType = 5;
-pub const HINAWA_SND_UNIT_TYPE_TASCAM: HinawaSndUnitType = 6;
-pub const HINAWA_SND_UNIT_TYPE_MOTU: HinawaSndUnitType = 7;
-pub const HINAWA_SND_UNIT_TYPE_FIREFACE: HinawaSndUnitType = 8;
-
 // Records
 #[repr(C)]
 pub struct HinawaCycleTime {
@@ -143,8 +101,8 @@ impl ::std::fmt::Debug for HinawaCycleTime {
 #[repr(C)]
 pub struct HinawaFwFcpClass {
     pub parent_class: HinawaFwRespClass,
-    pub responded: Option<unsafe extern "C" fn(*mut HinawaFwFcp, *const u8, c_uint)>,
-    pub responded2: Option<unsafe extern "C" fn(*mut HinawaFwFcp, c_uint, *const u8, c_uint)>,
+    pub responded:
+        Option<unsafe extern "C" fn(*mut HinawaFwFcp, c_uint, c_uint, *const u8, c_uint)>,
 }
 
 impl ::std::fmt::Debug for HinawaFwFcpClass {
@@ -152,7 +110,6 @@ impl ::std::fmt::Debug for HinawaFwFcpClass {
         f.debug_struct(&format!("HinawaFwFcpClass @ {:p}", self))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
-            .field("responded2", &self.responded2)
             .finish()
     }
 }
@@ -179,8 +136,7 @@ impl ::std::fmt::Debug for HinawaFwNodeClass {
 #[repr(C)]
 pub struct HinawaFwReqClass {
     pub parent_class: gobject::GObjectClass,
-    pub responded: Option<unsafe extern "C" fn(*mut HinawaFwReq, HinawaFwRcode, *const u8, c_uint)>,
-    pub responded2: Option<
+    pub responded: Option<
         unsafe extern "C" fn(*mut HinawaFwReq, HinawaFwRcode, c_uint, c_uint, *const u8, c_uint),
     >,
 }
@@ -190,7 +146,6 @@ impl ::std::fmt::Debug for HinawaFwReqClass {
         f.debug_struct(&format!("HinawaFwReqClass @ {:p}", self))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
-            .field("responded2", &self.responded2)
             .finish()
     }
 }
@@ -199,21 +154,7 @@ impl ::std::fmt::Debug for HinawaFwReqClass {
 #[repr(C)]
 pub struct HinawaFwRespClass {
     pub parent_class: gobject::GObjectClass,
-    pub requested: Option<unsafe extern "C" fn(*mut HinawaFwResp, HinawaFwTcode) -> HinawaFwRcode>,
-    pub requested2: Option<
-        unsafe extern "C" fn(
-            *mut HinawaFwResp,
-            HinawaFwTcode,
-            u64,
-            u32,
-            u32,
-            u32,
-            u32,
-            *const u8,
-            c_uint,
-        ) -> HinawaFwRcode,
-    >,
-    pub requested3: Option<
+    pub requested: Option<
         unsafe extern "C" fn(
             *mut HinawaFwResp,
             HinawaFwTcode,
@@ -234,131 +175,6 @@ impl ::std::fmt::Debug for HinawaFwRespClass {
         f.debug_struct(&format!("HinawaFwRespClass @ {:p}", self))
             .field("parent_class", &self.parent_class)
             .field("requested", &self.requested)
-            .field("requested2", &self.requested2)
-            .field("requested3", &self.requested3)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndDg00xClass {
-    pub parent_class: HinawaSndUnitClass,
-    pub message: Option<unsafe extern "C" fn(*mut HinawaSndDg00x, u32)>,
-}
-
-impl ::std::fmt::Debug for HinawaSndDg00xClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndDg00xClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("message", &self.message)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndDiceClass {
-    pub parent_class: HinawaSndUnitClass,
-    pub notified: Option<unsafe extern "C" fn(*mut HinawaSndDice, c_uint)>,
-}
-
-impl ::std::fmt::Debug for HinawaSndDiceClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndDiceClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("notified", &self.notified)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndEfwClass {
-    pub parent_class: HinawaSndUnitClass,
-    pub responded: Option<
-        unsafe extern "C" fn(
-            *mut HinawaSndEfw,
-            HinawaSndEfwStatus,
-            c_uint,
-            c_uint,
-            c_uint,
-            *const u32,
-            c_uint,
-        ),
-    >,
-}
-
-impl ::std::fmt::Debug for HinawaSndEfwClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndEfwClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("responded", &self.responded)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndMotuClass {
-    pub parent_class: HinawaSndUnitClass,
-    pub notified: Option<unsafe extern "C" fn(*mut HinawaSndMotu, c_uint)>,
-    pub register_dsp_changed: Option<unsafe extern "C" fn(*mut HinawaSndMotu, *const u32, c_uint)>,
-}
-
-impl ::std::fmt::Debug for HinawaSndMotuClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndMotuClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("notified", &self.notified)
-            .field("register_dsp_changed", &self.register_dsp_changed)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndMotuRegisterDspParameter {
-    pub parameter: [u8; 512],
-}
-
-impl ::std::fmt::Debug for HinawaSndMotuRegisterDspParameter {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndMotuRegisterDspParameter @ {:p}", self))
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndTscmClass {
-    pub parent_class: HinawaSndUnitClass,
-    pub control: Option<unsafe extern "C" fn(*mut HinawaSndTscm, c_uint, c_uint, c_uint)>,
-}
-
-impl ::std::fmt::Debug for HinawaSndTscmClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndTscmClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("control", &self.control)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndUnitClass {
-    pub parent_class: gobject::GObjectClass,
-    pub lock_status: Option<unsafe extern "C" fn(*mut HinawaSndUnit, gboolean)>,
-    pub disconnected: Option<unsafe extern "C" fn(*mut HinawaSndUnit)>,
-}
-
-impl ::std::fmt::Debug for HinawaSndUnitClass {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndUnitClass @ {:p}", self))
-            .field("parent_class", &self.parent_class)
-            .field("lock_status", &self.lock_status)
-            .field("disconnected", &self.disconnected)
             .finish()
     }
 }
@@ -420,90 +236,6 @@ impl ::std::fmt::Debug for HinawaFwResp {
     }
 }
 
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndDg00x {
-    pub parent_instance: HinawaSndUnit,
-}
-
-impl ::std::fmt::Debug for HinawaSndDg00x {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndDg00x @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndDice {
-    pub parent_instance: HinawaSndUnit,
-}
-
-impl ::std::fmt::Debug for HinawaSndDice {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndDice @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndEfw {
-    pub parent_instance: HinawaSndUnit,
-}
-
-impl ::std::fmt::Debug for HinawaSndEfw {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndEfw @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndMotu {
-    pub parent_instance: HinawaSndUnit,
-}
-
-impl ::std::fmt::Debug for HinawaSndMotu {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndMotu @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndTscm {
-    pub parent_instance: HinawaSndUnit,
-}
-
-impl ::std::fmt::Debug for HinawaSndTscm {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndTscm @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct HinawaSndUnit {
-    pub parent_instance: gobject::GObject,
-}
-
-impl ::std::fmt::Debug for HinawaSndUnit {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaSndUnit @ {:p}", self))
-            .field("parent_instance", &self.parent_instance)
-            .finish()
-    }
-}
-
 #[link(name = "hinawa")]
 extern "C" {
 
@@ -542,28 +274,6 @@ extern "C" {
     pub fn hinawa_fw_tcode_get_type() -> GType;
 
     //=========================================================================
-    // HinawaSndDiceError
-    //=========================================================================
-    pub fn hinawa_snd_dice_error_get_type() -> GType;
-    pub fn hinawa_snd_dice_error_quark() -> glib::GQuark;
-
-    //=========================================================================
-    // HinawaSndEfwStatus
-    //=========================================================================
-    pub fn hinawa_snd_efw_status_get_type() -> GType;
-
-    //=========================================================================
-    // HinawaSndUnitError
-    //=========================================================================
-    pub fn hinawa_snd_unit_error_get_type() -> GType;
-    pub fn hinawa_snd_unit_error_quark() -> glib::GQuark;
-
-    //=========================================================================
-    // HinawaSndUnitType
-    //=========================================================================
-    pub fn hinawa_snd_unit_type_get_type() -> GType;
-
-    //=========================================================================
     // HinawaCycleTime
     //=========================================================================
     pub fn hinawa_cycle_time_get_type() -> GType;
@@ -584,73 +294,6 @@ extern "C" {
     pub fn hinawa_cycle_time_parse_tstamp(tstamp: c_uint, isoc_cycle: *mut [c_uint; 2]);
 
     //=========================================================================
-    // HinawaSndMotuRegisterDspParameter
-    //=========================================================================
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_type() -> GType;
-    pub fn hinawa_snd_motu_register_dsp_parameter_new() -> *mut HinawaSndMotuRegisterDspParameter;
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_assignment(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        assignment: *mut u8,
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_headphone_output_paired_volume(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        volume: *mut u8,
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_input_flag(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        flag: *mut *const [u8; 10],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_input_gain_and_invert(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        gain_and_invert: *mut *const [u8; 10],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_line_input_boost_flag(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        boost_flag: *mut u8,
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_line_input_nominal_level_flag(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        nominal_level_flag: *mut u8,
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_main_output_paired_volume(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        volume: *mut u8,
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_flag(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        flag: *mut *const [u8; 4],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_output_paired_volume(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        volume: *mut *const [u8; 4],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_flag(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        mixer: size_t,
-        flag: *mut *const [u8; 20],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_gain(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        mixer: size_t,
-        gain: *mut *const [u8; 20],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_balance(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        mixer: size_t,
-        balance: *mut *const [u8; 20],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_paired_width(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        mixer: size_t,
-        width: *mut *const [u8; 20],
-    );
-    pub fn hinawa_snd_motu_register_dsp_parameter_get_mixer_source_pan(
-        self_: *const HinawaSndMotuRegisterDspParameter,
-        mixer: size_t,
-        pan: *mut *const [u8; 20],
-    );
-
-    //=========================================================================
     // HinawaFwFcp
     //=========================================================================
     pub fn hinawa_fw_fcp_get_type() -> GType;
@@ -659,11 +302,11 @@ extern "C" {
         self_: *mut HinawaFwFcp,
         cmd: *const u8,
         cmd_size: size_t,
-        resp: *const *mut u8,
+        resp: *mut *mut u8,
         resp_size: *mut size_t,
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_fcp_avc_transaction_with_tstamp(
         self_: *mut HinawaFwFcp,
         cmd: *const u8,
@@ -678,14 +321,14 @@ extern "C" {
         self_: *mut HinawaFwFcp,
         node: *mut HinawaFwNode,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_fcp_command(
         self_: *mut HinawaFwFcp,
         cmd: *const u8,
         cmd_size: size_t,
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_fcp_command_with_tstamp(
         self_: *mut HinawaFwFcp,
         cmd: *const u8,
@@ -694,14 +337,6 @@ extern "C" {
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
     ) -> gboolean;
-    pub fn hinawa_fw_fcp_transaction(
-        self_: *mut HinawaFwFcp,
-        req_frame: *const u8,
-        req_frame_size: size_t,
-        resp_frame: *const *mut u8,
-        resp_frame_size: *mut size_t,
-        error: *mut *mut glib::GError,
-    );
     pub fn hinawa_fw_fcp_unbind(self_: *mut HinawaFwFcp);
 
     //=========================================================================
@@ -713,22 +348,23 @@ extern "C" {
         self_: *mut HinawaFwNode,
         gsrc: *mut *mut glib::GSource,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_node_get_config_rom(
         self_: *mut HinawaFwNode,
         image: *mut *const u8,
         length: *mut size_t,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_node_open(
         self_: *mut HinawaFwNode,
         path: *const c_char,
+        open_flag: c_int,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_node_read_cycle_time(
         self_: *mut HinawaFwNode,
         clock_id: c_int,
-        cycle_time: *const *mut HinawaCycleTime,
+        cycle_time: *mut *mut HinawaCycleTime,
         error: *mut *mut glib::GError,
     ) -> gboolean;
 
@@ -743,7 +379,7 @@ extern "C" {
         tcode: HinawaFwTcode,
         addr: u64,
         length: size_t,
-        frame: *const *mut u8,
+        frame: *mut *mut u8,
         frame_size: *mut size_t,
         error: *mut *mut glib::GError,
     ) -> gboolean;
@@ -753,31 +389,11 @@ extern "C" {
         tcode: HinawaFwTcode,
         addr: u64,
         length: size_t,
-        frame: *const *mut u8,
-        frame_size: *mut size_t,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_fw_req_transaction_async(
-        self_: *mut HinawaFwReq,
-        node: *mut HinawaFwNode,
-        tcode: HinawaFwTcode,
-        addr: u64,
-        length: size_t,
-        frame: *const *mut u8,
-        frame_size: *mut size_t,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_fw_req_transaction_sync(
-        self_: *mut HinawaFwReq,
-        node: *mut HinawaFwNode,
-        tcode: HinawaFwTcode,
-        addr: u64,
-        length: size_t,
-        frame: *const *mut u8,
+        frame: *mut *mut u8,
         frame_size: *mut size_t,
         timeout_ms: c_uint,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_req_transaction_with_tstamp(
         self_: *mut HinawaFwReq,
         node: *mut HinawaFwNode,
@@ -796,11 +412,6 @@ extern "C" {
     //=========================================================================
     pub fn hinawa_fw_resp_get_type() -> GType;
     pub fn hinawa_fw_resp_new() -> *mut HinawaFwResp;
-    pub fn hinawa_fw_resp_get_req_frame(
-        self_: *mut HinawaFwResp,
-        frame: *mut *const u8,
-        length: *mut size_t,
-    );
     pub fn hinawa_fw_resp_release(self_: *mut HinawaFwResp);
     pub fn hinawa_fw_resp_reserve(
         self_: *mut HinawaFwResp,
@@ -808,7 +419,7 @@ extern "C" {
         addr: u64,
         width: c_uint,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_resp_reserve_within_region(
         self_: *mut HinawaFwResp,
         node: *mut HinawaFwNode,
@@ -816,139 +427,7 @@ extern "C" {
         region_end: u64,
         width: c_uint,
         error: *mut *mut glib::GError,
-    );
+    ) -> gboolean;
     pub fn hinawa_fw_resp_set_resp_frame(self_: *mut HinawaFwResp, frame: *mut u8, length: size_t);
-
-    //=========================================================================
-    // HinawaSndDg00x
-    //=========================================================================
-    pub fn hinawa_snd_dg00x_get_type() -> GType;
-    pub fn hinawa_snd_dg00x_new() -> *mut HinawaSndDg00x;
-    pub fn hinawa_snd_dg00x_open(
-        self_: *mut HinawaSndDg00x,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-
-    //=========================================================================
-    // HinawaSndDice
-    //=========================================================================
-    pub fn hinawa_snd_dice_get_type() -> GType;
-    pub fn hinawa_snd_dice_new() -> *mut HinawaSndDice;
-    pub fn hinawa_snd_dice_open(
-        self_: *mut HinawaSndDice,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_dice_transaction(
-        self_: *mut HinawaSndDice,
-        addr: u64,
-        frame: *const u32,
-        frame_count: size_t,
-        bit_flag: u32,
-        error: *mut *mut glib::GError,
-    );
-
-    //=========================================================================
-    // HinawaSndEfw
-    //=========================================================================
-    pub fn hinawa_snd_efw_get_type() -> GType;
-    pub fn hinawa_snd_efw_new() -> *mut HinawaSndEfw;
-    pub fn hinawa_snd_efw_error_quark() -> glib::GQuark;
-    pub fn hinawa_snd_efw_open(
-        self_: *mut HinawaSndEfw,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_efw_transaction(
-        self_: *mut HinawaSndEfw,
-        category: c_uint,
-        command: c_uint,
-        args: *const u32,
-        arg_count: size_t,
-        params: *const *mut u32,
-        param_count: *mut size_t,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_efw_transaction_async(
-        self_: *mut HinawaSndEfw,
-        category: c_uint,
-        command: c_uint,
-        args: *const u32,
-        arg_count: size_t,
-        resp_seqnum: *mut u32,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_efw_transaction_sync(
-        self_: *mut HinawaSndEfw,
-        category: c_uint,
-        command: c_uint,
-        args: *const u32,
-        arg_count: size_t,
-        params: *const *mut u32,
-        param_count: *mut size_t,
-        timeout_ms: c_uint,
-        error: *mut *mut glib::GError,
-    );
-
-    //=========================================================================
-    // HinawaSndMotu
-    //=========================================================================
-    pub fn hinawa_snd_motu_get_type() -> GType;
-    pub fn hinawa_snd_motu_new() -> *mut HinawaSndMotu;
-    pub fn hinawa_snd_motu_open(
-        self_: *mut HinawaSndMotu,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_motu_read_command_dsp_meter(
-        self_: *mut HinawaSndMotu,
-        meter: *const *mut [c_float; 400],
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_motu_read_register_dsp_meter(
-        self_: *mut HinawaSndMotu,
-        meter: *const *mut [u8; 48],
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_motu_read_register_dsp_parameter(
-        self_: *mut HinawaSndMotu,
-        param: *const *mut HinawaSndMotuRegisterDspParameter,
-        error: *mut *mut glib::GError,
-    );
-
-    //=========================================================================
-    // HinawaSndTscm
-    //=========================================================================
-    pub fn hinawa_snd_tscm_get_type() -> GType;
-    pub fn hinawa_snd_tscm_new() -> *mut HinawaSndTscm;
-    pub fn hinawa_snd_tscm_get_state(
-        self_: *mut HinawaSndTscm,
-        error: *mut *mut glib::GError,
-    ) -> *const [u32; 64];
-    pub fn hinawa_snd_tscm_open(
-        self_: *mut HinawaSndTscm,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-
-    //=========================================================================
-    // HinawaSndUnit
-    //=========================================================================
-    pub fn hinawa_snd_unit_get_type() -> GType;
-    pub fn hinawa_snd_unit_new() -> *mut HinawaSndUnit;
-    pub fn hinawa_snd_unit_create_source(
-        self_: *mut HinawaSndUnit,
-        gsrc: *mut *mut glib::GSource,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_unit_get_node(self_: *mut HinawaSndUnit, node: *mut *mut HinawaFwNode);
-    pub fn hinawa_snd_unit_lock(self_: *mut HinawaSndUnit, error: *mut *mut glib::GError);
-    pub fn hinawa_snd_unit_open(
-        self_: *mut HinawaSndUnit,
-        path: *mut c_char,
-        error: *mut *mut glib::GError,
-    );
-    pub fn hinawa_snd_unit_unlock(self_: *mut HinawaSndUnit, error: *mut *mut glib::GError);
 
 }

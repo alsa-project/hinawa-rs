@@ -19,11 +19,7 @@ repository = "https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/"
 features = ["dox"]
 [package.metadata.system-deps.hinawa]
 name = "hinawa"
-version = "2.6"
-
-[package.metadata.system-deps.hinawa.v2_6]
-name = "hinawa"
-version = "2.6"
+version = "4.0"
 
 [lib]
 name = "hinawa_sys"
@@ -51,4 +47,3 @@ tempfile = "3"
 [features]
 # To suppress linking to C library when generating documentation.
 dox = []
-v2_6 = []

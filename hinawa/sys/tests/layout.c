@@ -22,22 +22,5 @@ int main() {
     printf("%s;%zu;%zu\n", "HinawaFwRespClass", sizeof(HinawaFwRespClass), alignof(HinawaFwRespClass));
     printf("%s;%zu;%zu\n", "HinawaFwRespError", sizeof(HinawaFwRespError), alignof(HinawaFwRespError));
     printf("%s;%zu;%zu\n", "HinawaFwTcode", sizeof(HinawaFwTcode), alignof(HinawaFwTcode));
-    printf("%s;%zu;%zu\n", "HinawaSndDg00x", sizeof(HinawaSndDg00x), alignof(HinawaSndDg00x));
-    printf("%s;%zu;%zu\n", "HinawaSndDg00xClass", sizeof(HinawaSndDg00xClass), alignof(HinawaSndDg00xClass));
-    printf("%s;%zu;%zu\n", "HinawaSndDice", sizeof(HinawaSndDice), alignof(HinawaSndDice));
-    printf("%s;%zu;%zu\n", "HinawaSndDiceClass", sizeof(HinawaSndDiceClass), alignof(HinawaSndDiceClass));
-    printf("%s;%zu;%zu\n", "HinawaSndDiceError", sizeof(HinawaSndDiceError), alignof(HinawaSndDiceError));
-    printf("%s;%zu;%zu\n", "HinawaSndEfw", sizeof(HinawaSndEfw), alignof(HinawaSndEfw));
-    printf("%s;%zu;%zu\n", "HinawaSndEfwClass", sizeof(HinawaSndEfwClass), alignof(HinawaSndEfwClass));
-    printf("%s;%zu;%zu\n", "HinawaSndEfwStatus", sizeof(HinawaSndEfwStatus), alignof(HinawaSndEfwStatus));
-    printf("%s;%zu;%zu\n", "HinawaSndMotu", sizeof(HinawaSndMotu), alignof(HinawaSndMotu));
-    printf("%s;%zu;%zu\n", "HinawaSndMotuClass", sizeof(HinawaSndMotuClass), alignof(HinawaSndMotuClass));
-    printf("%s;%zu;%zu\n", "HinawaSndMotuRegisterDspParameter", sizeof(HinawaSndMotuRegisterDspParameter), alignof(HinawaSndMotuRegisterDspParameter));
-    printf("%s;%zu;%zu\n", "HinawaSndTscm", sizeof(HinawaSndTscm), alignof(HinawaSndTscm));
-    printf("%s;%zu;%zu\n", "HinawaSndTscmClass", sizeof(HinawaSndTscmClass), alignof(HinawaSndTscmClass));
-    printf("%s;%zu;%zu\n", "HinawaSndUnit", sizeof(HinawaSndUnit), alignof(HinawaSndUnit));
-    printf("%s;%zu;%zu\n", "HinawaSndUnitClass", sizeof(HinawaSndUnitClass), alignof(HinawaSndUnitClass));
-    printf("%s;%zu;%zu\n", "HinawaSndUnitError", sizeof(HinawaSndUnitError), alignof(HinawaSndUnitError));
-    printf("%s;%zu;%zu\n", "HinawaSndUnitType", sizeof(HinawaSndUnitType), alignof(HinawaSndUnitType));
     return 0;
 }
