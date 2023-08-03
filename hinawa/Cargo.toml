@@ -1,7 +1,7 @@
 [package]
 edition = "2018"
 name = "hinawa"
-version = "0.8.1"
+version = "0.9.0"
 # For publishing.
 authors = ["Takashi Sakamoto"]
 categories = ["api-bindings", "hardware-support", "os::linux-apis"]
@@ -22,7 +22,7 @@ name = "hinawa"
 [dependencies]
 libc = "0.2"
 glib = "0.15"
-ffi = {package = "hinawa-sys", path = "sys", version = "0.8.1"}
+ffi = {package = "hinawa-sys", path = "sys", version = "0.9.0"}
 
 [dev-dependencies]
 gir-format-check = "^0.1"

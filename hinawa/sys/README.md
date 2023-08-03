@@ -1,7 +1,7 @@
 # hinawa-sys crate
 
 Rust FFI bindings and wrappers for
-[hinawa library](https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/) to operate OHCI 1394
+[hinawa library](https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/) to operate 1394 OHCI
 hardware via Linux FireWire character device for asynchronous communication in IEEE 1394 bus.
 
 The hinawa library version 4.0 is the minimum supported version for underlying library.

@@ -3,7 +3,7 @@ build = "build.rs"
 edition = "2018"
 links = "hinawa"
 name = "hinawa-sys"
-version = "0.8.1"
+version = "0.9.0"
 # For publishing.
 authors = ["Takashi Sakamoto"]
 categories = ["external-ffi-bindings", "hardware-support", "os::linux-apis"]
