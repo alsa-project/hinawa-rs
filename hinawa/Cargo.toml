@@ -22,7 +22,7 @@ name = "hinawa"
 [dependencies]
 libc = "0.2"
 glib = "0.15"
-ffi = {package = "hinawa-sys", path = "../hinawa-sys", version = "0.8.1"}
+ffi = {package = "hinawa-sys", path = "sys", version = "0.8.1"}
 
 [dev-dependencies]
 gir-format-check = "^0.1"

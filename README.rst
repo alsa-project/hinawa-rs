@@ -31,7 +31,7 @@ API bindings for safe and high-level abstractions
 `FFI bindings <https://doc.rust-lang.org/cargo/reference/build-scripts.html#-sys-packages>`_
 --------------------------------------------------------------------------------------------
 
-* `hinawa-sys crate <hinawa-sys/README.md>`_
+* `hinawa-sys crate <hinawa/sys/README.md>`_
 
 License
 =======
