@@ -2,7 +2,7 @@
 Rust bindings for hinawa library
 ================================
 
-2022/07/14
+2023/10/30
 Takashi Sakamoto
 
 Introduction
@@ -18,7 +18,7 @@ Introduction
 * Unfortunately, it includes no support for ``libhinawa 1`` or former (``Hinawa-2.0.gir`` or
   ``Hinawa-1.0.gir``) as well as sound unit support deprecated at libhinawa v2.5.0.
 
-* The latest release is version 0.7.0.
+* The latest release is version 0.7.1.
 
 Crates
 ======
