@@ -15,6 +15,7 @@ use std::ptr;
 
 glib::wrapper! {
     /// An event listener for node in IEEE 1394 bus.
+    ///
     /// [`FwNode`][crate::FwNode] listens to any events for an associated node in IEEE 1394 bus. Additionally,
     /// it provides some methods to retrieve fundamental information about the bus.
     ///

@@ -8,6 +8,7 @@ use std::fmt;
 
 glib::wrapper! {
     /// A transaction executor to a node in IEEE 1394 bus.
+    ///
     /// [`FwReq`][crate::FwReq] supports all types of transactions defiend in IEEE 1212.
     ///
     /// # Implements

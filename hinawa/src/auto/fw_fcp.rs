@@ -17,6 +17,7 @@ use std::ptr;
 
 glib::wrapper! {
     /// A FCP transaction executor to node in IEEE 1394 bus.
+    ///
     /// [`FwFcp`][crate::FwFcp] supports Function Control Protocol (FCP) in IEC 61883-1. FCP transaction consists
     /// of a pair of asynchronous transactions for command and response, while the protocol has no
     /// mechanism to match them. In AV/C Digital Interface Command Set General Specification Version 4.2

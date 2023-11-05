@@ -16,6 +16,7 @@ use std::ptr;
 
 glib::wrapper! {
     /// A transaction responder for request subaction initiated by node in IEEE 1394 bus.
+    ///
     /// [`FwResp`][crate::FwResp] responds to request subaction initiated by node in IEEE 1394 bus.
     ///
     /// # Implements

@@ -378,6 +378,7 @@ impl ToValue for FwRcode {
 }
 
 /// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwReq`][crate::FwReq].
+///
 /// The actual value is equivalent to [`FwRcode`][crate::FwRcode].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]

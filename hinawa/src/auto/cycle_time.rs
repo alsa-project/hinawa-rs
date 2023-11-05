@@ -8,6 +8,7 @@ use std::mem;
 
 glib::wrapper! {
     /// A boxed object to express data of cycle time.
+    ///
     /// A [`CycleTime`][crate::CycleTime] expresses the value of cycle time of 1394 OHCI as well as Linux system
     /// time referring to clock_id.
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
