@@ -4,6 +4,30 @@ use super::*;
 
 /// Trait which should be implemented by subclass of [`FwResp`][crate::FwResp].
 pub trait FwRespImpl: ObjectImpl {
+    /// Class closure for the [`requested`][struct@crate::FwResp#requested] signal.
+    /// ## `tcode`
+    /// One of [`FwTcode`][crate::FwTcode] enumerations
+    /// ## `offset`
+    /// The address offset at which the transaction arrives.
+    /// ## `src_node_id`
+    /// The node ID of source for the transaction.
+    /// ## `dst_node_id`
+    /// The node ID of destination for the transaction.
+    /// ## `card_id`
+    /// The index of card specific to 1394 OHCI hardware at which the request
+    ///      subaction arrived.
+    /// ## `generation`
+    /// The generation of bus when the transaction is transferred.
+    /// ## `tstamp`
+    /// The time stamp at which the request arrived.
+    /// ## `frame`
+    /// The array with elements for byte
+    ///    data.
+    ///
+    /// # Returns
+    ///
+    /// One of [`FwRcode`][crate::FwRcode] enumerations corresponding to rcodes defined in IEEE 1394
+    ///     specification.
     fn requested(
         &self,
         resp: &Self::Type,

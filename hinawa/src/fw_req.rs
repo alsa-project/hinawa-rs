@@ -9,7 +9,7 @@ use crate::*;
 pub trait FwReqExtManual {
     /// Execute request subaction of transaction to the given node according to given code. When the
     /// response subaction arrives and running event dispatcher reads the contents,
-    /// `signal::FwReq::responded` signal handler is called.
+    /// [`responded`][struct@crate::FwReq#responded] signal handler is called.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
     /// ## `tcode`
@@ -62,6 +62,8 @@ pub trait FwReqExtManual {
     ///
     /// # Returns
     ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
+    ///
     /// ## `tstamp`
     /// The array with two elements for time stamps.
     ///     The first element is for the isochronous cycle at which the request subaction was sent.
@@ -97,6 +99,10 @@ pub trait FwReqExtManual {
     /// ## `timeout_ms`
     /// The timeout to wait for response subaction of the transaction since request
     ///     subaction is initiated, in milliseconds.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_req_transaction")]
     fn transaction<P: IsA<FwNode>>(
         &self,
@@ -108,8 +114,7 @@ pub trait FwReqExtManual {
         timeout_ms: u32,
     ) -> Result<(), glib::Error>;
 
-
-    /// Emitted when the unit transfers asynchronous packet as response subaction for the
+    /// Emitted when the node transfers asynchronous packet as response subaction for the
     /// transaction and the process successfully reads the content of packet from Linux firewire
     /// subsystem.
     ///
@@ -147,7 +152,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
             let mut frame_size = frame.len();
             let mut error = std::ptr::null_mut();
 
-            let _ = ffi::hinawa_fw_req_request(
+            let is_ok = ffi::hinawa_fw_req_request(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
                 tcode.into_glib(),
@@ -157,7 +162,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
                 &mut frame_size,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(())
             } else {
@@ -180,7 +185,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
             let mut tstamp = [0; 2];
             let mut error = std::ptr::null_mut();
 
-            let _ = ffi::hinawa_fw_req_transaction_with_tstamp(
+            let is_ok = ffi::hinawa_fw_req_transaction_with_tstamp(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
                 tcode.into_glib(),
@@ -192,7 +197,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
                 timeout_ms,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(tstamp)
             } else {
@@ -214,7 +219,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
             let mut frame_size = frame.len();
             let mut error = std::ptr::null_mut();
 
-            let _ = ffi::hinawa_fw_req_transaction(
+            let is_ok = ffi::hinawa_fw_req_transaction(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
                 tcode.into_glib(),
@@ -225,7 +230,7 @@ impl<O: IsA<FwReq>> FwReqExtManual for O {
                 timeout_ms,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(())
             } else {

@@ -3,13 +3,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use glib::error::ErrorDomain;
-use glib::translate::*;
-use glib::value::FromValue;
-use glib::value::ToValue;
-use glib::Quark;
-use glib::StaticType;
-use glib::Type;
+use glib::{prelude::*, translate::*};
 use std::fmt;
 
 /// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwFcp`][crate::FwFcp].
@@ -23,6 +17,7 @@ pub enum FwFcpError {
     /// The size of response is larger than expected.
     #[doc(alias = "HINAWA_FW_FCP_ERROR_LARGE_RESP")]
     LargeResp,
+    /// The transaction is aborted due to bus reset.
     #[doc(alias = "HINAWA_FW_FCP_ERROR_ABORTED")]
     Aborted,
     #[doc(hidden)]
@@ -48,6 +43,7 @@ impl fmt::Display for FwFcpError {
 impl IntoGlib for FwFcpError {
     type GlibType = ffi::HinawaFwFcpError;
 
+    #[inline]
     fn into_glib(self) -> ffi::HinawaFwFcpError {
         match self {
             Self::Timeout => ffi::HINAWA_FW_FCP_ERROR_TIMEOUT,
@@ -60,6 +56,7 @@ impl IntoGlib for FwFcpError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::HinawaFwFcpError> for FwFcpError {
+    #[inline]
     unsafe fn from_glib(value: ffi::HinawaFwFcpError) -> Self {
         match value {
             ffi::HINAWA_FW_FCP_ERROR_TIMEOUT => Self::Timeout,
@@ -70,28 +67,41 @@ impl FromGlib<ffi::HinawaFwFcpError> for FwFcpError {
     }
 }
 
-impl ErrorDomain for FwFcpError {
-    fn domain() -> Quark {
+impl glib::error::ErrorDomain for FwFcpError {
+    #[inline]
+    fn domain() -> glib::Quark {
         unsafe { from_glib(ffi::hinawa_fw_fcp_error_quark()) }
     }
 
+    #[inline]
     fn code(self) -> i32 {
         self.into_glib()
     }
 
+    #[inline]
+    #[allow(clippy::match_single_binding)]
     fn from(code: i32) -> Option<Self> {
-        match code {
-            ffi::HINAWA_FW_FCP_ERROR_TIMEOUT => Some(Self::Timeout),
-            ffi::HINAWA_FW_FCP_ERROR_LARGE_RESP => Some(Self::LargeResp),
-            ffi::HINAWA_FW_FCP_ERROR_ABORTED => Some(Self::Aborted),
-            value => Some(Self::__Unknown(value)),
+        match unsafe { from_glib(code) } {
+            value => Some(value),
         }
     }
 }
 
 impl StaticType for FwFcpError {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_fcp_error_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_fcp_error_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwFcpError {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -99,15 +109,17 @@ impl glib::value::ValueType for FwFcpError {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwFcpError {
+unsafe impl<'a> glib::value::FromValue<'a> for FwFcpError {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwFcpError {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -116,8 +128,16 @@ impl ToValue for FwFcpError {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwFcpError> for glib::Value {
+    #[inline]
+    fn from(v: FwFcpError) -> Self {
+        ToValue::to_value(&v)
     }
 }
 
@@ -162,6 +182,7 @@ impl fmt::Display for FwNodeError {
 impl IntoGlib for FwNodeError {
     type GlibType = ffi::HinawaFwNodeError;
 
+    #[inline]
     fn into_glib(self) -> ffi::HinawaFwNodeError {
         match self {
             Self::Disconnected => ffi::HINAWA_FW_NODE_ERROR_DISCONNECTED,
@@ -175,6 +196,7 @@ impl IntoGlib for FwNodeError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::HinawaFwNodeError> for FwNodeError {
+    #[inline]
     unsafe fn from_glib(value: ffi::HinawaFwNodeError) -> Self {
         match value {
             ffi::HINAWA_FW_NODE_ERROR_DISCONNECTED => Self::Disconnected,
@@ -186,29 +208,42 @@ impl FromGlib<ffi::HinawaFwNodeError> for FwNodeError {
     }
 }
 
-impl ErrorDomain for FwNodeError {
-    fn domain() -> Quark {
+impl glib::error::ErrorDomain for FwNodeError {
+    #[inline]
+    fn domain() -> glib::Quark {
         unsafe { from_glib(ffi::hinawa_fw_node_error_quark()) }
     }
 
+    #[inline]
     fn code(self) -> i32 {
         self.into_glib()
     }
 
+    #[inline]
+    #[allow(clippy::match_single_binding)]
     fn from(code: i32) -> Option<Self> {
-        match code {
-            ffi::HINAWA_FW_NODE_ERROR_DISCONNECTED => Some(Self::Disconnected),
-            ffi::HINAWA_FW_NODE_ERROR_OPENED => Some(Self::Opened),
-            ffi::HINAWA_FW_NODE_ERROR_NOT_OPENED => Some(Self::NotOpened),
-            ffi::HINAWA_FW_NODE_ERROR_FAILED => Some(Self::Failed),
-            _ => Some(Self::Failed),
+        match unsafe { from_glib(code) } {
+            Self::__Unknown(_) => Some(Self::Failed),
+            value => Some(value),
         }
     }
 }
 
 impl StaticType for FwNodeError {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_node_error_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_node_error_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwNodeError {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -216,15 +251,17 @@ impl glib::value::ValueType for FwNodeError {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwNodeError {
+unsafe impl<'a> glib::value::FromValue<'a> for FwNodeError {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwNodeError {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -233,8 +270,16 @@ impl ToValue for FwNodeError {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwNodeError> for glib::Value {
+    #[inline]
+    fn from(v: FwNodeError) -> Self {
+        ToValue::to_value(&v)
     }
 }
 
@@ -307,6 +352,7 @@ impl fmt::Display for FwRcode {
 impl IntoGlib for FwRcode {
     type GlibType = ffi::HinawaFwRcode;
 
+    #[inline]
     fn into_glib(self) -> ffi::HinawaFwRcode {
         match self {
             Self::Complete => ffi::HINAWA_FW_RCODE_COMPLETE,
@@ -327,6 +373,7 @@ impl IntoGlib for FwRcode {
 
 #[doc(hidden)]
 impl FromGlib<ffi::HinawaFwRcode> for FwRcode {
+    #[inline]
     unsafe fn from_glib(value: ffi::HinawaFwRcode) -> Self {
         match value {
             ffi::HINAWA_FW_RCODE_COMPLETE => Self::Complete,
@@ -346,8 +393,20 @@ impl FromGlib<ffi::HinawaFwRcode> for FwRcode {
 }
 
 impl StaticType for FwRcode {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_rcode_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_rcode_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwRcode {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -355,15 +414,17 @@ impl glib::value::ValueType for FwRcode {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwRcode {
+unsafe impl<'a> glib::value::FromValue<'a> for FwRcode {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwRcode {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -372,8 +433,16 @@ impl ToValue for FwRcode {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwRcode> for glib::Value {
+    #[inline]
+    fn from(v: FwRcode) -> Self {
+        ToValue::to_value(&v)
     }
 }
 
@@ -444,6 +513,7 @@ impl fmt::Display for FwReqError {
 impl IntoGlib for FwReqError {
     type GlibType = ffi::HinawaFwReqError;
 
+    #[inline]
     fn into_glib(self) -> ffi::HinawaFwReqError {
         match self {
             Self::ConflictError => ffi::HINAWA_FW_REQ_ERROR_CONFLICT_ERROR,
@@ -463,6 +533,7 @@ impl IntoGlib for FwReqError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::HinawaFwReqError> for FwReqError {
+    #[inline]
     unsafe fn from_glib(value: ffi::HinawaFwReqError) -> Self {
         match value {
             ffi::HINAWA_FW_REQ_ERROR_CONFLICT_ERROR => Self::ConflictError,
@@ -480,35 +551,41 @@ impl FromGlib<ffi::HinawaFwReqError> for FwReqError {
     }
 }
 
-impl ErrorDomain for FwReqError {
-    fn domain() -> Quark {
+impl glib::error::ErrorDomain for FwReqError {
+    #[inline]
+    fn domain() -> glib::Quark {
         unsafe { from_glib(ffi::hinawa_fw_req_error_quark()) }
     }
 
+    #[inline]
     fn code(self) -> i32 {
         self.into_glib()
     }
 
+    #[inline]
+    #[allow(clippy::match_single_binding)]
     fn from(code: i32) -> Option<Self> {
-        match code {
-            ffi::HINAWA_FW_REQ_ERROR_CONFLICT_ERROR => Some(Self::ConflictError),
-            ffi::HINAWA_FW_REQ_ERROR_DATA_ERROR => Some(Self::DataError),
-            ffi::HINAWA_FW_REQ_ERROR_TYPE_ERROR => Some(Self::TypeError),
-            ffi::HINAWA_FW_REQ_ERROR_ADDRESS_ERROR => Some(Self::AddressError),
-            ffi::HINAWA_FW_REQ_ERROR_SEND_ERROR => Some(Self::SendError),
-            ffi::HINAWA_FW_REQ_ERROR_CANCELLED => Some(Self::Cancelled),
-            ffi::HINAWA_FW_REQ_ERROR_BUSY => Some(Self::Busy),
-            ffi::HINAWA_FW_REQ_ERROR_GENERATION => Some(Self::Generation),
-            ffi::HINAWA_FW_REQ_ERROR_NO_ACK => Some(Self::NoAck),
-            ffi::HINAWA_FW_REQ_ERROR_INVALID => Some(Self::Invalid),
-            value => Some(Self::__Unknown(value)),
+        match unsafe { from_glib(code) } {
+            value => Some(value),
         }
     }
 }
 
 impl StaticType for FwReqError {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_req_error_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_req_error_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwReqError {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -516,15 +593,17 @@ impl glib::value::ValueType for FwReqError {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwReqError {
+unsafe impl<'a> glib::value::FromValue<'a> for FwReqError {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwReqError {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -533,8 +612,16 @@ impl ToValue for FwReqError {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwReqError> for glib::Value {
+    #[inline]
+    fn from(v: FwReqError) -> Self {
+        ToValue::to_value(&v)
     }
 }
 
@@ -575,6 +662,7 @@ impl fmt::Display for FwRespError {
 impl IntoGlib for FwRespError {
     type GlibType = ffi::HinawaFwRespError;
 
+    #[inline]
     fn into_glib(self) -> ffi::HinawaFwRespError {
         match self {
             Self::Failed => ffi::HINAWA_FW_RESP_ERROR_FAILED,
@@ -587,6 +675,7 @@ impl IntoGlib for FwRespError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::HinawaFwRespError> for FwRespError {
+    #[inline]
     unsafe fn from_glib(value: ffi::HinawaFwRespError) -> Self {
         match value {
             ffi::HINAWA_FW_RESP_ERROR_FAILED => Self::Failed,
@@ -597,28 +686,42 @@ impl FromGlib<ffi::HinawaFwRespError> for FwRespError {
     }
 }
 
-impl ErrorDomain for FwRespError {
-    fn domain() -> Quark {
+impl glib::error::ErrorDomain for FwRespError {
+    #[inline]
+    fn domain() -> glib::Quark {
         unsafe { from_glib(ffi::hinawa_fw_resp_error_quark()) }
     }
 
+    #[inline]
     fn code(self) -> i32 {
         self.into_glib()
     }
 
+    #[inline]
+    #[allow(clippy::match_single_binding)]
     fn from(code: i32) -> Option<Self> {
-        match code {
-            ffi::HINAWA_FW_RESP_ERROR_FAILED => Some(Self::Failed),
-            ffi::HINAWA_FW_RESP_ERROR_RESERVED => Some(Self::Reserved),
-            ffi::HINAWA_FW_RESP_ERROR_ADDR_SPACE_USED => Some(Self::AddrSpaceUsed),
-            _ => Some(Self::Failed),
+        match unsafe { from_glib(code) } {
+            Self::__Unknown(_) => Some(Self::Failed),
+            value => Some(value),
         }
     }
 }
 
 impl StaticType for FwRespError {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_resp_error_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_resp_error_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwRespError {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -626,15 +729,17 @@ impl glib::value::ValueType for FwRespError {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwRespError {
+unsafe impl<'a> glib::value::FromValue<'a> for FwRespError {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwRespError {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -643,8 +748,16 @@ impl ToValue for FwRespError {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwRespError> for glib::Value {
+    #[inline]
+    fn from(v: FwRespError) -> Self {
+        ToValue::to_value(&v)
     }
 }
 
@@ -798,8 +911,20 @@ impl FromGlib<ffi::HinawaFwTcode> for FwTcode {
 }
 
 impl StaticType for FwTcode {
-    fn static_type() -> Type {
+    #[inline]
+    #[doc(alias = "hinawa_fw_tcode_get_type")]
+    fn static_type() -> glib::Type {
         unsafe { from_glib(ffi::hinawa_fw_tcode_get_type()) }
+    }
+}
+
+impl glib::HasParamSpec for FwTcode {
+    type ParamSpec = glib::ParamSpecEnum;
+    type SetValue = Self;
+    type BuilderFn = fn(&str, Self) -> glib::ParamSpecEnumBuilder<Self>;
+
+    fn param_spec_builder() -> Self::BuilderFn {
+        Self::ParamSpec::builder_with_default
     }
 }
 
@@ -807,15 +932,17 @@ impl glib::value::ValueType for FwTcode {
     type Type = Self;
 }
 
-unsafe impl<'a> FromValue<'a> for FwTcode {
+unsafe impl<'a> glib::value::FromValue<'a> for FwTcode {
     type Checker = glib::value::GenericValueTypeChecker<Self>;
 
+    #[inline]
     unsafe fn from_value(value: &'a glib::Value) -> Self {
         from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
     }
 }
 
 impl ToValue for FwTcode {
+    #[inline]
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -824,7 +951,15 @@ impl ToValue for FwTcode {
         value
     }
 
+    #[inline]
     fn value_type(&self) -> glib::Type {
         Self::static_type()
+    }
+}
+
+impl From<FwTcode> for glib::Value {
+    #[inline]
+    fn from(v: FwTcode) -> Self {
+        ToValue::to_value(&v)
     }
 }

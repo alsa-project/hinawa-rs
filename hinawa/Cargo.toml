@@ -14,7 +14,8 @@ license = "MIT"
 readme = "README.md"
 repository = "https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/"
 [package.metadata.docs.rs]
-features = ["dox"]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [lib]
 name = "hinawa"
@@ -28,5 +29,3 @@ ffi = {package = "hinawa-sys", version = "0.9.1"}
 gir-format-check = "^0.1"
 
 [features]
-# To suppress linking to C library when generating documentation.
-dox = ["ffi/dox", "glib/dox"]

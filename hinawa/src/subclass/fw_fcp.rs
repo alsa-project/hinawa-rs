@@ -4,6 +4,15 @@ use super::*;
 
 /// Trait which should be implemented by subclass of [`FwFcp`][crate::FwFcp].
 pub trait FwFcpImpl: ObjectImpl + FwRespImpl {
+    /// Class closure for the [`responded`][struct@crate::FwFcp#responded] signal.
+    /// ## `generation`
+    /// The generation of bus topology.
+    /// ## `tstamp`
+    /// The time stamp at which the request subaction arrived for the response of FCP
+    ///     transaction.
+    /// ## `frame`
+    /// The array with elements for byte
+    ///    data in the response of Function Control Protocol.
     fn responded(&self, fcp: &Self::Type, generation: u32, tstamp: u32, frame: &[u8]) {
         self.parent_responded(fcp, generation, tstamp, frame)
     }

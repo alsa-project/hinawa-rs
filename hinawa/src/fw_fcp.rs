@@ -7,7 +7,7 @@ use crate::*;
 ///
 /// [`FwFcp`][struct@crate::FwFcp]
 pub trait FwFcpExtManual {
-    /// Transfer command frame for FCP. When receiving response frame for FCP, `signal::FwFcp::responded`
+    /// Transfer command frame for FCP. When receiving response frame for FCP, [`responded`][struct@crate::FwFcp#responded]
     /// signal is emitted.
     ///
     /// Each value of @tstamp is unsigned 16 bit integer including higher 3 bits for three low order bits
@@ -22,6 +22,8 @@ pub trait FwFcpExtManual {
     /// The timeout to wait for response subaction of transaction for command frame.
     ///
     /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     ///
     /// ## `tstamp`
     /// The array with two elements for time stamps.
@@ -48,6 +50,10 @@ pub trait FwFcpExtManual {
     ///   the pointer to the array and immutable. The content of array is mutable.
     /// ## `timeout_ms`
     /// The timeout to wait for response transaction since command transactions finishes.
+    ///
+    /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_fcp_avc_transaction")]
     fn avc_transaction(
         &self,
@@ -72,6 +78,8 @@ pub trait FwFcpExtManual {
     /// The timeout to wait for response transaction since command transactions finishes.
     ///
     /// # Returns
+    ///
+    /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     ///
     /// ## `tstamp`
     /// The array with three elements for time
@@ -120,7 +128,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
             let mut tstamp = [0; 2];
             let mut error = std::ptr::null_mut();
 
-            let _ = ffi::hinawa_fw_fcp_command_with_tstamp(
+            let is_ok = ffi::hinawa_fw_fcp_command_with_tstamp(
                 self.as_ref().to_glib_none().0,
                 cmd_frame.as_ptr(),
                 cmd_frame.len(),
@@ -128,7 +136,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
                 timeout_ms,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(tstamp)
             } else {
@@ -147,7 +155,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
             let mut resp_frame_size = resp_frame.len();
             let mut error = std::ptr::null_mut();
 
-            ffi::hinawa_fw_fcp_avc_transaction(
+            let is_ok = ffi::hinawa_fw_fcp_avc_transaction(
                 self.as_ref().to_glib_none().0,
                 cmd_frame.as_ptr(),
                 cmd_frame.len(),
@@ -156,7 +164,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
                 timeout_ms,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 resp_frame.truncate(resp_frame_size);
                 Ok(())
@@ -177,7 +185,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
             let mut tstamp = [0; 3];
             let mut error = std::ptr::null_mut();
 
-            let _ = ffi::hinawa_fw_fcp_avc_transaction_with_tstamp(
+            let is_ok = ffi::hinawa_fw_fcp_avc_transaction_with_tstamp(
                 self.as_ref().to_glib_none().0,
                 cmd_frame.as_ptr(),
                 cmd_frame.len(),
@@ -187,7 +195,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
                 timeout_ms,
                 &mut error,
             );
-
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 resp_frame.truncate(resp_frame_size);
                 Ok(tstamp)

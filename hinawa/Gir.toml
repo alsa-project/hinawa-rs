@@ -55,10 +55,6 @@ manual_traits = ["FwReqExtManual"]
     name = "responded"
     manual = true
     doc_trait_name = "FwReqExtManual"
-    [[object.function]]
-    name = "error_quark"
-    manual = true
-    doc_trait_name = "FwReqExtManual"
 
 [[object]]
 name = "Hinawa.FwResp"

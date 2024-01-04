@@ -45,8 +45,8 @@ Dependencies
 * FFI crate (``hinawa-sys``)
 
   * ``libc`` >= 0.2
-  * ``glib-sys`` >= 0.15
-  * ``gobject-sys`` >= 0.15
+  * ``glib-sys`` >= 0.18
+  * ``gobject-sys`` >= 0.18
 
 * API crate (`hinawa`)
 

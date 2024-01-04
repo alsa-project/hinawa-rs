@@ -4,20 +4,57 @@
 // DO NOT EDIT
 
 use crate::FwNode;
-use glib::object::Cast;
-use glib::object::IsA;
-use glib::signal::connect_raw;
-use glib::signal::SignalHandlerId;
-use glib::translate::*;
-use std::boxed::Box as Box_;
-use std::fmt;
-use std::mem::transmute;
-use std::ptr;
+use glib::{
+    prelude::*,
+    signal::{connect_raw, SignalHandlerId},
+    translate::*,
+};
+use std::{boxed::Box as Box_, fmt, mem::transmute, ptr};
 
 glib::wrapper! {
     /// A transaction responder for request subaction initiated by node in IEEE 1394 bus.
     ///
     /// [`FwResp`][crate::FwResp] responds to request subaction initiated by node in IEEE 1394 bus.
+    ///
+    /// ## Properties
+    ///
+    ///
+    /// #### `is-reserved`
+    ///  Whether a range of address is reserved or not.
+    ///
+    /// Readable
+    ///
+    ///
+    /// #### `offset`
+    ///  The start offset of reserved address range.
+    ///
+    /// Readable
+    ///
+    ///
+    /// #### `width`
+    ///  The width of reserved address range.
+    ///
+    /// Readable
+    ///
+    /// ## Signals
+    ///
+    ///
+    /// #### `requested`
+    ///  Emitted when any node transfers request subaction to local nodes within the address
+    /// range reserved in Linux system.
+    ///
+    /// The handler is expected to call [`FwRespExt::set_resp_frame()`][crate::prelude::FwRespExt::set_resp_frame()] with frame and return
+    /// [`FwRcode`][crate::FwRcode] for response subaction.
+    ///
+    /// The value of @tstamp is unsigned 16 bit integer including higher 3 bits for three low
+    /// order bits of second field and the rest 13 bits for cycle field in the format of IEEE
+    /// 1394 CYCLE_TIMER register.
+    ///
+    /// If the version of kernel ABI for Linux FireWire subsystem is less than 6, the value of
+    /// tstamp argument has invalid value (=G_MAXUINT). Furthermore, if the version is less than
+    /// 4, the src, dst, card, generation arguments have invalid value (=G_MAXUINT).
+    ///
+    ///
     ///
     /// # Implements
     ///
@@ -50,18 +87,27 @@ impl Default for FwResp {
     }
 }
 
-/// Trait containing the part of [`struct@FwResp`] methods.
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::FwResp>> Sealed for T {}
+}
+
+/// Trait containing all [`struct@FwResp`] methods.
 ///
 /// # Implementors
 ///
 /// [`FwFcp`][struct@crate::FwFcp], [`FwResp`][struct@crate::FwResp]
-pub trait FwRespExt: 'static {
+pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
     /// Stop listening to the address range in Linux system for local nodes.
     #[doc(alias = "hinawa_fw_resp_release")]
-    fn release(&self);
+    fn release(&self) {
+        unsafe {
+            ffi::hinawa_fw_resp_release(self.as_ref().to_glib_none().0);
+        }
+    }
 
     /// Allocate an address range within Linux system for local nodes, each of which expresses 1394
-    /// OHCI hardware. Once successful, `signal::FwResp::requested` signal will be emitted whenever any
+    /// OHCI hardware. Once successful, [`requested`][struct@crate::FwResp#requested] signal will be emitted whenever any
     /// request subactions arrive at the 1394 OHCI hardware within the dedicated range.
     ///
     /// The range is precisely reserved at the address specified by @addr with the size indicated by
@@ -78,10 +124,27 @@ pub trait FwRespExt: 'static {
     ///
     /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_resp_reserve")]
-    fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error>;
+    fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let is_ok = ffi::hinawa_fw_resp_reserve(
+                self.as_ref().to_glib_none().0,
+                node.as_ref().to_glib_none().0,
+                addr,
+                width,
+                &mut error,
+            );
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
+            if error.is_null() {
+                Ok(())
+            } else {
+                Err(from_glib_full(error))
+            }
+        }
+    }
 
     /// Allocate an address range within Linux system for local nodes, each of which expresses 1394
-    /// OHCI hardware. Once successful, `signal::FwResp::requested` signal will be emitted whenever any
+    /// OHCI hardware. Once successful, [`requested`][struct@crate::FwResp#requested] signal will be emitted whenever any
     /// request subactions arrive at the 1394 OHCI hardware within the dedicated range.
     ///
     /// The range is reserved between the values specified by @region_start and @region_end with the size
@@ -105,69 +168,10 @@ pub trait FwRespExt: 'static {
         region_start: u64,
         region_end: u64,
         width: u32,
-    ) -> Result<(), glib::Error>;
-
-    /// Register byte frame for the response subaction of transaction.
-    /// ## `frame`
-    /// a 8 bit array for response frame.
-    #[doc(alias = "hinawa_fw_resp_set_resp_frame")]
-    fn set_resp_frame(&self, frame: &[u8]);
-
-    /// Whether a range of address is reserved or not.
-    #[doc(alias = "is-reserved")]
-    fn is_reserved(&self) -> bool;
-
-    /// The start offset of reserved address range.
-    fn offset(&self) -> u64;
-
-    /// The width of reserved address range.
-    fn width(&self) -> u32;
-
-    #[doc(alias = "is-reserved")]
-    fn connect_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "offset")]
-    fn connect_offset_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    #[doc(alias = "width")]
-    fn connect_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<FwResp>> FwRespExt for O {
-    fn release(&self) {
-        unsafe {
-            ffi::hinawa_fw_resp_release(self.as_ref().to_glib_none().0);
-        }
-    }
-
-    fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error> {
-        unsafe {
-            let mut error = ptr::null_mut();
-            let _ = ffi::hinawa_fw_resp_reserve(
-                self.as_ref().to_glib_none().0,
-                node.as_ref().to_glib_none().0,
-                addr,
-                width,
-                &mut error,
-            );
-            if error.is_null() {
-                Ok(())
-            } else {
-                Err(from_glib_full(error))
-            }
-        }
-    }
-
-    fn reserve_within_region(
-        &self,
-        node: &impl IsA<FwNode>,
-        region_start: u64,
-        region_end: u64,
-        width: u32,
     ) -> Result<(), glib::Error> {
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = ffi::hinawa_fw_resp_reserve_within_region(
+            let is_ok = ffi::hinawa_fw_resp_reserve_within_region(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
                 region_start,
@@ -175,6 +179,7 @@ impl<O: IsA<FwResp>> FwRespExt for O {
                 width,
                 &mut error,
             );
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(())
             } else {
@@ -183,8 +188,12 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 
+    /// Register byte frame for the response subaction of transaction.
+    /// ## `frame`
+    /// a 8 bit array for response frame.
+    #[doc(alias = "hinawa_fw_resp_set_resp_frame")]
     fn set_resp_frame(&self, frame: &[u8]) {
-        let length = frame.len() as usize;
+        let length = frame.len() as _;
         unsafe {
             ffi::hinawa_fw_resp_set_resp_frame(
                 self.as_ref().to_glib_none().0,
@@ -194,18 +203,23 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 
+    /// Whether a range of address is reserved or not.
+    #[doc(alias = "is-reserved")]
     fn is_reserved(&self) -> bool {
-        glib::ObjectExt::property(self.as_ref(), "is-reserved")
+        ObjectExt::property(self.as_ref(), "is-reserved")
     }
 
+    /// The start offset of reserved address range.
     fn offset(&self) -> u64 {
-        glib::ObjectExt::property(self.as_ref(), "offset")
+        ObjectExt::property(self.as_ref(), "offset")
     }
 
+    /// The width of reserved address range.
     fn width(&self) -> u32 {
-        glib::ObjectExt::property(self.as_ref(), "width")
+        ObjectExt::property(self.as_ref(), "width")
     }
 
+    #[doc(alias = "is-reserved")]
     fn connect_is_reserved_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_is_reserved_trampoline<P: IsA<FwResp>, F: Fn(&P) + 'static>(
             this: *mut ffi::HinawaFwResp,
@@ -228,6 +242,7 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 
+    #[doc(alias = "offset")]
     fn connect_offset_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_offset_trampoline<P: IsA<FwResp>, F: Fn(&P) + 'static>(
             this: *mut ffi::HinawaFwResp,
@@ -250,6 +265,7 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 
+    #[doc(alias = "width")]
     fn connect_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_width_trampoline<P: IsA<FwResp>, F: Fn(&P) + 'static>(
             this: *mut ffi::HinawaFwResp,
@@ -272,6 +288,8 @@ impl<O: IsA<FwResp>> FwRespExt for O {
         }
     }
 }
+
+impl<O: IsA<FwResp>> FwRespExt for O {}
 
 impl fmt::Display for FwResp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

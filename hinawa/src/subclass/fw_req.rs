@@ -4,6 +4,18 @@ use super::*;
 
 /// Trait which should be implemented by subclass of [`FwReq`][crate::FwReq].
 pub trait FwReqImpl: ObjectImpl {
+    /// Class closure for the [`responded`][struct@crate::FwReq#responded] signal.
+    /// ## `rcode`
+    /// One of [`FwRcode`][crate::FwRcode].
+    /// ## `request_tstamp`
+    /// The isochronous cycle at which the request subaction was sent for the
+    ///         transaction.
+    /// ## `response_tstamp`
+    /// The isochronous cycle at which the response subaction arrived for the
+    ///          transaction.
+    /// ## `frame`
+    /// The array with elements for byte
+    ///    data of the response subaction of transaction.
     fn responded(
         &self,
         req: &Self::Type,

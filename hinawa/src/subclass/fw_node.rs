@@ -4,10 +4,12 @@ use super::*;
 
 /// Trait which should be implemented by subclass of [`FwNode`][crate::FwNode].
 pub trait FwNodeImpl: ObjectImpl {
+    /// Class closure for the [`bus-update`][struct@crate::FwNode#bus-update].
     fn bus_update(&self, node: &Self::Type) {
         self.parent_bus_update(node)
     }
 
+    /// Class closure for the [`disconnected`][struct@crate::FwNode#disconnected].
     fn disconnected(&self, node: &Self::Type) {
         self.parent_disconnected(node)
     }

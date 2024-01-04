@@ -47,8 +47,7 @@ impl CycleTime {
         unsafe {
             let mut clock_id = mem::MaybeUninit::uninit();
             ffi::hinawa_cycle_time_get_clock_id(self.to_glib_none().0, clock_id.as_mut_ptr());
-            let clock_id = clock_id.assume_init();
-            clock_id
+            clock_id.assume_init()
         }
     }
 
@@ -65,8 +64,7 @@ impl CycleTime {
         unsafe {
             let mut raw = mem::MaybeUninit::uninit();
             ffi::hinawa_cycle_time_get_raw(self.to_glib_none().0, raw.as_mut_ptr());
-            let raw = raw.assume_init();
-            raw
+            raw.assume_init()
         }
     }
 
@@ -92,9 +90,7 @@ impl CycleTime {
                 tv_sec.as_mut_ptr(),
                 tv_nsec.as_mut_ptr(),
             );
-            let tv_sec = tv_sec.assume_init();
-            let tv_nsec = tv_nsec.assume_init();
-            (tv_sec, tv_nsec)
+            (tv_sec.assume_init(), tv_nsec.assume_init())
         }
     }
 }

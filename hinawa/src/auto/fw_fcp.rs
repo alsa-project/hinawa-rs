@@ -3,17 +3,13 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use crate::FwNode;
-use crate::FwResp;
-use glib::object::Cast;
-use glib::object::IsA;
-use glib::signal::connect_raw;
-use glib::signal::SignalHandlerId;
-use glib::translate::*;
-use std::boxed::Box as Box_;
-use std::fmt;
-use std::mem::transmute;
-use std::ptr;
+use crate::{FwNode, FwResp};
+use glib::{
+    prelude::*,
+    signal::{connect_raw, SignalHandlerId},
+    translate::*,
+};
+use std::{boxed::Box as Box_, fmt, mem::transmute, ptr};
 
 glib::wrapper! {
     /// A FCP transaction executor to node in IEEE 1394 bus.
@@ -26,6 +22,70 @@ glib::wrapper! {
     ///
     /// Any of transaction frames should be aligned to 8 bit (1 byte). This class is an application of
     /// [`FwReq`][crate::FwReq] / [`FwResp`][crate::FwResp].
+    ///
+    /// ## Properties
+    ///
+    ///
+    /// #### `is-bound`
+    ///  Whether this protocol is bound to any instance of HinawaFwNode.
+    ///
+    /// Readable
+    /// <details><summary><h4>FwResp</h4></summary>
+    ///
+    ///
+    /// #### `is-reserved`
+    ///  Whether a range of address is reserved or not.
+    ///
+    /// Readable
+    ///
+    ///
+    /// #### `offset`
+    ///  The start offset of reserved address range.
+    ///
+    /// Readable
+    ///
+    ///
+    /// #### `width`
+    ///  The width of reserved address range.
+    ///
+    /// Readable
+    /// </details>
+    ///
+    /// ## Signals
+    ///
+    ///
+    /// #### `responded`
+    ///  Emitted when the node transfers asynchronous packet as response for FCP and the process
+    /// successfully read the content of packet.
+    ///
+    /// The values of @tstamp is unsigned 16 bit integer including higher 3 bits for three low
+    /// order bits of second field and the rest 13 bits for cycle field in the format of IEEE
+    /// 1394 CYCLE_TIMER register.
+    ///
+    /// If the version of kernel ABI for Linux FireWire subsystem is less than 6, the value of
+    /// @tstamp argument has invalid value (=G_MAXUINT).
+    ///
+    ///
+    /// <details><summary><h4>FwResp</h4></summary>
+    ///
+    ///
+    /// #### `requested`
+    ///  Emitted when any node transfers request subaction to local nodes within the address
+    /// range reserved in Linux system.
+    ///
+    /// The handler is expected to call [`FwRespExt::set_resp_frame()`][crate::prelude::FwRespExt::set_resp_frame()] with frame and return
+    /// [`FwRcode`][crate::FwRcode] for response subaction.
+    ///
+    /// The value of @tstamp is unsigned 16 bit integer including higher 3 bits for three low
+    /// order bits of second field and the rest 13 bits for cycle field in the format of IEEE
+    /// 1394 CYCLE_TIMER register.
+    ///
+    /// If the version of kernel ABI for Linux FireWire subsystem is less than 6, the value of
+    /// tstamp argument has invalid value (=G_MAXUINT). Furthermore, if the version is less than
+    /// 4, the src, dst, card, generation arguments have invalid value (=G_MAXUINT).
+    ///
+    ///
+    /// </details>
     ///
     /// # Implements
     ///
@@ -58,12 +118,17 @@ impl Default for FwFcp {
     }
 }
 
-/// Trait containing the part of [`struct@FwFcp`] methods.
+mod sealed {
+    pub trait Sealed {}
+    impl<T: super::IsA<super::FwFcp>> Sealed for T {}
+}
+
+/// Trait containing all [`struct@FwFcp`] methods.
 ///
 /// # Implementors
 ///
 /// [`FwFcp`][struct@crate::FwFcp]
-pub trait FwFcpExt: 'static {
+pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
     /// Start to listen to FCP responses.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
@@ -72,9 +137,24 @@ pub trait FwFcpExt: 'static {
     ///
     /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_fcp_bind")]
-    fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error>;
+    fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error> {
+        unsafe {
+            let mut error = ptr::null_mut();
+            let is_ok = ffi::hinawa_fw_fcp_bind(
+                self.as_ref().to_glib_none().0,
+                node.as_ref().to_glib_none().0,
+                &mut error,
+            );
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
+            if error.is_null() {
+                Ok(())
+            } else {
+                Err(from_glib_full(error))
+            }
+        }
+    }
 
-    /// Transfer command frame for FCP. When receiving response frame for FCP, `signal::FwFcp::responded`
+    /// Transfer command frame for FCP. When receiving response frame for FCP, [`responded`][struct@crate::FwFcp#responded]
     /// signal is emitted.
     /// ## `cmd`
     /// An array with elements for request byte data. The value of this
@@ -86,48 +166,18 @@ pub trait FwFcpExt: 'static {
     ///
     /// TRUE if the overall operation finishes successfully, otherwise FALSE.
     #[doc(alias = "hinawa_fw_fcp_command")]
-    fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error>;
-
-    /// Stop to listen to FCP responses. Any pending transactions are forced to be aborted.
-    #[doc(alias = "hinawa_fw_fcp_unbind")]
-    fn unbind(&self);
-
-    /// Whether this protocol is bound to any instance of HinawaFwNode.
-    #[doc(alias = "is-bound")]
-    fn is_bound(&self) -> bool;
-
-    #[doc(alias = "is-bound")]
-    fn connect_is_bound_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<FwFcp>> FwFcpExt for O {
-    fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error> {
-        unsafe {
-            let mut error = ptr::null_mut();
-            let _ = ffi::hinawa_fw_fcp_bind(
-                self.as_ref().to_glib_none().0,
-                node.as_ref().to_glib_none().0,
-                &mut error,
-            );
-            if error.is_null() {
-                Ok(())
-            } else {
-                Err(from_glib_full(error))
-            }
-        }
-    }
-
     fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error> {
-        let cmd_size = cmd.len() as usize;
+        let cmd_size = cmd.len() as _;
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = ffi::hinawa_fw_fcp_command(
+            let is_ok = ffi::hinawa_fw_fcp_command(
                 self.as_ref().to_glib_none().0,
                 cmd.to_glib_none().0,
                 cmd_size,
                 timeout_ms,
                 &mut error,
             );
+            debug_assert_eq!(is_ok == glib::ffi::GFALSE, !error.is_null());
             if error.is_null() {
                 Ok(())
             } else {
@@ -136,16 +186,21 @@ impl<O: IsA<FwFcp>> FwFcpExt for O {
         }
     }
 
+    /// Stop to listen to FCP responses. Any pending transactions are forced to be aborted.
+    #[doc(alias = "hinawa_fw_fcp_unbind")]
     fn unbind(&self) {
         unsafe {
             ffi::hinawa_fw_fcp_unbind(self.as_ref().to_glib_none().0);
         }
     }
 
+    /// Whether this protocol is bound to any instance of HinawaFwNode.
+    #[doc(alias = "is-bound")]
     fn is_bound(&self) -> bool {
-        glib::ObjectExt::property(self.as_ref(), "is-bound")
+        ObjectExt::property(self.as_ref(), "is-bound")
     }
 
+    #[doc(alias = "is-bound")]
     fn connect_is_bound_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_is_bound_trampoline<P: IsA<FwFcp>, F: Fn(&P) + 'static>(
             this: *mut ffi::HinawaFwFcp,
@@ -168,6 +223,8 @@ impl<O: IsA<FwFcp>> FwFcpExt for O {
         }
     }
 }
+
+impl<O: IsA<FwFcp>> FwFcpExt for O {}
 
 impl fmt::Display for FwFcp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

@@ -11,6 +11,23 @@ glib::wrapper! {
     ///
     /// [`FwReq`][crate::FwReq] supports all types of transactions defiend in IEEE 1212.
     ///
+    /// ## Signals
+    ///
+    ///
+    /// #### `responded`
+    ///  Emitted when the node transfers asynchronous packet as response subaction for the
+    /// transaction and the process successfully reads the content of packet from Linux firewire
+    /// subsystem.
+    ///
+    /// The values of @request_tstamp and @response_tstamp are unsigned 16 bit integer including
+    /// higher 3 bits for three low order bits of second field and the rest 13 bits for cycle
+    /// field in the format of IEEE 1394 CYCLE_TIMER register.
+    ///
+    /// If the version of kernel ABI for Linux FireWire subsystem is less than 6, the
+    /// @request_tstamp and @response_tstamp argument has invalid value (=G_MAXUINT).
+    ///
+    ///
+    ///
     /// # Implements
     ///
     /// [`FwReqExtManual`][trait@crate::prelude::FwReqExtManual]
