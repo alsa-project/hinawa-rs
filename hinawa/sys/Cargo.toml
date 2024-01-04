@@ -1,6 +1,6 @@
 [package]
 build = "build.rs"
-edition = "2018"
+edition = "2021"
 links = "hinawa"
 name = "hinawa-sys"
 version = "0.9.1"
