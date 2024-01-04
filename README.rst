@@ -2,23 +2,23 @@
 Rust bindings for hinawa library
 ================================
 
-2023/11/05
+2024/01/04
 Takashi Sakamoto
 
 Introduction
 ============
 
-* This repository includes FFI and API bindings for ``libhinawa`` v4.0.0 or later which
+* This repository includes FFI and API bindings for ``libhinawa`` v4.0 or later which
   provides ``Hinawa-4.0.gir``.
 
   * `<https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/>`_
 
 * The crates are available in `crates.io <https://crates.io/>`_ as well.
 
-* Inconveniently, it includes no support for ``libhinawa`` v2.6.1 or former, which provides
+* Inconveniently, it includes no support for ``libhinawa`` v2.6 or former, which provides
   ``Hinawa-3.0.gir``, ``Hinawa-2.0.gir``, and ``Hinawa-1.0.gir``.
 
-* The latest release is version 0.9.1.
+* The latest release is version 0.10.0.
 
 Crates
 ======

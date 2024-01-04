@@ -16,7 +16,7 @@ Add the following line to your Cargo.toml file:
 
 ```toml
 [dependencies]
-hinawa = "0.9"
+hinawa = "0.10"
 ```
 
 The API documentation is available in <https://docs.rs/hinawa/>.
