@@ -11,7 +11,7 @@
     clippy::unreadable_literal,
     clippy::upper_case_acronyms
 )]
-#![cfg_attr(feature = "dox", feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[allow(unused_imports)]
 use libc::{
@@ -93,7 +93,7 @@ pub struct HinawaCycleTime {
 
 impl ::std::fmt::Debug for HinawaCycleTime {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaCycleTime @ {:p}", self))
+        f.debug_struct(&format!("HinawaCycleTime @ {self:p}"))
             .finish()
     }
 }
@@ -108,7 +108,7 @@ pub struct HinawaFwFcpClass {
 
 impl ::std::fmt::Debug for HinawaFwFcpClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwFcpClass @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwFcpClass @ {self:p}"))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
             .finish()
@@ -125,7 +125,7 @@ pub struct HinawaFwNodeClass {
 
 impl ::std::fmt::Debug for HinawaFwNodeClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwNodeClass @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwNodeClass @ {self:p}"))
             .field("parent_class", &self.parent_class)
             .field("bus_update", &self.bus_update)
             .field("disconnected", &self.disconnected)
@@ -144,7 +144,7 @@ pub struct HinawaFwReqClass {
 
 impl ::std::fmt::Debug for HinawaFwReqClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwReqClass @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwReqClass @ {self:p}"))
             .field("parent_class", &self.parent_class)
             .field("responded", &self.responded)
             .finish()
@@ -173,7 +173,7 @@ pub struct HinawaFwRespClass {
 
 impl ::std::fmt::Debug for HinawaFwRespClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwRespClass @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwRespClass @ {self:p}"))
             .field("parent_class", &self.parent_class)
             .field("requested", &self.requested)
             .finish()
@@ -189,7 +189,7 @@ pub struct HinawaFwFcp {
 
 impl ::std::fmt::Debug for HinawaFwFcp {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwFcp @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwFcp @ {self:p}"))
             .field("parent_instance", &self.parent_instance)
             .finish()
     }
@@ -203,7 +203,7 @@ pub struct HinawaFwNode {
 
 impl ::std::fmt::Debug for HinawaFwNode {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwNode @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwNode @ {self:p}"))
             .field("parent_instance", &self.parent_instance)
             .finish()
     }
@@ -217,7 +217,7 @@ pub struct HinawaFwReq {
 
 impl ::std::fmt::Debug for HinawaFwReq {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwReq @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwReq @ {self:p}"))
             .field("parent_instance", &self.parent_instance)
             .finish()
     }
@@ -231,7 +231,7 @@ pub struct HinawaFwResp {
 
 impl ::std::fmt::Debug for HinawaFwResp {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("HinawaFwResp @ {:p}", self))
+        f.debug_struct(&format!("HinawaFwResp @ {self:p}"))
             .field("parent_instance", &self.parent_instance)
             .finish()
     }

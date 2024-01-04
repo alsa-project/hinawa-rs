@@ -15,8 +15,12 @@ keywords = ["ieee1394", "firewire", "linux", "glib", "ffi"]
 license = "MIT"
 readme = "README.md"
 repository = "https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/"
+
 [package.metadata.docs.rs]
-features = ["dox"]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+all-features = true
+
 [package.metadata.system-deps.hinawa]
 name = "hinawa"
 version = "4.0"
@@ -26,24 +30,21 @@ name = "hinawa_sys"
 
 [build-dependencies]
 pkg-config = "0.3.7"
-# To avoid MSRV in cfg-expr against rustc 1.67.
-system-deps = "=6.0.4"
+system-deps = "6"
 
 [dependencies]
 libc = "0.2"
 
 [dependencies.glib]
 package = "glib-sys"
-version = "0.15"
+version = "0.18"
 
 [dependencies.gobject]
 package = "gobject-sys"
-version = "0.15"
+version = "0.18"
 
 [dev-dependencies]
 shell-words = "1.0.0"
 tempfile = "3"
 
 [features]
-# To suppress linking to C library when generating documentation.
-dox = []

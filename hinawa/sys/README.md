@@ -19,13 +19,6 @@ The hinawa-sys crate is released under [MIT license](https://spdx.org/licenses/M
 The hinawa-sys crate depends on FFI crates provided by [gtk-rs project](https://gtk-rs.org/) for
 type/object system, event loop, and dispacher.
 
-## Features
-
-* dox
-
-   * Suppress detection of installed hinawa library. It's automatically enabled when generating
-     documentation in docs.rs.
-
 ## Repository
 
 The hinawa-sys crate is maintained by Takashi Sakamoto for upstream of Linux FireWire subsystem.

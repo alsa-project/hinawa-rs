@@ -51,7 +51,7 @@ Dependencies
 * API crate (`hinawa`)
 
   * ``libc`` >= 0.2
-  * ``glib`` >= 0.15
+  * ``glib`` >= 0.18
   * FFI crate (``hinawa-sys``)
 
 Examples
