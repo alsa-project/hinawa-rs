@@ -12,6 +12,10 @@ default-members = [
     "hinawa",
 ]
 
+# For development purpose.
+[patch.crates-io]
+hinawa-sys = { path = "hinawa/sys" }
+
 # For my convenience to generate README.md for each crates by my tool.
 [workspace.metadata.library.hinawa]
 repository = "https://git.kernel.org/pub/scm/libs/ieee1394/libhinawa.git/"
