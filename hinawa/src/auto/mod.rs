@@ -26,8 +26,7 @@ pub use self::enums::FwReqError;
 pub use self::enums::FwRespError;
 pub use self::enums::FwTcode;
 
-#[doc(hidden)]
-pub mod traits {
+pub(crate) mod traits {
     pub use super::fw_fcp::FwFcpExt;
     pub use super::fw_node::FwNodeExt;
     pub use super::fw_resp::FwRespExt;

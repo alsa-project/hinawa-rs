@@ -9,7 +9,7 @@ use glib::{
     signal::{connect_raw, SignalHandlerId},
     translate::*,
 };
-use std::{boxed::Box as Box_, fmt, mem::transmute, ptr};
+use std::boxed::Box as Box_;
 
 glib::wrapper! {
     /// A FCP transaction executor to node in IEEE 1394 bus.
@@ -123,7 +123,7 @@ mod sealed {
     impl<T: super::IsA<super::FwFcp>> Sealed for T {}
 }
 
-/// Trait containing all [`struct@FwFcp`] methods.
+/// Trait containing the part of [`struct@FwFcp`] methods.
 ///
 /// # Implementors
 ///
@@ -139,7 +139,7 @@ pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
     #[doc(alias = "hinawa_fw_fcp_bind")]
     fn bind(&self, node: &impl IsA<FwNode>) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_fcp_bind(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
@@ -169,7 +169,7 @@ pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
     fn command(&self, cmd: &[u8], timeout_ms: u32) -> Result<(), glib::Error> {
         let cmd_size = cmd.len() as _;
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_fcp_command(
                 self.as_ref().to_glib_none().0,
                 cmd.to_glib_none().0,
@@ -215,7 +215,7 @@ pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::is-bound\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_is_bound_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -225,9 +225,3 @@ pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
 }
 
 impl<O: IsA<FwFcp>> FwFcpExt for O {}
-
-impl fmt::Display for FwFcp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("FwFcp")
-    }
-}

@@ -9,7 +9,7 @@ use glib::{
     signal::{connect_raw, SignalHandlerId},
     translate::*,
 };
-use std::{boxed::Box as Box_, fmt, mem::transmute, ptr};
+use std::boxed::Box as Box_;
 
 glib::wrapper! {
     /// A transaction responder for request subaction initiated by node in IEEE 1394 bus.
@@ -92,7 +92,7 @@ mod sealed {
     impl<T: super::IsA<super::FwResp>> Sealed for T {}
 }
 
-/// Trait containing all [`struct@FwResp`] methods.
+/// Trait containing the part of [`struct@FwResp`] methods.
 ///
 /// # Implementors
 ///
@@ -126,7 +126,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
     #[doc(alias = "hinawa_fw_resp_reserve")]
     fn reserve(&self, node: &impl IsA<FwNode>, addr: u64, width: u32) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_resp_reserve(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
@@ -170,7 +170,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
         width: u32,
     ) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_resp_reserve_within_region(
                 self.as_ref().to_glib_none().0,
                 node.as_ref().to_glib_none().0,
@@ -234,7 +234,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::is-reserved\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_is_reserved_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -257,7 +257,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::offset\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_offset_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -280,7 +280,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::width\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_width_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -290,9 +290,3 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
 }
 
 impl<O: IsA<FwResp>> FwRespExt for O {}
-
-impl fmt::Display for FwResp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("FwResp")
-    }
-}

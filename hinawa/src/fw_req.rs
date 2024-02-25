@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 use crate::*;
 
-/// Trait containing all [`struct@FwReq`] methods.
+/// Trait containing the rest of [`struct@FwReq`] methods.
 ///
 /// # Implementors
 ///

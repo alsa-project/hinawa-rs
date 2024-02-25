@@ -8,7 +8,7 @@ use glib::{
     signal::{connect_raw, SignalHandlerId},
     translate::*,
 };
-use std::{boxed::Box as Box_, fmt, mem::transmute, ptr};
+use std::boxed::Box as Box_;
 
 glib::wrapper! {
     /// An event listener for node in IEEE 1394 bus.
@@ -116,7 +116,7 @@ mod sealed {
     impl<T: super::IsA<super::FwNode>> Sealed for T {}
 }
 
-/// Trait containing all [`struct@FwNode`] methods.
+/// Trait containing the part of [`struct@FwNode`] methods.
 ///
 /// # Implementors
 ///
@@ -134,8 +134,8 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
     #[doc(alias = "hinawa_fw_node_create_source")]
     fn create_source(&self) -> Result<glib::Source, glib::Error> {
         unsafe {
-            let mut gsrc = ptr::null_mut();
-            let mut error = ptr::null_mut();
+            let mut gsrc = std::ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_node_create_source(
                 self.as_ref().to_glib_none().0,
                 &mut gsrc,
@@ -162,7 +162,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
     #[doc(alias = "hinawa_fw_node_open")]
     fn open(&self, path: &str, open_flag: i32) -> Result<(), glib::Error> {
         unsafe {
-            let mut error = ptr::null_mut();
+            let mut error = std::ptr::null_mut();
             let is_ok = ffi::hinawa_fw_node_open(
                 self.as_ref().to_glib_none().0,
                 path.to_glib_none().0,
@@ -239,7 +239,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"bus-update\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     bus_update_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -263,7 +263,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"disconnected\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     disconnected_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -289,7 +289,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::bus-manager-node-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_bus_manager_node_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -312,7 +312,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::card-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_card_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -335,7 +335,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::generation\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_generation_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -361,7 +361,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::ir-manager-node-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_ir_manager_node_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -387,7 +387,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::local-node-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_local_node_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -410,7 +410,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::node-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_node_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -433,7 +433,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             connect_raw(
                 self.as_ptr() as *mut _,
                 b"notify::root-node-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
+                Some(std::mem::transmute::<_, unsafe extern "C" fn()>(
                     notify_root_node_id_trampoline::<Self, F> as *const (),
                 )),
                 Box_::into_raw(f),
@@ -443,9 +443,3 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
 }
 
 impl<O: IsA<FwNode>> FwNodeExt for O {}
-
-impl fmt::Display for FwNode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("FwNode")
-    }
-}

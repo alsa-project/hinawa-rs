@@ -22,7 +22,7 @@ name = "hinawa"
 
 [dependencies]
 libc = "0.2"
-glib = "0.18"
+glib = "0.19"
 ffi = {package = "hinawa-sys", version = "0.10.0"}
 
 [dev-dependencies]

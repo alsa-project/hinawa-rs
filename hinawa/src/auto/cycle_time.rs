@@ -4,7 +4,6 @@
 // DO NOT EDIT
 
 use glib::translate::*;
-use std::mem;
 
 glib::wrapper! {
     /// A boxed object to express data of cycle time.
@@ -45,7 +44,7 @@ impl CycleTime {
     #[doc(alias = "get_clock_id")]
     pub fn clock_id(&self) -> i32 {
         unsafe {
-            let mut clock_id = mem::MaybeUninit::uninit();
+            let mut clock_id = std::mem::MaybeUninit::uninit();
             ffi::hinawa_cycle_time_get_clock_id(self.to_glib_none().0, clock_id.as_mut_ptr());
             clock_id.assume_init()
         }
@@ -62,7 +61,7 @@ impl CycleTime {
     #[doc(alias = "get_raw")]
     pub fn raw(&self) -> u32 {
         unsafe {
-            let mut raw = mem::MaybeUninit::uninit();
+            let mut raw = std::mem::MaybeUninit::uninit();
             ffi::hinawa_cycle_time_get_raw(self.to_glib_none().0, raw.as_mut_ptr());
             raw.assume_init()
         }
@@ -83,8 +82,8 @@ impl CycleTime {
     #[doc(alias = "get_system_time")]
     pub fn system_time(&self) -> (i64, i32) {
         unsafe {
-            let mut tv_sec = mem::MaybeUninit::uninit();
-            let mut tv_nsec = mem::MaybeUninit::uninit();
+            let mut tv_sec = std::mem::MaybeUninit::uninit();
+            let mut tv_nsec = std::mem::MaybeUninit::uninit();
             ffi::hinawa_cycle_time_get_system_time(
                 self.to_glib_none().0,
                 tv_sec.as_mut_ptr(),

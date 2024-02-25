@@ -4,7 +4,6 @@
 // DO NOT EDIT
 
 use glib::translate::*;
-use std::fmt;
 
 glib::wrapper! {
     /// A transaction executor to a node in IEEE 1394 bus.
@@ -56,11 +55,5 @@ impl FwReq {
 impl Default for FwReq {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-impl fmt::Display for FwReq {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("FwReq")
     }
 }

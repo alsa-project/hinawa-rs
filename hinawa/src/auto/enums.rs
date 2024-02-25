@@ -4,7 +4,6 @@
 // DO NOT EDIT
 
 use glib::{prelude::*, translate::*};
-use std::fmt;
 
 /// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwFcp`][crate::FwFcp].
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
@@ -22,21 +21,6 @@ pub enum FwFcpError {
     Aborted,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for FwFcpError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwFcpError::{}",
-            match *self {
-                Self::Timeout => "Timeout",
-                Self::LargeResp => "LargeResp",
-                Self::Aborted => "Aborted",
-                _ => "Unknown",
-            }
-        )
-    }
 }
 
 #[doc(hidden)]
@@ -160,22 +144,6 @@ pub enum FwNodeError {
     Failed,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for FwNodeError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwNodeError::{}",
-            match *self {
-                Self::Disconnected => "Disconnected",
-                Self::Opened => "Opened",
-                Self::NotOpened => "NotOpened",
-                Self::Failed => "Failed",
-                _ => "Unknown",
-            }
-        )
-    }
 }
 
 #[doc(hidden)]
@@ -309,7 +277,7 @@ pub enum FwRcode {
     /// For cancellation.
     #[doc(alias = "HINAWA_FW_RCODE_CANCELLED")]
     Cancelled,
-    // For busyness.
+    /// For busyness.
     #[doc(alias = "HINAWA_FW_RCODE_BUSY")]
     Busy,
     /// For generation.
@@ -323,29 +291,6 @@ pub enum FwRcode {
     Invalid,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for FwRcode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwRcode::{}",
-            match *self {
-                Self::Complete => "Complete",
-                Self::ConflictError => "ConflictError",
-                Self::DataError => "DataError",
-                Self::TypeError => "TypeError",
-                Self::AddressError => "AddressError",
-                Self::SendError => "SendError",
-                Self::Cancelled => "Cancelled",
-                Self::Busy => "Busy",
-                Self::Generation => "Generation",
-                Self::NoAck => "NoAck",
-                Self::Invalid => "Invalid",
-                _ => "Unknown",
-            }
-        )
-    }
 }
 
 #[doc(hidden)]
@@ -487,28 +432,6 @@ pub enum FwReqError {
     __Unknown(i32),
 }
 
-impl fmt::Display for FwReqError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwReqError::{}",
-            match *self {
-                Self::ConflictError => "ConflictError",
-                Self::DataError => "DataError",
-                Self::TypeError => "TypeError",
-                Self::AddressError => "AddressError",
-                Self::SendError => "SendError",
-                Self::Cancelled => "Cancelled",
-                Self::Busy => "Busy",
-                Self::Generation => "Generation",
-                Self::NoAck => "NoAck",
-                Self::Invalid => "Invalid",
-                _ => "Unknown",
-            }
-        )
-    }
-}
-
 #[doc(hidden)]
 impl IntoGlib for FwReqError {
     type GlibType = ffi::HinawaFwReqError;
@@ -641,21 +564,6 @@ pub enum FwRespError {
     AddrSpaceUsed,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for FwRespError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwRespError::{}",
-            match *self {
-                Self::Failed => "Failed",
-                Self::Reserved => "Reserved",
-                Self::AddrSpaceUsed => "AddrSpaceUsed",
-                _ => "Unknown",
-            }
-        )
-    }
 }
 
 #[doc(hidden)]
@@ -822,36 +730,6 @@ pub enum FwTcode {
     LockVendorDependent,
     #[doc(hidden)]
     __Unknown(i32),
-}
-
-impl fmt::Display for FwTcode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "FwTcode::{}",
-            match *self {
-                Self::WriteQuadletRequest => "WriteQuadletRequest",
-                Self::WriteBlockRequest => "WriteBlockRequest",
-                Self::WriteResponse => "WriteResponse",
-                Self::ReadQuadletRequest => "ReadQuadletRequest",
-                Self::ReadBlockRequest => "ReadBlockRequest",
-                Self::ReadQuadletResponse => "ReadQuadletResponse",
-                Self::ReadBlockResponse => "ReadBlockResponse",
-                Self::CycleStart => "CycleStart",
-                Self::LockRequest => "LockRequest",
-                Self::StreamData => "StreamData",
-                Self::LockResponse => "LockResponse",
-                Self::LockMaskSwap => "LockMaskSwap",
-                Self::LockCompareSwap => "LockCompareSwap",
-                Self::LockFetchAdd => "LockFetchAdd",
-                Self::LockLittleAdd => "LockLittleAdd",
-                Self::LockBoundedAdd => "LockBoundedAdd",
-                Self::LockWrapAdd => "LockWrapAdd",
-                Self::LockVendorDependent => "LockVendorDependent",
-                _ => "Unknown",
-            }
-        )
-    }
 }
 
 #[doc(hidden)]
