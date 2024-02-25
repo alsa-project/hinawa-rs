@@ -4,7 +4,6 @@ edition = "2021"
 links = "hinawa"
 name = "hinawa-sys"
 version = "0.10.0"
-# For publishing.
 authors = ["Takashi Sakamoto"]
 categories = ["external-ffi-bindings", "hardware-support", "os::linux-apis"]
 description = "FFI bindings for hinawa library"
@@ -34,14 +33,8 @@ system-deps = "6"
 
 [dependencies]
 libc = "0.2"
-
-[dependencies.glib]
-package = "glib-sys"
-version = "0.18"
-
-[dependencies.gobject]
-package = "gobject-sys"
-version = "0.18"
+glib-sys = "0.19"
+gobject-sys = "0.19"
 
 [dev-dependencies]
 shell-words = "1.0.0"
