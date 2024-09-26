@@ -2,7 +2,7 @@
 Rust bindings for hinawa library
 ================================
 
-2024/02/25
+2024/09/20
 Takashi Sakamoto
 
 Introduction
@@ -18,7 +18,7 @@ Introduction
 * Inconveniently, it includes no support for ``libhinawa`` v2.6 or former, which provides
   ``Hinawa-3.0.gir``, ``Hinawa-2.0.gir``, and ``Hinawa-1.0.gir``.
 
-* The latest release is version 0.11.0.
+* The latest release is version 0.12.0.
 
 Crates
 ======
