@@ -19,8 +19,11 @@ use gobject_sys as gobject;
 #[allow(unused_imports)]
 use libc::{
     c_char, c_double, c_float, c_int, c_long, c_short, c_uchar, c_uint, c_ulong, c_ushort, c_void,
-    intptr_t, size_t, ssize_t, uintptr_t, FILE,
+    intptr_t, off_t, size_t, ssize_t, time_t, uintptr_t, FILE,
 };
+#[cfg(unix)]
+#[allow(unused_imports)]
+use libc::{dev_t, gid_t, pid_t, socklen_t, uid_t};
 
 #[allow(unused_imports)]
 use glib::{gboolean, gconstpointer, gpointer, GType};
@@ -89,6 +92,7 @@ pub const HINAWA_FW_TCODE_LOCK_VENDOR_DEPENDENT: HinawaFwTcode = 23;
 
 // Records
 #[repr(C)]
+#[allow(dead_code)]
 pub struct HinawaCycleTime {
     _data: [u8; 0],
     _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
