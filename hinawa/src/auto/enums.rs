@@ -3,6 +3,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::ffi;
 use glib::{prelude::*, translate::*};
 
 /// A set of error code for [`glib::Error`][crate::glib::Error] for operations in [`FwFcp`][crate::FwFcp].
