@@ -46,3 +46,7 @@ Some programs are available under `examples` directory.
 * `read-quadlet.rs`
 
     * demonstration to read quadlet data from node in IEEE 1394 bus identified as `/dev/fw1`.
+
+* `read-quadlet-async.rs`
+
+    * demonstration of the above example with async runtime.
