@@ -16,8 +16,7 @@ readme = "README.md"
 repository = "https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/"
 
 [package.metadata.docs.rs]
-rustc-args = ["--cfg", "docsrs"]
-rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+rustdoc-args = ["--generate-link-to-definition"]
 all-features = true
 
 [package.metadata.system-deps.hinawa]
