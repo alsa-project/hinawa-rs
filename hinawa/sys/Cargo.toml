@@ -3,7 +3,7 @@ build = "build.rs"
 edition = "2021"
 links = "hinawa"
 name = "hinawa-sys"
-version = "0.12.0"
+version = "0.13.0"
 authors = ["Takashi Sakamoto"]
 categories = ["external-ffi-bindings", "hardware-support", "os::linux-apis"]
 description = "FFI bindings for hinawa library"
@@ -32,8 +32,8 @@ system-deps = "7.0"
 
 [dependencies]
 libc = "0.2"
-glib-sys = "0.20"
-gobject-sys = "0.20"
+glib-sys = "0.21"
+gobject-sys = "0.21"
 
 [dev-dependencies]
 shell-words = "1.1"
