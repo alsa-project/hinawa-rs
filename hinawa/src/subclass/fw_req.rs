@@ -79,10 +79,10 @@ unsafe impl<T: FwReqImpl> IsSubclassable<T> for FwReq {
 unsafe extern "C" fn fw_req_responded<T: FwReqImpl>(
     ptr: *mut ffi::HinawaFwReq,
     rcode: ffi::HinawaFwRcode,
-    request_tstamp: c_uint,
-    response_tstamp: c_uint,
+    request_tstamp: std::ffi::c_uint,
+    response_tstamp: std::ffi::c_uint,
     frame: *const u8,
-    length: c_uint,
+    length: std::ffi::c_uint,
 ) {
     let instance = &*(ptr as *mut T::Instance);
     let imp = instance.imp();

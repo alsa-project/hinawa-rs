@@ -87,17 +87,12 @@ impl Default for FwResp {
     }
 }
 
-mod sealed {
-    pub trait Sealed {}
-    impl<T: super::IsA<super::FwResp>> Sealed for T {}
-}
-
 /// Trait containing the part of [`struct@FwResp`] methods.
 ///
 /// # Implementors
 ///
 /// [`FwFcp`][struct@crate::FwFcp], [`FwResp`][struct@crate::FwResp]
-pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
+pub trait FwRespExt: IsA<FwResp> + 'static {
     /// Stop listening to the address range in Linux system for local nodes.
     #[doc(alias = "hinawa_fw_resp_release")]
     fn release(&self) {
@@ -233,7 +228,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::is-reserved\0".as_ptr() as *const _,
+                c"notify::is-reserved".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_is_reserved_trampoline::<Self, F> as *const (),
                 )),
@@ -256,7 +251,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::offset\0".as_ptr() as *const _,
+                c"notify::offset".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_offset_trampoline::<Self, F> as *const (),
                 )),
@@ -279,7 +274,7 @@ pub trait FwRespExt: IsA<FwResp> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::width\0".as_ptr() as *const _,
+                c"notify::width".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_width_trampoline::<Self, F> as *const (),
                 )),

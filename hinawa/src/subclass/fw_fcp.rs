@@ -53,10 +53,10 @@ unsafe impl<T: FwFcpImpl> IsSubclassable<T> for FwFcp {
 
 unsafe extern "C" fn fw_fcp_responded<T: FwFcpImpl>(
     ptr: *mut ffi::HinawaFwFcp,
-    generation: c_uint,
-    tstamp: c_uint,
+    generation: std::ffi::c_uint,
+    tstamp: std::ffi::c_uint,
     frame: *const u8,
-    length: c_uint,
+    length: std::ffi::c_uint,
 ) {
     let instance = &*(ptr as *mut T::Instance);
     let imp = instance.imp();

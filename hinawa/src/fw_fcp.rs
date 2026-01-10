@@ -211,10 +211,10 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
     {
         unsafe extern "C" fn responded_trampoline<P, F>(
             this: *mut ffi::HinawaFwFcp,
-            generation: libc::c_uint,
-            tstamp: libc::c_uint,
+            generation: std::ffi::c_uint,
+            tstamp: std::ffi::c_uint,
             frame: *const u8,
-            length: libc::c_uint,
+            length: std::ffi::c_uint,
             f: glib::ffi::gpointer,
         ) where
             P: IsA<FwFcp>,
@@ -232,7 +232,7 @@ impl<O: IsA<FwFcp>> FwFcpExtManual for O {
             let f: std::boxed::Box<F> = std::boxed::Box::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"responded\0".as_ptr() as *const _,
+                c"responded".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     responded_trampoline::<Self, F> as *const (),
                 )),

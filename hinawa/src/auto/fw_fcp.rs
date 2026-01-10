@@ -118,17 +118,12 @@ impl Default for FwFcp {
     }
 }
 
-mod sealed {
-    pub trait Sealed {}
-    impl<T: super::IsA<super::FwFcp>> Sealed for T {}
-}
-
 /// Trait containing the part of [`struct@FwFcp`] methods.
 ///
 /// # Implementors
 ///
 /// [`FwFcp`][struct@crate::FwFcp]
-pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
+pub trait FwFcpExt: IsA<FwFcp> + 'static {
     /// Start to listen to FCP responses.
     /// ## `node`
     /// A [`FwNode`][crate::FwNode].
@@ -214,7 +209,7 @@ pub trait FwFcpExt: IsA<FwFcp> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::is-bound\0".as_ptr() as *const _,
+                c"notify::is-bound".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_is_bound_trampoline::<Self, F> as *const (),
                 )),

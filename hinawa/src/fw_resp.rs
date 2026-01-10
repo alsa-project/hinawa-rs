@@ -58,13 +58,13 @@ impl<O: IsA<FwResp>> FwRespExtManual for O {
             this: *mut ffi::HinawaFwResp,
             tcode: ffi::HinawaFwTcode,
             offset: u64,
-            src: libc::c_uint,
-            dst: libc::c_uint,
-            card: libc::c_uint,
-            generation: libc::c_uint,
-            tstamp: libc::c_uint,
+            src: std::ffi::c_uint,
+            dst: std::ffi::c_uint,
+            card: std::ffi::c_uint,
+            generation: std::ffi::c_uint,
+            tstamp: std::ffi::c_uint,
             frame: *const u8,
-            length: libc::c_uint,
+            length: std::ffi::c_uint,
             f: glib::ffi::gpointer,
         ) -> ffi::HinawaFwRcode
         where
@@ -89,7 +89,7 @@ impl<O: IsA<FwResp>> FwRespExtManual for O {
             let f: std::boxed::Box<F> = std::boxed::Box::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"requested\0".as_ptr() as *const _,
+                c"requested".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     requested_trampoline::<Self, F> as *const (),
                 )),

@@ -116,7 +116,7 @@ unsafe extern "C" fn fw_resp_requested<T: FwRespImpl>(
     generation: u32,
     tstamp: u32,
     frame: *const u8,
-    length: c_uint,
+    length: std::ffi::c_uint,
 ) -> ffi::HinawaFwRcode {
     let instance = &*(ptr as *mut T::Instance);
     let imp = instance.imp();

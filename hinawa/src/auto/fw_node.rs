@@ -112,19 +112,14 @@ impl Default for FwNode {
     }
 }
 
-mod sealed {
-    pub trait Sealed {}
-    impl<T: super::IsA<super::FwNode>> Sealed for T {}
-}
-
 /// Trait containing the part of [`struct@FwNode`] methods.
 ///
 /// # Implementors
 ///
 /// [`FwNode`][struct@crate::FwNode]
-pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
-    /// Create [`glib::Source`][crate::glib::Source] for `GLib::MainContext` to dispatch events for the node on
-    /// IEEE 1394 bus.
+pub trait FwNodeExt: IsA<FwNode> + 'static {
+    /// Create [`glib::Source`][crate::glib::Source] for [`gLib::MainContext`][crate::glib::MainContext]
+    /// to dispatch events for the node on IEEE 1394 bus.
     ///
     /// # Returns
     ///
@@ -239,7 +234,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"bus-update\0".as_ptr() as *const _,
+                c"bus-update".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     bus_update_trampoline::<Self, F> as *const (),
                 )),
@@ -263,7 +258,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"disconnected\0".as_ptr() as *const _,
+                c"disconnected".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     disconnected_trampoline::<Self, F> as *const (),
                 )),
@@ -289,7 +284,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::bus-manager-node-id\0".as_ptr() as *const _,
+                c"notify::bus-manager-node-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_bus_manager_node_id_trampoline::<Self, F> as *const (),
                 )),
@@ -312,7 +307,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::card-id\0".as_ptr() as *const _,
+                c"notify::card-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_card_id_trampoline::<Self, F> as *const (),
                 )),
@@ -335,7 +330,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::generation\0".as_ptr() as *const _,
+                c"notify::generation".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_generation_trampoline::<Self, F> as *const (),
                 )),
@@ -361,7 +356,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::ir-manager-node-id\0".as_ptr() as *const _,
+                c"notify::ir-manager-node-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_ir_manager_node_id_trampoline::<Self, F> as *const (),
                 )),
@@ -387,7 +382,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::local-node-id\0".as_ptr() as *const _,
+                c"notify::local-node-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_local_node_id_trampoline::<Self, F> as *const (),
                 )),
@@ -410,7 +405,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::node-id\0".as_ptr() as *const _,
+                c"notify::node-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_node_id_trampoline::<Self, F> as *const (),
                 )),
@@ -433,7 +428,7 @@ pub trait FwNodeExt: IsA<FwNode> + sealed::Sealed + 'static {
             let f: Box_<F> = Box_::new(f);
             connect_raw(
                 self.as_ptr() as *mut _,
-                b"notify::root-node-id\0".as_ptr() as *const _,
+                c"notify::root-node-id".as_ptr() as *const _,
                 Some(std::mem::transmute::<*const (), unsafe extern "C" fn()>(
                     notify_root_node_id_trampoline::<Self, F> as *const (),
                 )),

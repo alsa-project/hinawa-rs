@@ -13,15 +13,15 @@ keywords = ["ieee1394", "firewire", "linux", "glib"]
 license = "MIT"
 readme = "README.md"
 repository = "https://git.kernel.org/pub/scm/libs/ieee1394/hinawa-rs.git/"
+
 [package.metadata.docs.rs]
-rustc-args = ["--cfg", "docsrs"]
-rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+rustdoc-args = ["--generate-link-to-definition"]
+all-features = true
 
 [lib]
 name = "hinawa"
 
 [dependencies]
-libc = "0.2"
 glib = "0.20"
 ffi = {package = "hinawa-sys", version = "0.12.0"}
 

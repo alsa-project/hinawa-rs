@@ -19,8 +19,11 @@ pub mod prelude {
 /// For subclass implementations derived from provided class.
 pub mod subclass;
 
+// For applications to handle stuffs in the sys crate.
 pub use ffi;
 
+// For documentation links to external crates in docs.rs.
 pub(crate) use glib;
 
+// Just for local conveniences.
 use glib::{object::*, signal::*, translate::*};
